@@ -2,54 +2,54 @@ import React,{useState} from 'react';
 import {
     useQuery,
     gql,
-    useMutation,
     useSubscription,
-    useLazyQuery
-} from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
-import { DataGrid } from '@material-ui/data-grid';
-//import { IconName } from "react-icons/bs";
+    useMutation
+  } from "@apollo/client";
 import { Modal, Button } from "react-bootstrap";
-import CircularProgress from '@material-ui/core/CircularProgress';         
+import { DataGrid } from '@material-ui/data-grid';
+import CircularProgress from '@material-ui/core/CircularProgress';       
 
 const StockQuery=gql`
-query MyQuery{
-    stock {
-        accidental
-        average
-        bank
-        bank_loan
-        body_color
-        body_type
-        buyer
-        chess_no
-        engine_displacement
-        engine_no
-        expected_price
-        extra_keys
-        fuel_type
-        hp
-        id
-        installment
-        insurance
-        is_sold
-        kms_driven
-        loan_amount
-        no_of_owners
-        noc
-        owner
-        passing
-        registered
-        selling_price
-        stepny
-        taxposition
-        transfer
-        transmission
-        vehicle_master
-        vehicle_no
-      }
+query MyQuery {
+  stock {
+    accidental
+    average
+    bank
+    bank_loan
+    vehicle_no
+    id
   }
-  `
+}
+`
+
+const SellerQuery=gql`
+query MyQuery {
+  seller {
+    address
+    adhaar
+    email
+    id
+    licence
+    mobile_no
+    name
+    occupation
+    pan
+    photo
+    vehicle_master
+  }
+}
+`
+const BuyerQuery=gql`
+query MyQuery {
+  buyer {
+    customer_type
+    email
+    id
+    mobile_no
+    name
+  }
+}
+`
 
 const TransactionQuery=gql`
 subscription MySubscription {
@@ -64,20 +64,126 @@ subscription MySubscription {
     rto_commission
     seller
     seller_commission
-    transaction_date
     vehicle
+    transaction_date
+    sellerBySeller {
+      name
+    }
+    buyerByBuyer {
+      name
+    }
+    stock {
+      vehicle_no
+    }
   }
-}  
+} 
 `
+
+const UPDATE_TRANSACTION=gql`
+  mutation MyMutation2($id:Int!,$advance_amount:bigint!,$amount_paid:bigint!,$buyer:Int!,$buyer_commission:bigint!,$pending_amount:bigint!,$reg_date:date!,$rto_commission:bigint!,$seller:Int!,$seller_commission:bigint!,$transaction_date:date!,$vehicle:Int!){
+    update_transaction_by_pk(pk_columns: {id: $id}, _set: {advance_amount: $advance_amount, amount_paid: $amount_paid, buyer: $buyer, buyer_commission: $buyer_commission, pending_amount: $pending_amount, vehicle: $vehicle, transaction_date: $transaction_date, seller_commission: $seller_commission, seller: $seller, rto_commission: $rto_commission, reg_date: $reg_date}) {
+      id
+    }
+  }`
+
+const INSERT_TRANSACTION=gql`
+mutation MyMutation($advance_amount:bigint!,$amount_paid:bigint!,$buyer:Int!,$buyer_commission:bigint!,$pending_amount:bigint!,$reg_date:date!,$rto_commission:bigint!,$seller:Int!,$seller_commission:bigint!,$transaction_date:date!,$vehicle:Int!){
+  insert_transaction_one(object: {advance_amount: $advance_amount, amount_paid: $amount_paid, buyer: $buyer, buyer_commission: $buyer_commission, pending_amount: $pending_amount, reg_date: $reg_date, rto_commission: $rto_commission, seller: $seller, seller_commission: $seller_commission, transaction_date: $transaction_date, vehicle: $vehicle}) {
+    id
+  }
+}
+`
+const DELETE_TRANSACTION=gql`
+mutation MyMutation($id: Int!) {
+  delete_transaction_by_pk(id: $id) {
+    id
+  }
+}
+  `
 
 
 function Transaction()
 {   
-    const { loading,error,data } = useQuery(StockQuery);
-    const { loading1,error1,data1 } = useSubscription(TransactionQuery);
-    if (loading1) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;
-    if (error1) return `Error! ${error1.message}`;
+    const [showModal, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [transaction,setTransaction] = useState({
+      seller:"",
+      buyer:"",
+      seller_commission:"",
+      buyer_commission:"",
+      advance_amount:"",
+      amount_paid:"",
+      pending_amount:"",
+      rto_commission:"",
+      reg_date:"",
+      transaction_date:"",
+      vehicle:""
+    })
+    const [modalTransaction,setModalTransaction] = useState({
+      id:"",
+      seller:"",
+      buyer:"",
+      seller_commission:"",
+      buyer_commission:"",
+      advance_amount:"",
+      amount_paid:"",
+      pending_amount:"",
+      rto_commission:"",
+      reg_date:"",
+      transaction_date:"",
+      vehicle:""
+    })
+
+    const onInputChange=(e)=>{
+      setTransaction({...transaction,[e.target.name]:e.target.value})
+    }
+    const onModalInputChange=(e)=>{
+      setModalTransaction({...modalTransaction,[e.target.name]:e.target.value})
+      console.log(modalTransaction)
+  }
     
+    const onFormSubmit=(e)=>{
+      e.preventDefault();
+      insertTransactionData({variables:{seller:transaction.seller,buyer:transaction.buyer,seller_commission:transaction.seller_commission,buyer_commission:transaction.buyer_commission,advance_amount:transaction.advance_amount,amount_paid:transaction.amount_paid,pending_amount:transaction.pending_amount,rto_commission:transaction.rto_commission,reg_date:transaction.reg_date,transaction_date:transaction.transaction_date,vehicle:transaction.vehicle}});
+  }
+  const onModalFormSubmit=(e)=>{
+    e.preventDefault();
+    console.log(e.target[0].value);
+    updateTransactionData({variables:{id:modalTransaction.id,seller:modalTransaction.seller,buyer:modalTransaction.buyer,seller_commission:modalTransaction.seller_commission,buyer_commission:modalTransaction.buyer_commission,advance_amount:modalTransaction.advance_amount,amount_paid:modalTransaction.amount_paid,pending_amount:modalTransaction.pending_amount,rto_commission:modalTransaction.rto_commission,reg_date:modalTransaction.reg_date,transaction_date:modalTransaction.transaction_date,vehicle:modalTransaction.vehicle}});
+    handleClose();
+  }
+  const editTransaction=(transaction_data)=>{
+    setModalTransaction({
+      id:transaction_data.id,
+      seller:transaction_data.seller,
+      buyer:transaction_data.buyer,
+      seller_commission:transaction_data.seller_commission,
+      buyer_commission:transaction_data.buyer_commission,
+      advance_amount:transaction_data.advance_amount,
+      amount_paid:transaction_data.amount_paid,
+      pending_amount:transaction_data.pending_amount,
+      rto_commission:transaction_data.rto_commission,
+      reg_date:transaction_data.reg_date,
+      transaction_date:transaction_data.transaction_date,
+      vehicle:transaction_data.vehicle
+    })
+    handleShow();
+}
+const deleteTransaction=(id)=>{
+  console.log(id);
+  deleteTransactionData({variables:{id:id}})
+}
+    const [deleteTransactionData,{deletedData}]=useMutation(DELETE_TRANSACTION);
+    const [updateTransactionData,{updatedData}]=useMutation(UPDATE_TRANSACTION);
+    const [insertTransactionData,{transactionData}]=useMutation(INSERT_TRANSACTION);
+    const stock = useQuery(StockQuery);
+    const seller = useQuery(SellerQuery);
+    const buyer = useQuery(BuyerQuery);
+    const { loading, error, data } = useSubscription(TransactionQuery);
+    if (loading || stock.loading) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;
+    if (error) return `Error! ${error.message}`;
+    if (stock.error) return `Error1! ${stock.error.message}`;
     
     const columns = [
         { 
@@ -87,16 +193,41 @@ function Transaction()
             hide:false, 
         },
         {
-          field: 'seller',
-          headerName: 'Seller',
-          width: 150,
-          editable: false,
-        },
+          field: "seller",
+          headerName: "Seller Name",
+          width: 160,
+          valueGetter: (params) => {
+            //console.log({ params });
+            let result = [];
+            if (params.row.sellerBySeller) {
+              if (params.row.sellerBySeller) {
+                result.push(params.row.sellerBySeller.name);
+              }
+              
+            } else {
+              result = ["Unknown"];
+            }
+            return result.join(", ");
+          }
+        }
+        ,
         {
-          field: 'buyer',
-          headerName: 'Buyer',
-          width: 150,
-          editable: false,
+          field: "buyer",
+          headerName: "Buyer Name",
+          width: 160,
+          valueGetter: (params) => {
+            //console.log({ params });
+            let result = [];
+            if (params.row.buyerByBuyer) {
+              if (params.row.buyerByBuyer) {
+                result.push(params.row.buyerByBuyer.name);
+              }
+              
+            } else {
+              result = ["Unknown"];
+            }
+            return result.join(", ");
+          }
         },
         {
             field: 'seller_commission',
@@ -128,15 +259,16 @@ function Transaction()
             width: 150,
             editable: false,
           },
+        
           {
-            field: 'payable',
-            headerName: 'Payable',
+            field: 'rto_commission',
+            headerName: 'RTO Commission',
             width: 150,
             editable: false,
           },
           {
-            field: 'rto_commission',
-            headerName: 'RTO Commission',
+            field: 'transaction_date',
+            headerName: 'Transaction Date',
             width: 150,
             editable: false,
           },
@@ -147,104 +279,189 @@ function Transaction()
             editable: false,
           },
           {
+            field: "vehicle",
+            headerName: "Vehicle No",
+            width: 160,
+            valueGetter: (params) => {
+              //console.log({ params });
+              let result = [];
+              if (params.row.stock) {
+                if (params.row.stock) {
+                  result.push(params.row.stock.vehicle_no);
+                }
+                
+              } else {
+                result = ["Unknown"];
+              }
+              return result.join(", ");
+            }
+          },
+          {
             field: 'action',
             headerName: 'Action',
             width: 300,
             renderCell: (params) => {
               return (
                 <div className="btn-group">
-                <button data-toggle="tooltip" title="Edit" type="button" className="btn btn-warning" ><i className="fa fa-pencil"></i></button>
-                <button data-toggle="tooltip" title="Delete" style={{marginLeft:'20%'}} className="btn btn-danger"><i className="fa fa-trash"></i></button>
+                <button data-toggle="tooltip" title="Edit" type="button" className="btn btn-warning" onClick={()=>{editTransaction(params.row)}} ><i className="fa fa-pencil"></i></button>
+                <button data-toggle="tooltip" title="Delete" onClick={()=>{deleteTransaction(params.row.id)}} style={{marginLeft:'20%'}} className="btn btn-danger"><i className="fa fa-trash"></i></button>
                 
                 </div>
               );
            }
           },
       ];
-      console.log(data1);
-      //const rows=data.transaction
-      const rows=[
-          {
-              id:1,
-              seller:"Yash",
-              buyer:"Aditya",
-              seller_commission:123,
-              buyer_commission:123,
-              advance_amount:123,
-              amount_paid:123,
-              pending_amount:123,
-              payable:123,
-              rto_commission:123,
-              reg_date:"2021-09-09",
-              transaction_date:"2021-09-09",
-              vehicle:"Ertiga"
-          }
-      ];
+      console.log(stock.data.stock);
+      const rows=data.transaction;
+      
 return (
     <div className="container">
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <div className="col-md-6">
+                <form className="form-group" onSubmit={e=>onModalFormSubmit(e)}>
+                    <div className="field">
+                        <label>Transaction Id</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.id} className="form-control" name="id" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Seller</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.seller} className="form-control" name="seller" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Buyer</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.buyer} className="form-control" name="buyer" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Seller Commission</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.seller_commission} className="form-control" name="seller_commission" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Buyer Commission</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.buyer_commission} className="form-control" name="buyer_commission" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Advance Amount</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.advance_amount} className="form-control" name="advance_amount" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Amount Paid</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.amount_paid} className="form-control" name="amount_paid" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Pending Amount</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.pending_amount} className="form-control" name="pending_amount" type="text" />
+                    </div>
+                    
+                    <div className="field">
+                        <label>RTO Commission</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.rto_commission} className="form-control" name="rto_commission" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Registered Date</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.reg_date} className="form-control" name="reg_date" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Transaction Date</label>
+                        <input onChange={(e)=>{onModalInputChange(e)}} defaultValue={modalTransaction.transaction_date} className="form-control" name="transaction_date" type="text" />
+                    </div>
+                    <div className="field">
+                        <label>Vehicle</label>
+                        <select onChange={(e)=>{onModalInputChange(e)}} className="form-control">
+                          <option>Select Vehicle</option>
+                          {stock.data.stock.map(vehicle=>(
+                                <option key={vehicle.id} value={vehicle.id}>{vehicle.vehicle_no}</option>
+                              ))}
+                        </select>  
+                    </div>
+                    <div className="field">
+                        <button className="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          
+        </Modal.Footer>
+      </Modal>
         <div className="col-md-12">
-              <form className="form-group">
+              <form  onSubmit={(e)=>{onFormSubmit(e)}} className="form-group">
                   <div className="row">
                       <div className="field col-md-6">
                           <label>Seller</label>
-                          <input className="form-control" name="seller" type="text" />
+                          <select onChange={e=>onInputChange(e)} className="form-control" name="seller">
+                              <option>Select Seller</option>
+                              {seller.data.seller.map(seller=>(
+                                <option key={seller.id} value={seller.id}>{seller.name}</option>
+                              ))}
+                          </select>
                       </div>
                       <div className="field col-md-6">
                           <label>Buyer</label>
-                          <input className="form-control" name="buyer" type="text" />
+                          <select onChange={e=>onInputChange(e)} className="form-control" name="buyer">
+                              <option>Select Buyer</option>
+                              {buyer.data.buyer.map(buyer=>(
+                                <option key={buyer.id} value={buyer.id}>{buyer.name}</option>
+                              ))}
+                          </select>
                       </div>
                   </div>
                   <div className="row">
                       <div className="field col-md-6">
                           <label>Seller Commission</label>
-                          <input className="form-control" name="seller_commission" type="text" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="seller_commission" type="text" />
                       </div>
                       <div className="field col-md-6">
                           <label>Buyer Commission</label>
-                          <input className="form-control" name="buyer_commission" type="text" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="buyer_commission" type="text" />
                       </div>
                   </div>
                   <div className="row">
                       <div className="field col-md-6">
                           <label>Advance Amount</label>
-                          <input className="form-control" name="advance_amount" type="text" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="advance_amount" type="text" />
                       </div>
                       <div className="field col-md-6">
                           <label>Amount Paid</label>
-                          <input className="form-control" name="amount_paid" type="text" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="amount_paid" type="text" />
                       </div>
                   </div>
                   <div className="row">
                       <div className="field col-md-6">
                           <label>Pending Amount</label>
-                          <input className="form-control" name="pending_amount" type="text" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="pending_amount" type="text" />
                       </div>
-                      <div className="field col-md-6">
-                          <label>Payable</label>
-                          <input className="form-control" name="payable" type="text" />
-                      </div>
+                      
                   </div>
                   <div className="row">
                       <div className="field col-md-6">
                           <label>RTO Commission</label>
-                          <input className="form-control" name="rto_commission" type="text" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="rto_commission" type="text" />
                       </div>
                       <div className="field col-md-6">
                           <label>Registered Date</label>
-                          <input className="form-control" name="reg_date" type="date" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="reg_date" type="date" />
                       </div>
                   </div>
                   <div className="row">
                       <div className="field col-md-6">
                           <label>Transaction Date</label>
-                          <input className="form-control" name="transaction_date" type="date" />
+                          <input onChange={e=>onInputChange(e)} className="form-control" name="transaction_date" type="date" />
                       </div>
                       <div className="field col-md-6">
                           <label>Vehicle</label>
                          
-                          <select className="form-control" name="vehicle">
+                          <select onChange={e=>onInputChange(e)} className="form-control" name="vehicle">
                               <option>Select Vehicle</option>
-                               
+                              {stock.data.stock.map(vehicle=>(
+                                <option key={vehicle.id} value={vehicle.id}>{vehicle.vehicle_no}</option>
+                              ))}
                           </select>
                       </div>
                   </div>
