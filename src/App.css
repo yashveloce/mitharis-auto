@@ -42,7 +42,7 @@ body {
 
 /* Fixed sidenav, full height */
 .sidenav {
-  height: "auto";
+  height: "auto" !important;
   width: 300px;
   z-index: 1;
   top: 0;
@@ -52,6 +52,7 @@ body {
   overflow-x: hidden;
   border-right: 1px solid black;
   padding-top: 20px;
+  height: "auto";
 }
 
 /* Style the sidenav links and the dropdown button */

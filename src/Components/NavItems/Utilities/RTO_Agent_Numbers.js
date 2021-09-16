@@ -179,9 +179,10 @@ function RTO_Agent_Numbers()
                           <input onChange={e=>onInputChange(e)} className="form-control" name="rto_mobile" type="text" />
                       </div>
                   </div>
-                  <div className="field" style={{width:'100%', textAlign: 'center', marginTop: '20px'}}>
-                        <button className="btn btn-primary">Save</button>
-                  </div>
+                  <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                        <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <button className="btn btn-primary" type='reset'>Reset</button>
+                    </div>
               </form>
           </div><br />
     <div style={{ height: 500, width: '100%' }}>

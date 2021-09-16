@@ -144,7 +144,7 @@ function Stolen()
         width: 300,
         renderCell: (params) => {
           return (
-            <div className="btn-group">
+            <div className="">
             <button data-toggle="tooltip" title="Edit" onClick={(e)=>{editStolen(params.row)}} type="button" className="btn btn-warning"><i className="fa fa-pencil"></i></button>
             <button data-toggle="tooltip" title="Delete" onClick={(e)=>{deleteStolenData(params.row.id)}} style={{marginLeft:'20%'}} className="btn btn-danger"><i className="fa fa-trash"></i></button>
             
@@ -220,9 +220,10 @@ function Stolen()
                       </div>
                       </div>
                   </div>
-                  <div className="field" style={{width:'100%', textAlign: 'center', marginTop: '20px'}}>
-                        <button className="btn btn-primary">Save</button>
-                  </div>
+                  <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                        <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <button className="btn btn-primary" type='reset'>Reset</button>
+                    </div>
               </form>
           </div><br />
     <div style={{ height: 500, width: '100%' }}>

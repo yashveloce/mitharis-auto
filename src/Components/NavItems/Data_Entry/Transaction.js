@@ -181,7 +181,7 @@ const deleteTransaction=(id)=>{
     const seller = useQuery(SellerQuery);
     const buyer = useQuery(BuyerQuery);
     const { loading, error, data } = useSubscription(TransactionQuery);
-    if (loading || stock.loading) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;
+    if (loading || stock.loading || seller.loading || buyer.loading) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;
     if (error) return `Error! ${error.message}`;
     if (stock.error) return `Error1! ${stock.error.message}`;
     
@@ -302,7 +302,7 @@ const deleteTransaction=(id)=>{
             width: 300,
             renderCell: (params) => {
               return (
-                <div className="btn-group">
+                <div className="">
                 <button data-toggle="tooltip" title="Edit" type="button" className="btn btn-warning" onClick={()=>{editTransaction(params.row)}} ><i className="fa fa-pencil"></i></button>
                 <button data-toggle="tooltip" title="Delete" onClick={()=>{deleteTransaction(params.row.id)}} style={{marginLeft:'20%'}} className="btn btn-danger"><i className="fa fa-trash"></i></button>
                 
@@ -312,6 +312,7 @@ const deleteTransaction=(id)=>{
           },
       ];
       console.log(stock.data.stock);
+      console.log(data.transaction);
       const rows=data.transaction;
       
 return (
@@ -465,9 +466,10 @@ return (
                           </select>
                       </div>
                   </div>
-                  <div className="field" style={{width:'100%', textAlign: 'center', marginTop: '20px'}}>
-                        <button className="btn btn-primary">Save</button>
-                  </div>
+                  <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                        <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <button className="btn btn-primary" type='reset'>Reset</button>
+                    </div>
               </form>
           </div>
           <br />
