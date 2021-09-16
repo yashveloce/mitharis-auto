@@ -145,7 +145,7 @@ function Vehicle_Master()
         width: 300,
         renderCell: (params) => {
           return (
-            <div className="btn-group">
+            <div className="">
             <button data-toggle="tooltip" title="Edit" type="button" className="btn btn-warning" onClick={()=>{editVehicle(params.row.id,params.row.brand,params.row.model)}} ><i className="fa fa-pencil"></i></button>
             <button data-toggle="tooltip" title="Delete" style={{marginLeft:'20%'}} className="btn btn-danger" onClick={()=>{deleteVehicle(params.row.id)}}><i className="fa fa-trash"></i></button>
             
@@ -203,9 +203,10 @@ function Vehicle_Master()
                           <input onChange={e=>onInputChange(e)} className="form-control" name="model" type="text" />
                       </div>
                   </div>
-                  <div className="field" style={{width:'100%', textAlign: 'center', marginTop: '20px'}}>
-                        <button className="btn btn-primary">Save</button>
-                  </div>
+                  <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                        <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <button className="btn btn-primary" type='reset'>Reset</button>
+                    </div>
               </form>
           </div><br />
     <div style={{ height: 500, width: '100%' }}>

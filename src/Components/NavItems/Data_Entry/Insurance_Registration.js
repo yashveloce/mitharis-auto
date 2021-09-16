@@ -34,8 +34,8 @@ mutation MyMutation($id: Int!) {
 `
 
 const INSERT_INSURANCE=gql`
-mutation MyMutation($customer: Int!, $from_date: date!, $insurance_amount: bigint!, $insurance_type: String!, $to_date: date!, $vehicle_no: String!) {
-  insert_insurance_one(object: {customer: $customer, from_date: $from_date, insurance_amount: $insurance_amount, insurance_type: $insurance_type, to_date: $to_date, vehicle_no: $vehicle_no}) {
+mutation MyMutation($customer: Int!, $from_date: date!, $insurance_amount: bigint!, $insurance_type: String!, $to_date: date!, $vehicle_no: String!,$timestamp:date!) {
+  insert_insurance_one(object: {customer: $customer, from_date: $from_date, insurance_amount: $insurance_amount, insurance_type: $insurance_type, to_date: $to_date, vehicle_no: $vehicle_no,timestamp:$timestamp}) {
     id
   }
 }
@@ -51,6 +51,11 @@ mutation MyMutation($id:Int!,$customer: Int!, $from_date: date!, $insurance_amou
 `
 function Insurance_Registration()
 {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '/' + mm + '/' + dd;
   const [showModal, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -78,7 +83,7 @@ function Insurance_Registration()
   const onFormSubmit=(e)=>{
     e.preventDefault();
     console.log(e.target);
-    insertInsuranceData({variables:{customer:insurance.customer,insurance_type:insurance.insurance_type,from_date:insurance.from_date,to_date:insurance.to_date,insurance_amount:insurance.insurance_amount,vehicle_no:insurance.vehicle_no}});
+    insertInsuranceData({variables:{customer:insurance.customer,insurance_type:insurance.insurance_type,from_date:insurance.from_date,to_date:insurance.to_date,insurance_amount:insurance.insurance_amount,vehicle_no:insurance.vehicle_no,timestamp:today}});
   }
   const editInsurance=(insurance_data)=>{
     setModalInsurance({
@@ -167,7 +172,7 @@ function Insurance_Registration()
         width: 300,
         renderCell: (params) => {
           return (
-            <div className="btn-group">
+            <div className="">
             <button data-toggle="tooltip" title="Edit" type="button" onClick={(e)=>editInsurance(params.row)} className="btn btn-warning"><i className="fa fa-pencil"></i></button>
             <button data-toggle="tooltip" onClick={()=>{deleteInsurance(params.row.id)}} title="Delete" style={{marginLeft:'20%'}} className="btn btn-danger"><i className="fa fa-trash"></i></button>
             
@@ -256,8 +261,9 @@ function Insurance_Registration()
                           <input onChange={(e)=>onInputChange(e)} className="form-control" name="insurance_type" type="text" />
                       </div>
                   </div>
-                  <div className="field" style={{width:'100%', textAlign: 'center', marginTop: '20px'}}>
-                        <button className="btn btn-primary">Save</button>
+                  <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                        <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <button className="btn btn-primary" type='reset'>Reset</button>
                   </div>
               </form>
           </div><br />
