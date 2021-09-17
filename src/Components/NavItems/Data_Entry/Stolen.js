@@ -38,14 +38,35 @@ mutation MyMutation($id:Int!){
 
 const StolenQuery = gql`
 subscription MySubscription {
-    stolen {
-      criminal_record
-      fine
+  stolen {
+    sellerBySeller {
+      name
       id
-      seller
-      vehicle_no
     }
+    seller
+    id
+    fine
+    criminal_record
+    vehicle_no
+  }
   } 
+`
+const SellerQuery = gql`
+query MyQuery {
+  seller {
+    address
+    adhaar
+    email
+    id
+    licence
+    mobile_no
+    name
+    occupation
+    pan
+    photo
+    vehicle_master
+  }
+}
 `
 
 function Stolen() {
@@ -80,6 +101,7 @@ function Stolen() {
   const [insertStolen, { stolenData }] = useMutation(INSERT_STOLEN);
   const [updateStolen, { updatedData }] = useMutation(UPDATE_STOLEN);
   const [deleteStolen, { deleteData }] = useMutation(DELETE_STOLEN);
+  const sellerquery = useQuery(SellerQuery);
   const { loading, error, data } = useSubscription(StolenQuery);
   // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
   //   fetchPolicy: 'network-only',
@@ -102,7 +124,7 @@ function Stolen() {
     deleteStolen({ variables: { id: id } })
   }
 
-  if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+  if (loading || sellerquery.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
   if (error) return `Error! ${error.message}`;
 
 
@@ -116,10 +138,12 @@ function Stolen() {
       hide: false,
     },
     {
-      field: 'seller',
-      headerName: 'Seller',
-      width: 150,
-      editable: false,
+      field: "seller",
+      headerName: "Seller Name",
+      width: 160,
+      valueGetter: (params) => {
+        return params.row.sellerBySeller.name;
+      }
     },
     {
       field: 'vehicle_no',
@@ -171,7 +195,13 @@ function Stolen() {
               </div>
               <div className="field">
                 <label>Seller</label>
-                <input defaultValue={modalSeller} className="form-control" name="seller" type="text" />
+                  {/* <input defaultValue={modalSeller} className="form-control" name="seller" type="text" /> */}
+                  <select defaultValue={modalSeller} className="form-control" name="seller">
+                  <option>Select Seller</option>
+                  {sellerquery.data.seller.map(sellerdata => (
+                    <option key={sellerdata.id} value={sellerdata.id}>{sellerdata.name}</option>
+                  ))}  
+                </select>
               </div>
               <div className="field">
                 <label>Vehicle No</label>
