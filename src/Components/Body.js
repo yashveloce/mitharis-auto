@@ -22,6 +22,7 @@ import Vehicle_Form from './NavItems/Data_Entry/Vehicle_Form'
 import Delivery_Note from "./NavItems/Data_Entry/Delivery_Note";
 import EnqGen from "./NavItems/Data_Entry/EnqGen";
 import VehicleCrud from './NavItems/Data_Entry/VehicleCrud';
+import EnquiryCrud from "./NavItems/Data_Entry/EnquiryCrud";
 
 const Body = () => {
   const history = useHistory();
@@ -52,6 +53,7 @@ history.push('/')
             <Route exact path ='/Data_Entry/Vehicle_Registration' component={Vehicle_Registration}/>
             <Route exact path ='/Data_Entry/Enquiry_Generation' component={Enquiry_Generation}/>
             <Route exact path ='/Data_Entry/Enquiry_Generation1' component={EnqGen}/>
+            <Route exact path ='/Data_Entry/Enquiry_Generation2' component={EnquiryCrud}/>
             <Route exact path ='/Data_Entry/Transactions' component={Transaction}/>
             <Route exact path ='/Data_Entry/Insurance_Registration' component={Insurance_Registration}/>
             <Route exact path ='/Data_Entry/RTO_Agent' component={RTO_Agent}/>

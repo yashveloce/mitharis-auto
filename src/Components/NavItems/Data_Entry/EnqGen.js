@@ -134,8 +134,6 @@ export default function EnqGen() {
     const [deleteVehicleData] = useMutation(DELETE_VEHICLE);
 
     const { loading, error, data } = useSubscription(VehicleQuery);
-
-
     if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
     if (error) return `Error! ${error.message}`;
 

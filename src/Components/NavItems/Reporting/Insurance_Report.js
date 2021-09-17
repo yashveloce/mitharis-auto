@@ -142,10 +142,6 @@ function Insurance_Report()
         <div style={{ marginRight: '70%', marginTop: '30px' }}>
             <button onClick={() =>exportPDF()} class="btn btn-primary" type='button'>Print PDF</button>
         </div>
-        <div>
-            <label>Search</label>
-            <input className="form-control" name="brand" type="text" />
-        </div>
     </div>
     <form className="form-group" onSubmit={e=>onFormSubmit(e)} style={{ marginTop: '50px' }}>
         <div className="row">

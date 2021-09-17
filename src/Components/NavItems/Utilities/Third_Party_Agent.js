@@ -11,6 +11,7 @@ import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Divider } from '@material-ui/core';
 
 const INSERT_AGENT=gql`
 mutation MyMutation2($mobile: String!, $name: String!) {
@@ -170,6 +171,8 @@ function Third_Party_Agent()
         </Modal.Footer>
       </Modal>
           <div className="col-md-12">
+              <h1 style={{ width: '100%', textAlign: 'center' }}>Third Party Agent Numbers</h1>
+              <Divider style={{ marginBottom: '10px', }} />
               <form className="form-group" onSubmit={e=>onFormSubmit(e)}>
                   <div className="row">
                       <div className="field col-md-6">

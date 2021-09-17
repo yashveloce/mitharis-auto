@@ -402,6 +402,9 @@ export default function Enquiry_Generation() {
 
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <Link to={`/Data_Entry/Enquiry_Generation2`} className="btn btn-success" style={{ marginRight: '50px' }}>
+                            Next
+                        </Link>
                         <button className="btn btn-primary" type='reset'>Reset</button>
                     </div>
                 </form>
@@ -415,9 +418,7 @@ export default function Enquiry_Generation() {
                     checkboxSelection={false}
                     disableSelectionOnClick
                 />
-        <Link to={`/Data_Entry/Enquiry_Generation1`} className="btn btn-success">
-          Next
-        </Link>
+
             </div>
 
         </div>

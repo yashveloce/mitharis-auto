@@ -33,7 +33,7 @@ function Vehicle_Registration() {
   const handleShow = () => setShow(true);
 
   const [id, setId] = useState('');
-  
+
   const INSERT_SELLER = gql`
   mutation insert_seller($address: String = "", $adhaar: String = "", $licence: String = "", $mobile_no: String = "", $name: String = "", $occupation: String = "", $pan: String = "", $email: String = "") {
     insert_seller(objects: {address: $address, adhaar: $adhaar, licence: $licence, mobile_no: $mobile_no, pan: $pan, name: $name, occupation: $occupation, email: $email}) {
@@ -54,7 +54,7 @@ function Vehicle_Registration() {
     licence: "",
     email: "",
   })
-  
+
   const onInputChange = (e) => {
     setSeller({ ...seller, [e.target.name]: e.target.value })
   }
@@ -63,7 +63,7 @@ function Vehicle_Registration() {
     e.preventDefault();
     insertSellersData({ variables: { address: seller.address, adhaar: seller.adhaar, licence: seller.licence, mobile_no: seller.mobile_no, pan: seller.pan, name: seller.name, occupation: seller.occupation, email: seller.email } });
   }
-  
+
   const [modalseller, setModalSeller] = useState({
     name: "",
     mobile_no: "",
@@ -74,21 +74,21 @@ function Vehicle_Registration() {
     licence: "",
     email: "",
   })
-  
+
   const onModalInputChange = (e) => {
     setModalSeller({ ...modalseller, [e.target.name]: e.target.value })
     console.log(modalseller)
   }
-  
+
   const deleteVehicle = (id) => {
     console.log(id);
     deleteVehicleData({ variables: { id: id } })
   }
-  
+
   const onModalFormSubmit = (e) => {
     e.preventDefault();
     console.log(modalseller);
-    updateVehicleData({ variables: { id: id,address: modalseller.address, adhaar: modalseller.adhaar, licence: modalseller.licence, mobile_no: modalseller.mobile_no, pan: modalseller.pan, name: modalseller.name, occupation: modalseller.occupation, email: modalseller.email } });
+    updateVehicleData({ variables: { id: id, address: modalseller.address, adhaar: modalseller.adhaar, licence: modalseller.licence, mobile_no: modalseller.mobile_no, pan: modalseller.pan, name: modalseller.name, occupation: modalseller.occupation, email: modalseller.email } });
     handleClose();
   }
   const editVehicle = (row) => {
@@ -107,7 +107,7 @@ function Vehicle_Registration() {
     handleShow();
   }
   const [updateVehicleData] = useMutation(UPDATE_VEHICLE);
-  
+
   const [deleteVehicleData] = useMutation(DELETE_VEHICLE);
 
   const SellerQuery = gql`
@@ -160,14 +160,14 @@ function Vehicle_Registration() {
       flex: 1,
       editable: false,
     },
-    
+
     // {
     //   field: 'pan',
     //   headerName: 'Pan Card Number',
     //   width: 150,
     //   editable: false,
     // },
-    
+
     // {
     //   field: 'occupation',
     //   headerName: 'Occupation',
@@ -181,7 +181,7 @@ function Vehicle_Registration() {
     //   width: 150,
     //   editable: false,
     // },
-    
+
     {
       field: 'email',
       headerName: 'Email',
@@ -189,7 +189,7 @@ function Vehicle_Registration() {
       editable: false,
     },
 
-    
+
     // {
     //   field: 'adhaar',
     //   headerName: 'Adhaar Card Number',
@@ -224,63 +224,63 @@ function Vehicle_Registration() {
         <Modal.Body>
           <div className="col-md-12">
             <form className="form-group" onSubmit={(e) => { onModalFormSubmit(e) }}>
-            <div className="row">
-            <div className="field col-md-6">
-              <label>Seller Name</label>
-              <input defaultValue={modalseller.name} onChange={onModalInputChange} className="form-control" name="name" type="text" placeholder='Enter Your Name' required/>
-            </div>
+              <div className="row">
+                <div className="field col-md-6">
+                  <label>Seller Name</label>
+                  <input defaultValue={modalseller.name} onChange={onModalInputChange} className="form-control" name="name" type="text" placeholder='Enter Your Name' required />
+                </div>
 
-            <div className="field col-md-6">
-              <label>Occupation</label>
-              <input defaultValue={modalseller.occupation} onChange={onModalInputChange} className="form-control" name="occupation" type="text" placeholder='Enter Your Occupation' required/>
-            </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>Contact Details</label>
-              <div style={{ display: 'flex' }}>
-                <input defaultValue={modalseller.mobile_no} onChange={onModalInputChange} className="form-control" name="mobile_no" type="text" placeholder='+91' style={{ width: '50%' }} required/>
-                <button className="btn btn-primary" style={{ margin: '0 20px' }} type='button'>Get OTP</button>
+                <div className="field col-md-6">
+                  <label>Occupation</label>
+                  <input defaultValue={modalseller.occupation} onChange={onModalInputChange} className="form-control" name="occupation" type="text" placeholder='Enter Your Occupation' required />
+                </div>
               </div>
-            </div>
+              <div className="row">
+                <div className="field col-md-6">
+                  <label>Contact Details</label>
+                  <div style={{ display: 'flex' }}>
+                    <input defaultValue={modalseller.mobile_no} onChange={onModalInputChange} className="form-control" name="mobile_no" type="text" placeholder='+91' style={{ width: '50%' }} required />
+                    <button className="btn btn-primary" style={{ margin: '0 20px' }} type='button'>Get OTP</button>
+                  </div>
+                </div>
 
-            <div className="field col-md-6">
-              <label>Enter OTP</label>
-              <input onChange={onModalInputChange} className="form-control" name="otp" type="text" placeholder='Enter Your OTP' />
-            </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>License Number</label>
-              <input defaultValue={modalseller.licence} onChange={onModalInputChange} className="form-control" name="licence" type="text" placeholder='Enter Your License Number' required/>
-            </div>
+                <div className="field col-md-6">
+                  <label>Enter OTP</label>
+                  <input onChange={onModalInputChange} className="form-control" name="otp" type="text" placeholder='Enter Your OTP' />
+                </div>
+              </div>
+              <div className="row">
+                <div className="field col-md-6">
+                  <label>License Number</label>
+                  <input defaultValue={modalseller.licence} onChange={onModalInputChange} className="form-control" name="licence" type="text" placeholder='Enter Your License Number' required />
+                </div>
 
-            <div className="field col-md-6">
-              <label>Pan Number</label>
-              <input defaultValue={modalseller.pan} onChange={onModalInputChange} className="form-control" name="pan" type="text" placeholder='Enter Your Pan Number' required/>
-            </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>Email</label>
-              <input defaultValue={modalseller.email} onChange={onModalInputChange} className="form-control" name="email" type="text" placeholder='Enter Your Email' required/>
-            </div>
+                <div className="field col-md-6">
+                  <label>Pan Number</label>
+                  <input defaultValue={modalseller.pan} onChange={onModalInputChange} className="form-control" name="pan" type="text" placeholder='Enter Your Pan Number' required />
+                </div>
+              </div>
+              <div className="row">
+                <div className="field col-md-6">
+                  <label>Email</label>
+                  <input defaultValue={modalseller.email} onChange={onModalInputChange} className="form-control" name="email" type="text" placeholder='Enter Your Email' required />
+                </div>
 
-            <div className="field col-md-6">
-              <label>Adhaar Number</label>
-              <input defaultValue={modalseller.adhaar} onChange={onModalInputChange} className="form-control" name="adhaar" type="text" placeholder='Enter Your Adhar Number' required/>
-            </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>Address</label>
-              <input defaultValue={modalseller.address} onChange={onModalInputChange} className="form-control" name="address" type="text" placeholder='Enter Your Address' required/>
-            </div>
-          </div>
-          <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
-                        <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
-                        <button className="btn btn-primary" type='reset'>Reset</button>
-                    </div>
+                <div className="field col-md-6">
+                  <label>Adhaar Number</label>
+                  <input defaultValue={modalseller.adhaar} onChange={onModalInputChange} className="form-control" name="adhaar" type="text" placeholder='Enter Your Adhar Number' required />
+                </div>
+              </div>
+              <div className="row">
+                <div className="field col-md-6">
+                  <label>Address</label>
+                  <input defaultValue={modalseller.address} onChange={onModalInputChange} className="form-control" name="address" type="text" placeholder='Enter Your Address' required />
+                </div>
+              </div>
+              <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                <button className="btn btn-primary" type='reset'>Reset</button>
+              </div>
             </form>
           </div>
         </Modal.Body>
@@ -298,19 +298,19 @@ function Vehicle_Registration() {
           <div className="row">
             <div className="field col-md-6">
               <label>Seller Name</label>
-              <input onChange={onInputChange} className="form-control" name="name" type="text" placeholder='Enter Your Name' required/>
+              <input onChange={onInputChange} className="form-control" name="name" type="text" placeholder='Enter Your Name' required />
             </div>
 
             <div className="field col-md-6">
               <label>Occupation</label>
-              <input onChange={onInputChange} className="form-control" name="occupation" type="text" placeholder='Enter Your Occupation' required/>
+              <input onChange={onInputChange} className="form-control" name="occupation" type="text" placeholder='Enter Your Occupation' required />
             </div>
           </div>
           <div className="row">
             <div className="field col-md-6">
               <label>Contact Details</label>
               <div style={{ display: 'flex' }}>
-                <input onChange={onInputChange} className="form-control" name="mobile_no" type="text" placeholder='+91' style={{ width: '50%' }} required/>
+                <input onChange={onInputChange} className="form-control" name="mobile_no" type="text" placeholder='+91' style={{ width: '50%' }} required />
                 <button className="btn btn-primary" style={{ margin: '0 20px' }} type='button'>Get OTP</button>
               </div>
             </div>
@@ -323,33 +323,37 @@ function Vehicle_Registration() {
           <div className="row">
             <div className="field col-md-6">
               <label>License Number</label>
-              <input onChange={onInputChange} className="form-control" name="licence" type="text" placeholder='Enter Your License Number' required/>
+              <input onChange={onInputChange} className="form-control" name="licence" type="text" placeholder='Enter Your License Number' required />
             </div>
 
             <div className="field col-md-6">
               <label>Pan Number</label>
-              <input onChange={onInputChange} className="form-control" name="pan" type="text" placeholder='Enter Your Pan Number' required/>
+              <input onChange={onInputChange} className="form-control" name="pan" type="text" placeholder='Enter Your Pan Number' required />
             </div>
           </div>
           <div className="row">
             <div className="field col-md-6">
               <label>Email</label>
-              <input onChange={onInputChange} className="form-control" name="email" type="text" placeholder='Enter Your Email' required/>
+              <input onChange={onInputChange} className="form-control" name="email" type="text" placeholder='Enter Your Email' required />
             </div>
 
             <div className="field col-md-6">
               <label>Adhaar Number</label>
-              <input onChange={onInputChange} className="form-control" name="adhaar" type="text" placeholder='Enter Your Adhar Number' required/>
+              <input onChange={onInputChange} className="form-control" name="adhaar" type="text" placeholder='Enter Your Adhar Number' required />
             </div>
           </div>
           <div className="row">
             <div className="field col-md-6">
               <label>Address</label>
-              <input onChange={onInputChange} className="form-control" name="address" type="text" placeholder='Enter Your Address' required/>
+              <input onChange={onInputChange} className="form-control" name="address" type="text" placeholder='Enter Your Address' required />
             </div>
           </div>
           <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
             <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+
+            <Link to={`/Data_Entry/Vehicle_Registration2`} className="btn btn-success" style={{ marginRight: '50px' }}>
+              Next
+            </Link>
             <button className="btn btn-primary" type='reset'>Reset</button>
           </div>
         </form>
@@ -366,9 +370,6 @@ function Vehicle_Registration() {
           // }}
           disableSelectionOnClick
         />
-        <Link to={`/Data_Entry/Vehicle_Registration2`} className="btn btn-success">
-          Next
-        </Link>
       </div>
     </div>
   )

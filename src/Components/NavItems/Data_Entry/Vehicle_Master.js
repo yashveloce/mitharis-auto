@@ -11,6 +11,7 @@ import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Divider } from '@material-ui/core';
 
 const VehicleMasterQuery=gql`
 subscription MySubscription {
@@ -191,6 +192,8 @@ function Vehicle_Master()
         </Modal.Footer>
       </Modal>
           <div className="col-md-12">
+              <h1 style={{ width: '100%', textAlign: 'center' }}>Vehicle Master</h1>
+              <Divider style={{ marginBottom: '10px', }} />
               <form onSubmit={(e)=>{onFormSubmit(e)}} className="form-group">
                   <div className="row">
                       <div className="field col-md-6">

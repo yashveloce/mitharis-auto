@@ -99,7 +99,7 @@ function RTO_Agent() {
                 payable_amount: paperwork.payable_amount,
                 rto_id: paperwork.rto_id,
                 seller_id: paperwork.seller_id,
-                timestamp:today
+                timestamp: today
             }
         });
     }
@@ -263,34 +263,37 @@ function RTO_Agent() {
                 </Modal.Footer>
             </Modal>
             <div className="col-md-12">
-            <form  onSubmit={(e)=>{onFormSubmit(e)}} className="form-group">
-                  <div className="row">
-                      <div className="field col-md-6">
-                          <label>Seller</label>
-                          <input onChange={e=>onInputChange(e)} className="form-control" name="seller_id" type="text" />
-                      </div>
-                      <div className="field col-md-6">
-                          <label>Amount Pending</label>
-                          <input onChange={e=>onInputChange(e)} className="form-control" name="amount_pending" type="text" />
-                      </div>
-                  </div>
-                  <div className="row">
-                      <div className="field col-md-6">
-                          <label>Payable Amount</label>
-                          <input onChange={e=>onInputChange(e)} className="form-control" name="payable_amount" type="text" />
-                      </div>
-                      <div className="field col-md-6">
-                          <label>Amount Paid</label>
-                          <input onChange={e=>onInputChange(e)} className="form-control" name="amount_paid" type="text" />
-                      </div>
-                  </div>
-                  <div className="row">
-                      <div className="field col-md-6">
-                          <label>RTO</label>
-                          <input onChange={e=>onInputChange(e)} className="form-control" name="rto_id" type="text" />
-                      </div>
-                      
-                  </div>
+                <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
+                    <div className="row">
+                        <h1 style={{ width: '100%', textAlign: 'center' }}>RTO Agent</h1>
+                        <Divider style={{ marginBottom: '10px', }} />
+
+                        <div className="field col-md-6">
+                            <label>Seller</label>
+                            <input onChange={e => onInputChange(e)} className="form-control" name="seller_id" type="text" />
+                        </div>
+                        <div className="field col-md-6">
+                            <label>Amount Pending</label>
+                            <input onChange={e => onInputChange(e)} className="form-control" name="amount_pending" type="text" />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="field col-md-6">
+                            <label>Payable Amount</label>
+                            <input onChange={e => onInputChange(e)} className="form-control" name="payable_amount" type="text" />
+                        </div>
+                        <div className="field col-md-6">
+                            <label>Amount Paid</label>
+                            <input onChange={e => onInputChange(e)} className="form-control" name="amount_paid" type="text" />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="field col-md-6">
+                            <label>RTO</label>
+                            <input onChange={e => onInputChange(e)} className="form-control" name="rto_id" type="text" />
+                        </div>
+
+                    </div>
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
                         <button className="btn btn-primary" type='reset'>Reset</button>
@@ -304,7 +307,7 @@ function RTO_Agent() {
                     pageSize={10}
                     rowsPerPageOptions={[10]}
                     checkboxSelection={false}
-                    
+
                     disableSelectionOnClick
                 />
             </div>
