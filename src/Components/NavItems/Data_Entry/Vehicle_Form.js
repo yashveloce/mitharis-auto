@@ -4,11 +4,11 @@ import {
   useMutation,
   useSubscription,
 } from "@apollo/client";
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const VehicleQuery = gql`
 subscription MySubscription {

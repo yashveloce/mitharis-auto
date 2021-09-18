@@ -145,7 +145,6 @@ function Transaction() {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(modalTransaction)
     insertTransactionData({ variables: { seller: transaction.seller, buyer: transaction.buyer, seller_commission: transaction.seller_commission, buyer_commission: transaction.buyer_commission, advance_amount: transaction.advance_amount, amount_paid: transaction.amount_paid, pending_amount: transaction.pending_amount, rto_commission: transaction.rto_commission, reg_date: transaction.reg_date, transaction_date: transaction.transaction_date, vehicle: transaction.vehicle } });
   }
   const onModalFormSubmit = (e) => {
@@ -175,9 +174,9 @@ function Transaction() {
     console.log(id);
     deleteTransactionData({ variables: { id: id } })
   }
-  const [deleteTransactionData, { deletedData }] = useMutation(DELETE_TRANSACTION);
-  const [updateTransactionData, { updatedData }] = useMutation(UPDATE_TRANSACTION);
-  const [insertTransactionData, { transactionData }] = useMutation(INSERT_TRANSACTION);
+  const [deleteTransactionData] = useMutation(DELETE_TRANSACTION);
+  const [updateTransactionData] = useMutation(UPDATE_TRANSACTION);
+  const [insertTransactionData] = useMutation(INSERT_TRANSACTION);
   const stock = useQuery(StockQuery);
   const seller = useQuery(SellerQuery);
   const buyer = useQuery(BuyerQuery);
@@ -302,8 +301,8 @@ function Transaction() {
       }
     },
   ];
-  //console.log(stock.data.stock);
-  //console.log(data.transaction);
+  console.log(stock.data.stock);
+  console.log(data.transaction);
   const rows = data.transaction;
 
   return (
@@ -321,23 +320,11 @@ function Transaction() {
               </div>
               <div className="field">
                 <label>Seller</label>
-                {/* <input onChange={(e) => { onModalInputChange(e) }} defaultValue={modalTransaction.seller} className="form-control" name="seller" type="text" /> */}
-                <select defaultValue={modalTransaction.seller} onChange={(e) => onModalInputChange(e)} className="form-control" name="seller">
-                <option>Select Seller</option>
-                {seller.data.seller.map(sellerdata => (
-                  <option key={sellerdata.id} value={sellerdata.id}>{sellerdata.name}</option>
-                ))}  
-              </select>
+                <input onChange={(e) => { onModalInputChange(e) }} defaultValue={modalTransaction.seller} className="form-control" name="seller" type="text" />
               </div>
               <div className="field">
                 <label>Buyer</label>
-                {/* <input onChange={(e) => { onModalInputChange(e) }} defaultValue={modalTransaction.buyer} className="form-control" name="buyer" type="text" /> */}
-                <select defaultValue={modalTransaction.buyer} onChange={(e) => onModalInputChange(e)} className="form-control" name="buyer">
-                <option>Select Buyer</option>
-                {buyer.data.buyer.map(buyerdata => (
-                  <option key={buyerdata.id} value={buyerdata.id}>{buyerdata.name}</option>
-                ))}  
-              </select>
+                <input onChange={(e) => { onModalInputChange(e) }} defaultValue={modalTransaction.buyer} className="form-control" name="buyer" type="text" />
               </div>
               <div className="field">
                 <label>Seller Commission</label>
@@ -374,7 +361,7 @@ function Transaction() {
               </div>
               <div className="field">
                 <label>Vehicle</label>
-                <select defaultValue={modalTransaction.vehicle} onChange={(e) => { onModalInputChange(e) }} className="form-control" name="vehicle">
+                <select onChange={(e) => { onModalInputChange(e) }} className="form-control">
                   <option>Select Vehicle</option>
                   {stock.data.stock.map(vehicle => (
           
@@ -399,7 +386,7 @@ function Transaction() {
         <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
           <div className="row">
 
-            <h1 style={{ width: '100%', textAlign: 'center' }}>Transaction</h1>
+          <h2 style={{ textAlign: 'center', fontWeight: 'bold', fontFamily: 'serif', }}>Transaction</h2>
             <Divider style={{ marginBottom: '10px', }} />
             <div className="field col-md-6">
               <label>Seller</label>

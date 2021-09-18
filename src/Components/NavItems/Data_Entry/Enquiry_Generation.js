@@ -3,7 +3,7 @@ import { CircularProgress, Divider } from '@material-ui/core';
 import { gql, useMutation, useSubscription } from '@apollo/client';
 import { Modal, Button } from "react-bootstrap";
 import { DataGrid } from '@material-ui/data-grid';
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const VehicleQuery = gql`
 subscription MySubscription {

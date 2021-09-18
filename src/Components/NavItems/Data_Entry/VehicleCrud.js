@@ -3,17 +3,16 @@ import {
   gql,
   useMutation,
   useSubscription,
-  useQuery,
 } from "@apollo/client";
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const INSERT_STOCK = gql`
-mutation MyMutation($accidental: String!, $average: Int!, $bank: Int!, $bank_loan: Boolean!, $body_color: String!, $body_type: String!,  $chess_no: String!, $engine_displacement: String!, $engine_no: String!, $expected_price: bigint!, $extra_keys: Boolean!, $fuel_type: String!, $hp: Int!, $installment: String!, $insurance: String!, $kms_driven: bigint!, $loan_amount: bigint!, $no_of_owners: Int!, $noc: String!, $owner: Int!, $passing: String!, $registered: String!, $selling_price: bigint!, $stepny: Boolean!, $taxposition: String!, $transfer: String!, $transmission: String!, $vehicle_master: Int!, $vehicle_no: String!) {
-    insert_stock_one(object: {accidental: $accidental, average: $average, bank: $bank, bank_loan: $bank_loan, body_color: $body_color, body_type: $body_type,  chess_no: $chess_no, engine_displacement: $engine_displacement, engine_no: $engine_no, expected_price: $expected_price, extra_keys: $extra_keys, fuel_type: $fuel_type, hp: $hp, installment: $installment, insurance: $insurance, kms_driven: $kms_driven, loan_amount: $loan_amount, no_of_owners: $no_of_owners, noc: $noc, owner: $owner, passing: $passing, registered: $registered, selling_price: $selling_price, stepny: $stepny, taxposition: $taxposition, transfer: $transfer, transmission: $transmission, vehicle_master: $vehicle_master, vehicle_no: $vehicle_no}) {
+mutation MyMutation($accidental: String!, $average: Int!, $bank: Int!, $bank_loan: Boolean!, $body_color: String!, $body_type: String!, $buyer: Int!, $chess_no: String!, $engine_displacement: String!, $engine_no: String!, $expected_price: bigint!, $extra_keys: Boolean!, $fuel_type: String!, $hp: Int!, $installment: String!, $insurance: String!, $kms_driven: bigint!, $loan_amount: bigint!, $no_of_owners: Int!, $noc: String!, $owner: Int!, $passing: String!, $registered: String!, $selling_price: bigint!, $stepny: Boolean!, $taxposition: String!, $transfer: String!, $transmission: String!, $vehicle_master: Int!, $vehicle_no: String!) {
+    insert_stock_one(object: {accidental: $accidental, average: $average, bank: $bank, bank_loan: $bank_loan, body_color: $body_color, body_type: $body_type, buyer: $buyer, chess_no: $chess_no, engine_displacement: $engine_displacement, engine_no: $engine_no, expected_price: $expected_price, extra_keys: $extra_keys, fuel_type: $fuel_type, hp: $hp, installment: $installment, insurance: $insurance, kms_driven: $kms_driven, loan_amount: $loan_amount, no_of_owners: $no_of_owners, noc: $noc, owner: $owner, passing: $passing, registered: $registered, selling_price: $selling_price, stepny: $stepny, taxposition: $taxposition, transfer: $transfer, transmission: $transmission, vehicle_master: $vehicle_master, vehicle_no: $vehicle_no}) {
       id
     }
   }
@@ -70,33 +69,6 @@ mutation MyMutation($id: Int!) {
     id
   }
 }
-`
-const VEHICLE_QUERY=gql`
-query MyQuery {
-  vehicle_master {
-    id
-    model
-    brand
-  }
-}
-`
-const SELLER_QUERY=gql`
-query MyQuery {
-  seller {
-    id
-    name
-  }
-}
-`
-const BANK_QUERY=gql`
-query MyQuery {
-  bank_master {
-    bank_name
-    branch_name
-    id
-    ifsc_code
-  }
-}
 
 `
 function VehicleCrud() {
@@ -104,7 +76,6 @@ function VehicleCrud() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const passing_year = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
-  const transmission = ['Manual','Automatic']
   const [stock, setStock] = useState({
     vehicle_master: '',
     selling_price: '',
@@ -127,7 +98,7 @@ function VehicleCrud() {
     accidental: '',
     registered: '',
     taxposition: '',
-    //buyer: '',
+    buyer: '',
     expected_price: '',
     bank_loan: '',
     installment: '',
@@ -180,7 +151,7 @@ function VehicleCrud() {
   }
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(stock);
+    //console.log(stock);
     insertStockData({
       variables: {
         vehicle_master: stock.vehicle_master,
@@ -204,7 +175,7 @@ function VehicleCrud() {
         accidental: stock.accidental,
         registered: stock.registered,
         taxposition: stock.taxposition,
-        //buyer: stock.buyer,
+        buyer: stock.buyer,
         expected_price: stock.expected_price,
         bank_loan: stock.bank_loan,
         installment: stock.installment,
@@ -300,19 +271,16 @@ function VehicleCrud() {
   const deleteStock = (id) => {
     deleteStockData({ variables: { id: id } })
   }
-  const vehicledata=useQuery(VEHICLE_QUERY);
-  const sellerdata=useQuery(SELLER_QUERY);
-  const bankdata=useQuery(BANK_QUERY);
-  const [insertStockData, { insertData }] = useMutation(INSERT_STOCK);
-  const [upateStockData, { updateData }] = useMutation(UPDATE_STOCK);
-  const [deleteStockData, { deleteData }] = useMutation(DELETE_STOCK);
+  const [insertStockData] = useMutation(INSERT_STOCK);
+  const [upateStockData] = useMutation(UPDATE_STOCK);
+  const [deleteStockData] = useMutation(DELETE_STOCK);
   const { loading, error, data } = useSubscription(READ_STOCK);
   // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
   //   fetchPolicy: 'network-only',
   // });
 
 
-  if (loading || vehicledata.loading || sellerdata.loading || bankdata.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+  if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
   if (error) return `Error! ${error.message}`;
   const columns = [
     {
@@ -555,13 +523,7 @@ function VehicleCrud() {
 
                   <div className="field col-md-6">
                     <label>Vehicle Master</label>
-                    {/* <input className="form-control" defaultValue={modalStock.vehicle_master} onChange={e => { onModalInputChange(e) }} name="vehicle_master" type="text" required /> */}
-                    <select defaultValue={modalStock.vehicle_master} className="form-control" name="vehicle_master">
-                      <option>Select Vehicle</option>
-                      {vehicledata.data.vehicle_master.map(vehicle => (
-                        <option key={vehicle.id} value={vehicle.id}>{vehicle.model}</option>
-                      ))}  
-                    </select>
+                    <input className="form-control" defaultValue={modalStock.vehicle_master} onChange={e => { onModalInputChange(e) }} name="vehicle_master" type="text" required />
                   </div>
                 </div>
                 <div className="row">
@@ -589,13 +551,7 @@ function VehicleCrud() {
                 <div className="row">
                   <div className="field col-md-6">
                     <label>Owner</label>
-                    {/* <input className="form-control" defaultValue={modalStock.owner} onChange={e => { onModalInputChange(e) }} name="owner" type="text" required /> */}
-                    <select defaultValue={modalStock.owner} className="form-control" name="owner">
-                      <option>Select Owner</option>
-                      {sellerdata.data.seller.map(seller => (
-                        <option key={seller.id} value={seller.id}>{seller.model}</option>
-                      ))}  
-                    </select>
+                    <input className="form-control" defaultValue={modalStock.owner} onChange={e => { onModalInputChange(e) }} name="owner" type="text" required />
                   </div>
 
                   <div className="field col-md-6">
@@ -751,13 +707,7 @@ function VehicleCrud() {
               </div>
               <div className="field col-md-6">
                 <label>Vehicle Master</label>
-                {/* <input className="form-control" onChange={e => onInputChange(e)} name="vehicle_master" type="text" required /> */}
-                <select onChange={e => onInputChange(e)} className="form-control" name="vehicle_master">
-                      <option>Select Vehicle</option>
-                      {vehicledata.data.vehicle_master.map(vehicle => (
-                        <option key={vehicle.id} value={vehicle.id}>{vehicle.model}</option>
-                      ))}  
-                </select>
+                <input className="form-control" onChange={e => onInputChange(e)} name="vehicle_master" type="text" required />
               </div>
             </div>
             <div className="row">
@@ -767,13 +717,7 @@ function VehicleCrud() {
               </div>
               <div className="field col-md-6">
                 <label>Bank</label>
-                {/* <input className="form-control" onChange={e => onInputChange(e)} name="bank" type="text" required /> */}
-                <select className="form-control" onChange={e => onInputChange(e)} name="bank">
-                  <option>Select Bank</option>
-                  {bankdata.data.bank_master.map(bank => (
-                    <option key={bank.id} value={bank.id}>{bank.bank_name}</option>
-                  ))}
-                </select>
+                <input className="form-control" onChange={e => onInputChange(e)} name="bank" type="text" placeholder='Enter Your HP' required />
               </div>
             </div>
 
@@ -815,7 +759,7 @@ function VehicleCrud() {
             <div className="row">
               <div className="field col-md-6">
                 <label>Number Of Owners</label>
-                <input className="form-control" onChange={e => onInputChange(e)} name="no_of_owners" type="text" required />
+                <input className="form-control" onChange={e => onInputChange(e)} name="no_of_owners" type="text" placeholder='Enter Your Number Of Owners' required />
               </div>
               <div className="field col-md-6">
                 <label>Passing Year</label>
@@ -835,13 +779,7 @@ function VehicleCrud() {
               </div>
               <div className="field col-md-6">
                 <label>Transmission</label>
-                {/* <input className="form-control" onChange={e => onInputChange(e)} name="transmission" type="text" required /> */}
-                <select className="form-control" onChange={e => onInputChange(e)} name="transmission">
-                  <option>Select Transmission</option>
-                  {transmission.map(transmission => (
-                    <option key={transmission} value={transmission}>{transmission}</option>
-                  ))}
-                </select>
+                <input className="form-control" onChange={e => onInputChange(e)} name="transmission" type="text" required />
               </div>
             </div>
             <div className="row">
@@ -917,18 +855,12 @@ function VehicleCrud() {
             <div className="row">
               <div className="field col-md-6">
                 <label>Owner</label>
-                {/* <input className="form-control" onChange={e => onInputChange(e)} name="owner" type="text" required /> */}
-                <select onChange={e => onInputChange(e)} className="form-control" name="owner">
-                  <option>Select Owner</option>
-                    {sellerdata.data.seller.map(seller => (
-                      <option key={seller.id} value={seller.id}>{seller.name}</option>
-                    ))}  
-                </select>
+                <input className="form-control" onChange={e => onInputChange(e)} name="owner" type="text" required />
               </div>
-              {/* <div className="field col-md-6">
+              <div className="field col-md-6">
                 <label>Buyer</label>
                 <input className="form-control" onChange={e => onInputChange(e)} name="buyer" type="text" required />
-              </div> */}
+              </div>
             </div>
             <div className="row">
               <div className="field col-md-6">

@@ -3,9 +3,8 @@ import {
     gql,
     useMutation,
     useSubscription,
-    useQuery
 } from "@apollo/client";
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
 //import 'bootstrap/dist/css/bootstrap.css';
@@ -14,50 +13,13 @@ import { Divider } from '@material-ui/core';
 
 const PaperWorkQuery = gql`
 subscription MySubscription {
-    paperwork {
-      id
-      payable_amount
-      amount_pending
-      amount_paid
-      rto_id
-      seller_id
-      sellerBySeller {
-        id
-        name
-      }
-      rto_agent_master {
-        rto_name
-      }
-    }
-  }
-  
-`
-
-const RtoQuery = gql`
-query MyQuery {
-    rto_agent_master {
-      id
-      rto_mobile
-      rto_name
-    }
-  }
-`
-
-
-const SellerQuery = gql`
-query MyQuery {
-  seller {
-    address
-    adhaar
-    email
+  paperwork {
+    amount_paid
+    amount_pending
     id
-    licence
-    mobile_no
-    name
-    occupation
-    pan
-    photo
-    vehicle_master
+    payable_amount
+    rto_id
+    seller_id
   }
 }
 `
@@ -121,7 +83,6 @@ function RTO_Agent() {
         seller_id: '',
     })
     const onInputChange = (e) => {
-        console.log(paperwork)
         setPaperwork({ ...paperwork, [e.target.name]: e.target.value })
     }
     const onModalInputChange = (e) => {
@@ -149,7 +110,6 @@ function RTO_Agent() {
     const onModalFormSubmit = (e) => {
         e.preventDefault();
         console.log(id);
-        console.log(updatedPaperwork);
         updatePaperwork({
             variables: {
                 id: id,
@@ -177,8 +137,6 @@ function RTO_Agent() {
         //loadVehicle({ variables: { id:id } });
         //console.log(data3);
     }
-    const seller = useQuery(SellerQuery);
-    const rto = useQuery(RtoQuery);
     const [updatePaperwork] = useMutation(UPDATE_PAPERWORK);
     const [insertVehicleData] = useMutation(INSERT_PAPERWORK);
     const [deleteVehicleData] = useMutation(DELETE_VEHICLE);
@@ -189,7 +147,7 @@ function RTO_Agent() {
     // // });
 
 
-    if (loading || seller.loading || rto.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+    if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
     if (error) return `Error! ${error.message}`;
 
     //console.log(data3)
@@ -224,27 +182,17 @@ function RTO_Agent() {
             editable: false,
         },
 
-        // {
-        //     field: 'rto_id',
-        //     headerName: 'RTO Agent ID',
-        //     width: 130,
-        //     editable: false,
-        // },
         {
-            field: "rto_id",
-            headerName: "RTO Name",
-            width: 160,
-            valueGetter: (params) => {
-                return params.row.rto_agent_master.rto_name;
-            }
+            field: 'rto_id',
+            headerName: 'RTO Agent ID',
+            width: 130,
+            editable: false,
         },
         {
             field: 'seller_id',
             headerName: 'Seller Id',
             width: 150,
-            valueGetter: (params) => {
-                return params.row.sellerBySeller.name;
-            }
+            editable: false,
         },
         {
             field: 'action',
@@ -265,10 +213,10 @@ function RTO_Agent() {
     //console.log(data3);
     // const rows = data.vehicle_master;
 
-    // pdf generation function
-    const printPdf = (e) => {
-        e.preventDefault();
-    }
+    // // pdf generation function
+    // const printPdf = (e) => {
+    //     e.preventDefault();
+    // }
 
     return (
         <div className="container">
@@ -292,24 +240,12 @@ function RTO_Agent() {
                                 <input defaultValue={updatedPaperwork.payable_amount} onChange={(e) => { onModalInputChange(e) }} className="form-control" name="payable_amount" type="text" />
                             </div>
                             <div className="field">
-                                <label>RTO Agent</label>
-                                {/* <input defaultValue={updatedPaperwork.rto_id} onChange={(e) => { onModalInputChange(e) }} className="form-control" name="rto_id" type="text" /> */}
-                                <select defaultValue={updatedPaperwork.rto_id} onChange={e => onModalInputChange(e)} className="form-control" name="rto_id">
-                                    <option>Select RTO</option>
-                                    {rto.data.rto_agent_master.map(rtodata => (
-                                        <option key={rtodata.id} value={rtodata.id}>{rtodata.rto_name}</option>
-                                    ))}
-                                </select>
+                                <label>RTO Agent ID</label>
+                                <input defaultValue={updatedPaperwork.rto_id} onChange={(e) => { onModalInputChange(e) }} className="form-control" name="rto_id" type="text" />
                             </div>
                             <div className="field">
-                                <label>Seller</label>
-                                {/* <input defaultValue={updatedPaperwork.seller_id} onChange={(e) => { onModalInputChange(e) }} className="form-control" name="seller_id" type="text" /> */}
-                                <select defaultValue={updatedPaperwork.seller_id} onChange={e => onModalInputChange(e)} className="form-control" name="seller_id">
-                                    <option>Select Seller</option>
-                                    {seller.data.seller.map(seller => (
-                                        <option key={seller.id} value={seller.id}>{seller.name}</option>
-                                    ))}
-                                </select>
+                                <label>Seller ID</label>
+                                <input defaultValue={updatedPaperwork.seller_id} onChange={(e) => { onModalInputChange(e) }} className="form-control" name="seller_id" type="text" />
                             </div>
 
                             <div className="field">
@@ -329,18 +265,12 @@ function RTO_Agent() {
             <div className="col-md-12">
                 <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
                     <div className="row">
-                        <h1 style={{ width: '100%', textAlign: 'center' }}>RTO Agent</h1>
+                    <h2 style={{ textAlign: 'center', fontWeight: 'bold', fontFamily: 'serif', }}>RTO Agent</h2>
                         <Divider style={{ marginBottom: '10px', }} />
 
                         <div className="field col-md-6">
                             <label>Seller</label>
-                            {/* <input onChange={e => onInputChange(e)} className="form-control" name="seller_id" type="text" /> */}
-                            <select onChange={e => onInputChange(e)} className="form-control" name="seller_id">
-                                <option>Select Seller</option>
-                                {seller.data.seller.map(seller => (
-                                    <option key={seller.id} value={seller.id}>{seller.name}</option>
-                                ))}
-                            </select>
+                            <input onChange={e => onInputChange(e)} className="form-control" name="seller_id" type="text" />
                         </div>
                         <div className="field col-md-6">
                             <label>Amount Pending</label>
@@ -360,13 +290,7 @@ function RTO_Agent() {
                     <div className="row">
                         <div className="field col-md-6">
                             <label>RTO</label>
-                            {/* <input onChange={e => onInputChange(e)} className="form-control" name="rto_id" type="text" /> */}
-                            <select onChange={e => onInputChange(e)} className="form-control" name="seller_id">
-                                <option>Select RTO</option>
-                                {rto.data.rto_agent_master.map(rtodata => (
-                                    <option key={rtodata.id} value={rtodata.id}>{rtodata.rto_name}</option>
-                                ))}
-                            </select>
+                            <input onChange={e => onInputChange(e)} className="form-control" name="rto_id" type="text" />
                         </div>
 
                     </div>

@@ -1,12 +1,12 @@
 import React,{useState} from 'react';
 import {
-    useQuery,
+    // useQuery,
     gql,
     useMutation,
     useSubscription,
-    useLazyQuery
+    // useLazyQuery
   } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
@@ -94,9 +94,9 @@ function Third_Party_Agent()
     const deleteAgent=(id)=>{
         deleteAgentData({variables:{id:id}})
     }
-    const [deleteAgentData,{deleteData}]=useMutation(DELETE_AGENT);
+    const [deleteAgentData]=useMutation(DELETE_AGENT);
     const [updateAgentData,{updateData}]=useMutation(UPDATE_AGENT);
-    const [insertAgentData,{insertData}]=useMutation(INSERT_AGENT);
+    const [insertAgentData]=useMutation(INSERT_AGENT);
     const { loading, error, data } = useSubscription(AgentQuery);
     if (loading) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;
     if (error) return `Error! ${error.message}`;
@@ -171,9 +171,10 @@ function Third_Party_Agent()
         </Modal.Footer>
       </Modal>
           <div className="col-md-12">
-              <h1 style={{ width: '100%', textAlign: 'center' }}>Third Party Agent Numbers</h1>
+          <h2 style={{ textAlign: 'center', fontWeight: 'bold', fontFamily: 'serif', }}>Third Party Agent Numbers</h2>
               <Divider style={{ marginBottom: '10px', }} />
               <form className="form-group" onSubmit={e=>onFormSubmit(e)}>
+                  
                   <div className="row">
                       <div className="field col-md-6">
                           <label>Agent Name</label>

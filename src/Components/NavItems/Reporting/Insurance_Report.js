@@ -1,15 +1,15 @@
 import React,{useState} from 'react';
 import {
-    useQuery,
+    // useQuery,
     gql,
-    useMutation,
-    useSubscription,
+    // useMutation,
+    // useSubscription,
     useLazyQuery
   } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid,GridToolbar } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
-import { Modal, Button } from "react-bootstrap";
+// import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
 import jsPDF from "jspdf";
@@ -135,7 +135,7 @@ function Insurance_Report()
       <div className="container">
         
           <div className="col-md-12">
-          <h1 style={{ width: '100%', textAlign: 'center' }}>Insurance Report</h1>
+          <h2 style={{ textAlign: 'center', fontWeight: 'bold', fontFamily: 'serif', }}>Insurance Report</h2>
     <Divider />
 
     <div className="field" style={{ display: 'flex' }}>
@@ -144,16 +144,31 @@ function Insurance_Report()
         </div>
     </div>
     <form className="form-group" onSubmit={e=>onFormSubmit(e)} style={{ marginTop: '50px' }}>
-        <div className="row">
-            <div className="field col-md-6">
-                <label>From</label>
-                <input className="form-control" onChange={e=>{onInputChange(e)}} name="from" type="date" />
-            </div>
+    <div className="row">
+          <div className="field col-md-6">
 
-            <div className="field col-md-6">
-                <label>To</label>
-                <input className="form-control" onChange={e=>{onInputChange(e)}} name="to" type="date" />
+            <div className='row'>
+              <div className='col-md-2'>
+                <label>From</label>
+              </div>
+              <div className='col-md-10'>
+                <input className="form-control" onChange={e => { onInputChange(e) }} name="from" type="date" />
+
+              </div>
             </div>
+          </div>
+
+          <div className="field col-md-6">
+            <div className='row'>
+              <div className='col-md-1'>
+                <label>To</label>
+              </div>
+              <div className='col-md-11'>
+                <input className="form-control" onChange={e => { onInputChange(e) }} name="to" type="date" />
+
+              </div>
+            </div>
+          </div>
         </div>
         <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
             <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>

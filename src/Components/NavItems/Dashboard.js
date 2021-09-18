@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+//import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import {
   gql,
-  useMutation,
+//   useMutation,
   useSubscription,
 } from "@apollo/client";
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
-import { Modal, Button } from "react-bootstrap";
+import { DataGrid } from '@material-ui/data-grid';
+// import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Divider } from '@material-ui/core';
-import { Switch, Route, Link } from "react-router-dom";
+import { AccessTime, AccountBalance, EventAvailable } from '@material-ui/icons';
+// import { Divider } from '@material-ui/core';
+// import { Switch, Route, Link } from "react-router-dom";
 const VehicleQuery = gql`subscription MySubscription {
     office_receipt(distinct_on: id) {
       budget_from
@@ -89,25 +91,19 @@ export default function Dashboard() {
     const rows = data.office_receipt;
     return (
         <div className="container">
-            <h1>
-                Dashboard
-            </h1>
             <div className="row">
-                <div className="card bg-primary text-white col-md-3">
-                    <div className="card-header">Cars Sold Till Date</div>
-                    <div className="card-body">254</div>
+            <div className="card text-white col-md-3" style={{background: '#17a2b8', marginLeft:'2%', width:'30%', marginBottom:'2%', marginTop:'2%'}} >
+            
+                    <div className="card-header" >Cars Sold Till Date <AccessTime  style={{marginLeft:'17%',fontSize: '200%'}}/> </div>
+                    <div className="card-body" style={{textAlign:'center'}}>254</div>
                 </div>
-                <div className="card bg-success text-white col-md-3">
-                    <div className="card-header">Cars Available</div>
-                    <div className="card-body">24</div>
+                <div className="card text-white col-md-3" style={{background: '#28a745', marginLeft:'2%', width:'30%', marginBottom:'2%', marginTop:'2%'}}>
+                    <div className="card-header">Cars Available <EventAvailable style={{marginLeft:'32%',fontSize: '200%'}}/> </div>
+                    <div className="card-body"  style={{textAlign:'center'}}>24</div>
                 </div>
-                <div className="card bg-danger text-white col-md-3">
-                    <div className="card-header">Total Profit</div>
-                    <div className="card-body">254444</div>
-                </div>
-                <div className="card bg-warning text-white col-md-3">
-                    <div className="card-header">Primary card</div>
-                    <div className="card-body">Data</div>
+                <div className="card bg-danger text-white col-md-3"style={{background: '#ffc107 ', marginLeft:'2%', width:'30%', marginBottom:'2%', marginTop:'2%'}}>
+                    <div className="card-header">Total Profit <AccountBalance style={{marginLeft:'40%',fontSize: '200%'}}/></div>
+                    <div className="card-body"  style={{textAlign:'center'}}>254444</div>
                 </div>
             </div>
             <h3>Todays Agenda</h3>
