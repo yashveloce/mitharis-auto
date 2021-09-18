@@ -30,23 +30,22 @@ query MyQuery($_lte: date!, $_gte: date!) {
 
 
 function PaperWork() {
-    var rows=[];
+    var rows = [];
     // var counter=0;
-    const [date,setDate]=useState({
-      from:"",
-      to:""
+    const [date, setDate] = useState({
+        from: "",
+        to: ""
     });
-    const onInputChange=(e)=>{  
-        setDate({...date,[e.target.name]:e.target.value})
-      }
-      const onFormSubmit=(e)=>
-      {
+    const onInputChange = (e) => {
+        setDate({ ...date, [e.target.name]: e.target.value })
+    }
+    const onFormSubmit = (e) => {
         e.preventDefault();
-        
-        getData({ variables: { _lte:date.to,_gte:date.from } })
+
+        getData({ variables: { _lte: date.to, _gte: date.from } })
         //console.assert();
-      }
-    const [getData,{ loading, error, data }] = useLazyQuery(PaperWorkQuery);
+    }
+    const [getData, { loading, error, data }] = useLazyQuery(PaperWorkQuery);
     // // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
     // //   fetchPolicy: 'network-only',
     // // });
@@ -103,36 +102,35 @@ function PaperWork() {
     //const rows = data.paperwork;
     //console.log(data3);
     // const rows = data.vehicle_master;
-    if(data)
-    {
-      console.log(data.paperwork);
-      rows=data.paperwork;
+    if (data) {
+        console.log(data.paperwork);
+        rows = data.paperwork;
     }
     const exportPDF = () => {
         const unit = "pt";
         const size = "A4"; // Use A1, A2, A3 or A4
         const orientation = "portrait"; // portrait or landscape
-    
+
         const marginLeft = 40;
         const doc = new jsPDF(orientation, unit, size);
-    
+
         doc.setFontSize(15);
-    
+
         const title = "Paperwork Report";
-        const headers = [["ID","SELLER","AMOUNT PENDING","AMOUNT PAID", "AMOUNT PAYABLE","RTO"]];
-    
-        const comm_data = data.paperwork.map(comm=> [comm.id,comm.seller_id,comm.amount_pending,comm.amount_paid,comm.payable_amount,comm.rto_id]);
-    
+        const headers = [["ID", "SELLER", "AMOUNT PENDING", "AMOUNT PAID", "AMOUNT PAYABLE", "RTO"]];
+
+        const comm_data = data.paperwork.map(comm => [comm.id, comm.seller_id, comm.amount_pending, comm.amount_paid, comm.payable_amount, comm.rto_id]);
+
         let content = {
-          startY: 50,
-          head: headers,
-          body: comm_data  
+            startY: 50,
+            head: headers,
+            body: comm_data
         };
-    
+
         doc.text(title, marginLeft, 40);
         doc.autoTable(content);
         doc.save("report.pdf")
-      }
+    }
     // pdf generation function
     // const printPdf = (e) => {
     //     e.preventDefault();
@@ -146,19 +144,19 @@ function PaperWork() {
 
                 <div className="field" style={{ display: 'flex' }}>
                     <div style={{ marginRight: '70%', marginTop: '30px' }}>
-                        <button class="btn btn-primary" type='button'  onClick={() =>exportPDF()}>Print PDF</button>
+                        <button class="btn btn-primary" type='button' onClick={() => exportPDF()}>Print PDF</button>
                     </div>
                 </div>
-                <form className="form-group" onSubmit={e=>onFormSubmit(e)} style={{ marginTop: '50px' }}>
+                <form className="form-group" onSubmit={e => onFormSubmit(e)} style={{ marginTop: '50px' }}>
                     <div className="row">
                         <div className="field col-md-6">
                             <label>From</label>
-                            <input className="form-control" onChange={e=>{onInputChange(e)}} name="from" type="date" />
+                            <input className="form-control" onChange={e => { onInputChange(e) }} name="from" type="date" />
                         </div>
 
                         <div className="field col-md-6">
                             <label>To</label>
-                            <input className="form-control" onChange={e=>{onInputChange(e)}} name="to" type="date" />
+                            <input className="form-control" onChange={e => { onInputChange(e) }} name="to" type="date" />
                         </div>
                     </div>
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
@@ -175,7 +173,7 @@ function PaperWork() {
                     rowsPerPageOptions={[10]}
                     checkboxSelection={false}
                     components={{
-                      Toolbar: GridToolbar,
+                        Toolbar: GridToolbar,
                     }}
                     disableSelectionOnClick
                 />

@@ -132,8 +132,8 @@ function Stolen() {
     deleteStolen({ variables: { id: id } })
   }
 
-  if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
-  if (error) return `Error! ${error.message}`;
+  if (loading || seller1.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+  if (error || seller1.error) return `Error! ${error.message}`;
 
 
   console.log(data);

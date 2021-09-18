@@ -267,7 +267,14 @@ export default function Enquiry_Generation() {
                                 <div className="col-sm-6">
                                     <div className="form-group">
                                         <span className="form-label">Occupation</span>
-                                        <input defaultValue={updateBuyerdata.occupation} className="form-control" onChange={e => onModalInputChange(e)} name="occupation" type="text" placeholder="Enter your occupation" />
+                                        {/* <input defaultValue={updateBuyerdata.occupation} className="form-control" onChange={e => onModalInputChange(e)} name="occupation" type="text" placeholder="Enter your occupation" /> */}
+                                        <select defaultValue={updateBuyerdata.occupation} className="form-control" onChange={e => onModalInputChange(e)} name="occupation">
+                                            <option value='' selected disabled>Select </option>
+                                            <option value='Healthcare '>Healthcare </option>
+                                            <option value='Business'>Business</option>
+                                            <option value='Service'>Service</option>
+                                            <option value='Agriculture'>Agriculture</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="col-sm-6">
@@ -352,7 +359,14 @@ export default function Enquiry_Generation() {
                         <div className="col-sm-6">
                             <div className="form-group">
                                 <span className="form-label">Occupation</span>
-                                <input className="form-control" onChange={e => onInputChange(e)} name="occupation" type="text" placeholder="Enter your occupation" />
+                                {/* <input className="form-control" onChange={e => onInputChange(e)} name="occupation" type="text" placeholder="Enter your occupation" /> */}
+                                <select defaultValue={updateBuyerdata.occupation} className="form-control" onChange={e => onModalInputChange(e)} name="occupation">
+                                    <option value='' selected disabled>Select </option>
+                                    <option value='Healthcare '>Healthcare </option>
+                                    <option value='Business'>Business</option>
+                                    <option value='Service'>Service</option>
+                                    <option value='Agriculture'>Agriculture</option>
+                                </select>
                             </div>
                         </div>
                         <div className="col-sm-6">
@@ -402,7 +416,7 @@ export default function Enquiry_Generation() {
 
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
-                        <Link to={`/Data_Entry/Enquiry_Generation2`} className="btn btn-success" style={{ marginRight: '50px' }}>
+                        <Link to={`/Data_Entry/Enquiry_Generation1`} className="btn btn-success" style={{ marginRight: '50px' }}>
                             Next
                         </Link>
                         <button className="btn btn-primary" type='reset'>Reset</button>

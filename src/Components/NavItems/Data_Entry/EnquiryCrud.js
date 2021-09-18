@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
 import { CircularProgress, Divider } from '@material-ui/core';
-import { gql, useMutation, useSubscription } from '@apollo/client';
+import { gql, useMutation, useQuery, useSubscription } from '@apollo/client';
 import { Modal, Button } from "react-bootstrap";
 import { DataGrid } from '@material-ui/data-grid';
 import { Link } from "react-router-dom";
+
+const BuyerQuery = gql`
+query MyQuery {
+    buyer {
+        name
+        id
+    }
+}
+`;
 
 const EnquiryQuery = gql`
 subscription MySubscription {
@@ -13,6 +22,10 @@ subscription MySubscription {
         adhaar
         pan
         vehicle
+        buyerByBuyer {
+            name
+            id
+        }
     }
   }
   
@@ -104,6 +117,13 @@ export default function EnquiryCrud() {
     const [insertEnquiryData] = useMutation(INSERT_ENQUIRY);
     const [updateEnquiryData] = useMutation(UPDATE_ENQUIRY);
     const [deleteEnquiryData] = useMutation(DELETE_ENQUIRY);
+    const buyer = useQuery(BuyerQuery);
+    if (buyer.loading) {
+        console.log(buyer.loading);
+    }
+    if (buyer.error) {
+        console.log(buyer.error);
+    }
     const { loading, error, data } = useSubscription(EnquiryQuery);
     if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
     if (error) return `Error! ${error.message}`;
@@ -117,6 +137,9 @@ export default function EnquiryCrud() {
         {
             field: 'buyer',
             headerName: 'Buyer',
+            valueGetter: (params) => {
+                return params.row.buyerByBuyer.name;
+            },
             width: 200,
             hide: false,
         },
@@ -171,7 +194,15 @@ export default function EnquiryCrud() {
                             </div>
                             <div className="field col-md-6">
                                 <label>Buyer</label>
-                                <input className="form-control" defaultValue={modalEnquiry.buyer} onChange={e => onModalInputChange(e)} name="buyer" type="text" required />
+                                {/* <input className="form-control" defaultValue={modalEnquiry.buyer} onChange={e => onModalInputChange(e)} name="buyer" type="text" required /> */}
+                                <select className="form-control" defaultValue={modalEnquiry.buyer} onChange={e => onModalInputChange(e)} name="buyer" required>
+                                    <option selected disabled>Select</option>
+                                    {
+                                        buyer.data.buyer.map(buyer => (
+                                            <option key={buyer.id} value={buyer.id}>{buyer.name}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
                             <div className="field col-md-6">
                                 <label>Adhaar</label>
@@ -208,13 +239,21 @@ export default function EnquiryCrud() {
                                 <div className="row">
                                     <div className="col-sm-6">
                                         <div className="form-group">
-                                            <span className="form-label">Buyer</span>
-                                            <input className="form-control" onChange={e => onInputChange(e)} type="text" name='buyer' />
+                                            <span className="form-label">Buyer's Name</span>
+                                            {/* <input className="form-control" onChange={e => onInputChange(e)} type="text" name='buyer' /> */}
+                                            <select className="form-control" defaultValue={modalEnquiry.buyer} onChange={e => onModalInputChange(e)} name="buyer" required>
+                                                <option selected value=''>Select</option>
+                                                {
+                                                    buyer.data.buyer.map(buyer => (
+                                                        <option key={buyer.id} value={buyer.id}>{buyer.name}</option>
+                                                    ))
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="col-sm-6">
                                         <div className="form-group">
-                                            <span className="form-label">Adhaar</span>
+                                            <span className="form-label">Adhaar Card Number</span>
                                             <input className="form-control" onChange={e => onInputChange(e)} type="text" name='adhaar' />
                                         </div>
                                     </div>
@@ -223,13 +262,13 @@ export default function EnquiryCrud() {
                             <div className="row">
                                 <div className="col-sm-6">
                                     <div className="form-group">
-                                        <span className="form-label">PAN</span>
+                                        <span className="form-label">PAN Card Number</span>
                                         <input className="form-control" onChange={e => onInputChange(e)} type="text" name='pan' />
                                     </div>
                                 </div>
                                 <div className="col-sm-6">
                                     <div className="form-group">
-                                        <span className="form-label">Vehicle</span>
+                                        <span className="form-label">Vehicle Number</span>
                                         <input className="form-control" onChange={e => onInputChange(e)} type="text" name='vehicle' />
                                     </div>
                                 </div>

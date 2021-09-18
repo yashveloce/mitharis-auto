@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  gql,
-//   useMutation,
-  useSubscription,
+    gql,
+    //   useMutation,
+    useSubscription,
 } from "@apollo/client";
 import { DataGrid } from '@material-ui/data-grid';
 // import { Modal, Button } from "react-bootstrap";
@@ -10,22 +10,23 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // import { Divider } from '@material-ui/core';
 // import { Switch, Route, Link } from "react-router-dom";
 const VehicleQuery = gql`subscription MySubscription {
-    office_receipt(distinct_on: id) {
-      budget_from
-      budget_to
-      fuel_type
-      id
-      model
-      name
-      owner
-      variant
-    }
+    enq_gen {
+        budget_from
+        budget_to
+        buyer {
+          id
+          name
+        }
+        fuel_type
+        id
+        buyer_id
+      }
   }
   
   `
 
 export default function Dashboard() {
-    
+
     const { loading, error, data } = useSubscription(VehicleQuery);
 
 
@@ -38,30 +39,15 @@ export default function Dashboard() {
             width: 100,
             hide: false,
         },
-        {
-            field: 'name',
-            headerName: 'Buyer Name',
-            width: 200,
-            hide: false,
-        },
-        {
-            field: 'model',
-            headerName: 'Model',
-            width: 150,
-            editable: false,
-        },
-        {
-            field: 'variant',
-            headerName: 'Variant',
-            width: 150,
-            editable: false,
-        },
 
         {
-            field: 'owner',
-            headerName: 'Owner Name',
-            width: 200,
-            editable: false,
+            field: 'buyer_id',
+            headerName: 'ID',
+            valueGetter: (params) => {
+                return params.row.buyer.name;
+            },
+            width: 100,
+            hide: false,
         },
 
         {
@@ -86,7 +72,7 @@ export default function Dashboard() {
         },
 
     ]
-    const rows = data.office_receipt;
+    const rows = data.enq_gen;
     return (
         <div className="container">
             <h1>
