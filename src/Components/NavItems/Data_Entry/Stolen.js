@@ -252,7 +252,7 @@ function Stolen() {
                 <option>Select Seller</option>
                 {
                   seller1.data.seller.map(seller => (
-                    <option key={seller.id} value={seller.name}>{seller.name}</option>
+                    <option key={seller.id} value={seller.id}>{seller.name}</option>
                   ))
                 }
               </select>

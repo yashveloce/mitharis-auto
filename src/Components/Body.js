@@ -50,7 +50,7 @@ const Body = () => {
     <div>
       <header className="header" id="header" >
         <div className="header_toggle row" onClick={menu_toggle}> 
-          <GridMenuIcon className='col'/> 
+          <GridMenuIcon className='col' style={{marginTop: '10px'}}/> 
           <h2 className='col-5' style={{ cursor: 'pointer',}} onClick={homeRedirect}>
             Veloce
           </h2>

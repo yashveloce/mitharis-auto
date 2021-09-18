@@ -13,10 +13,6 @@ import { Divider } from '@material-ui/core';
 const StockQuery = gql`
 query MyQuery {
   stock {
-    accidental
-    average
-    bank
-    bank_loan
     vehicle_no
     id
   }
@@ -26,27 +22,15 @@ query MyQuery {
 const SellerQuery = gql`
 query MyQuery {
   seller {
-    address
-    adhaar
-    email
     id
-    licence
-    mobile_no
     name
-    occupation
-    pan
-    photo
-    vehicle_master
   }
 }
 `
 const BuyerQuery = gql`
 query MyQuery {
   buyer {
-    customer_type
-    email
     id
-    mobile_no
     name
   }
 }
