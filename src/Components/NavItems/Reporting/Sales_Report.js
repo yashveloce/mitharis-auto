@@ -242,6 +242,8 @@ function Transaction()
       }
 return (
     <div className="container">  <div className="col-md-12">
+      <div class="card mt-2">
+      <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
     <h1 style={{ width: '100%', textAlign: 'center' }}>Sales Report</h1>
     <Divider />
 
@@ -267,7 +269,7 @@ return (
             <button className="btn btn-primary" type='reset'>Reset</button>
         </div>
     </form>
-</div><br />
+</div></div></div><br />
         <div style={{ height: 500, width: '100%' }}>
             <DataGrid
                 rows={rows}
@@ -279,6 +281,7 @@ return (
                     Toolbar: GridToolbar,
                   }}
                 disableSelectionOnClick
+                style={{borderTop: '4px solid #05386b'}}
             />
         </div>
     </div>

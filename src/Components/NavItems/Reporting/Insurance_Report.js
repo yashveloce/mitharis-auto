@@ -133,7 +133,7 @@ function Insurance_Report()
       }
     return(
       <div className="container">
-        
+        <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
           <div className="col-md-12">
           <h1 style={{ width: '100%', textAlign: 'center' }}>Insurance Report</h1>
     <Divider />
@@ -160,7 +160,7 @@ function Insurance_Report()
             <button className="btn btn-primary" type='reset'>Reset</button>
         </div>
     </form>
-</div><br />
+</div></div><br />
     <div style={{ height: 500, width: '100%' }}>
       <DataGrid
         rows={rows}
@@ -172,6 +172,9 @@ function Insurance_Report()
             Toolbar: GridToolbar,
           }}
         disableSelectionOnClick
+        style={{borderTop: '4px solid #05386b'}}
+
+
       />
     </div>
     </div>

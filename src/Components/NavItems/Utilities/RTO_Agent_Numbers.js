@@ -168,6 +168,7 @@ function RTO_Agent_Numbers() {
         </Modal.Footer>
       </Modal>
       <div className="col-md-12">
+      <div class="card mt-4">
 
         <h1 style={{ width: '100%', textAlign: 'center' }}>RTO Agent Numbers</h1>
         <Divider style={{ marginBottom: '10px', }} />
@@ -187,7 +188,7 @@ function RTO_Agent_Numbers() {
             <button className="btn btn-primary" type='reset'>Reset</button>
           </div>
         </form>
-      </div><br />
+      </div><br /></div>
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid
           rows={rows}

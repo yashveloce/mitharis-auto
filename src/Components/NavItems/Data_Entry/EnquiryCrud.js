@@ -199,6 +199,7 @@ export default function EnquiryCrud() {
 
                 </Modal.Footer>
             </Modal>            <div className="col-md-12">
+            <div class="card mt-4">
                 <form className="form-group" onSubmit={e => onFormSubmit(e)}>
                     <div className="row">
                         <h1 style={{ width: '100%', textAlign: 'center' }}>Enquiry Generation</h1>
@@ -245,7 +246,7 @@ export default function EnquiryCrud() {
                         <button className="btn btn-primary" type='reset'>Reset</button>
                     </div>
                 </form>
-            </div><br />
+            </div></div><br />
             <div style={{ height: 500, width: '100%' }}>
                 <DataGrid
                     rows={rows}

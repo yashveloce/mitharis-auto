@@ -200,9 +200,9 @@ function RTO_Agent() {
             width: 150,
             renderCell: (params) => {
                 return (
-                    <div className="" style={{ width: "100%", textAlign: 'center', margin: '0 40px' }}>
+                    <div className="" style={{ width: "80%", textAlign: 'center', margin: '0 0px' }}>
                         <button type="button" className="btn btn-warning" onClick={() => { editVehicle(params.row) }} ><i className="fa fa-pencil"></i></button>
-                        <button style={{ marginLeft: '20%' }} className="btn btn-danger" onClick={() => { deleteVehicle(params.row.id) }}><i className="fa fa-trash"></i></button>
+                        <button style={{ marginLeft: '9%' }} className="btn btn-danger" onClick={() => { deleteVehicle(params.row.id) }}><i className="fa fa-trash"></i></button>
 
                     </div>
                 );
@@ -263,9 +263,11 @@ function RTO_Agent() {
                 </Modal.Footer>
             </Modal>
             <div className="col-md-12">
+            <div className="card mt-2">
+            <div className='card card-primary card-outline' style={{padding: '8px', borderTop: '4px solid #05386b'}}>
                 <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
                     <div className="row">
-                        <h1 style={{ width: '100%', textAlign: 'center' }}>RTO Agent</h1>
+                        <h1 style={{ width: '100%', textAlign: 'Left' }}>RTO Agent</h1>
                         <Divider style={{ marginBottom: '10px', }} />
 
                         <div className="field col-md-6">
@@ -295,20 +297,22 @@ function RTO_Agent() {
 
                     </div>
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
-                        <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <button className="btn btn-primary" type='submit' style={{ marginRight: '30px' }}>Save</button>
                         <button className="btn btn-primary" type='reset'>Reset</button>
                     </div>
                 </form>
-            </div><br />
+                </div></div></div><br />
             <div style={{ height: 500, width: '100%' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    pageSize={4}
+                    rowsPerPageOptions={[5]}
                     checkboxSelection={false}
-
                     disableSelectionOnClick
+                    style={{borderTop: '4px solid #05386b'}}
+
+
                 />
             </div>
         </div>

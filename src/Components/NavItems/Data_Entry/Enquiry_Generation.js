@@ -327,6 +327,8 @@ export default function Enquiry_Generation() {
                 </Modal.Footer>
             </Modal>
             <div className="col-md-12">
+            <div class="card mt-2">
+            <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
                 <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
                     <div className="row">
                         <h1 style={{ width: '100%', textAlign: 'center' }}>Buyer's   Registration</h1>
@@ -408,7 +410,7 @@ export default function Enquiry_Generation() {
                         <button className="btn btn-primary" type='reset'>Reset</button>
                     </div>
                 </form>
-            </div><br />
+            </div></div></div><br />
             <div style={{ height: 500, width: '100%' }}>
                 <DataGrid
                     rows={rows}
@@ -417,6 +419,9 @@ export default function Enquiry_Generation() {
                     rowsPerPageOptions={[10]}
                     checkboxSelection={false}
                     disableSelectionOnClick
+                    style={{borderTop: '4px solid #05386b'}}
+
+
                 />
 
             </div>

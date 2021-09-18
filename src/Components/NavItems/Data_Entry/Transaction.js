@@ -383,6 +383,8 @@ function Transaction() {
         </Modal.Footer>
       </Modal>
       <div className="col-md-12">
+        <div class="card mt-2">
+        <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
         <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
           <div className="row">
 
@@ -466,6 +468,8 @@ function Transaction() {
           </div>
         </form>
       </div>
+      </div>
+      </div>
       <br />
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid
@@ -475,6 +479,9 @@ function Transaction() {
           rowsPerPageOptions={[10]}
           checkboxSelection={false}
           disableSelectionOnClick
+          style={{borderTop: '4px solid #05386b'}}
+
+
         />
       </div>
     </div>

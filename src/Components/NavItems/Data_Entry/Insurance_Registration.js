@@ -235,6 +235,8 @@ function Insurance_Registration() {
         </Modal.Footer>
       </Modal>
       <div className="col-md-12">
+        <div className="card mt-2">
+      <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
         <form className="form-group" onSubmit={e => onFormSubmit(e)}>
           <div className="row">
 
@@ -270,7 +272,7 @@ function Insurance_Registration() {
             <button className="btn btn-primary" type='reset'>Reset</button>
           </div>
         </form>
-      </div><br />
+      </div></div></div><br />
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid
           rows={rows}
@@ -279,6 +281,7 @@ function Insurance_Registration() {
           rowsPerPageOptions={[10]}
           checkboxSelection={false}
           disableSelectionOnClick
+          style={{borderTop: '5px solid #05386b'}}
         />
       </div>
     </div>

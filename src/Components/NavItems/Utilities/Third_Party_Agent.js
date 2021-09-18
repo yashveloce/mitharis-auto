@@ -171,6 +171,8 @@ function Third_Party_Agent()
         </Modal.Footer>
       </Modal>
           <div className="col-md-12">
+          <div class="card mt-4">
+
               <h1 style={{ width: '100%', textAlign: 'center' }}>Third Party Agent Numbers</h1>
               <Divider style={{ marginBottom: '10px', }} />
               <form className="form-group" onSubmit={e=>onFormSubmit(e)}>
@@ -189,7 +191,7 @@ function Third_Party_Agent()
                         <button className="btn btn-primary" type='reset'>Reset</button>
                     </div>
               </form>
-          </div><br />
+          </div><br /></div>
     <div style={{ height: 500, width: '100%' }}>
       <DataGrid
         rows={rows}

@@ -192,6 +192,8 @@ function Vehicle_Master()
         </Modal.Footer>
       </Modal>
           <div className="col-md-12">
+          <div class="card mt-2">
+          <div className='card card-primary card-outline' style={{padding: '17px', borderTop: '4px solid #05386b'}}>
               <h1 style={{ width: '100%', textAlign: 'center' }}>Vehicle Master</h1>
               <Divider style={{ marginBottom: '10px', }} />
               <form onSubmit={(e)=>{onFormSubmit(e)}} className="form-group">
@@ -206,12 +208,12 @@ function Vehicle_Master()
                           <input onChange={e=>onInputChange(e)} className="form-control" name="model" type="text" />
                       </div>
                   </div>
-                  <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                  <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '22px' }}>
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
                         <button className="btn btn-primary" type='reset'>Reset</button>
                     </div>
               </form>
-          </div><br />
+          </div></div></div><br />
     <div style={{ height: 500, width: '100%' }}>
       <DataGrid
         rows={rows}
@@ -220,6 +222,9 @@ function Vehicle_Master()
         rowsPerPageOptions={[10]}
         checkboxSelection={false}
         disableSelectionOnClick
+        style={{borderTop: '4px solid #05386b'}}
+
+
       />
     </div>
     </div>

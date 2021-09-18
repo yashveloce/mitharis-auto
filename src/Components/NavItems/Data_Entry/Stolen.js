@@ -147,7 +147,7 @@ function Stolen() {
         return (
           <div className="">
             <button data-toggle="tooltip" title="Edit" onClick={(e) => { editStolen(params.row) }} type="button" className="btn btn-warning"><i className="fa fa-pencil"></i></button>
-            <button data-toggle="tooltip" title="Delete" onClick={(e) => { deleteStolenData(params.row.id) }} style={{ marginLeft: '20%' }} className="btn btn-danger"><i className="fa fa-trash"></i></button>
+            <button data-toggle="tooltip" title="Delete" onClick={(e) => { deleteStolenData(params.row.id) }} style={{ marginLeft: '18%' }} className="btn btn-danger"><i className="fa fa-trash"></i></button>
 
           </div>
         );
@@ -199,6 +199,8 @@ function Stolen() {
         </Modal.Footer>
       </Modal>
       <div className="col-md-12">
+      <div class="card mt-4">
+      <div className='card card-primary card-outline' style={{padding: '19px', borderTop: '4px solid #05386b'}}>
         <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
           <div className="row">
  
@@ -229,7 +231,7 @@ function Stolen() {
             <button className="btn btn-primary" type='reset'>Reset</button>
           </div>
         </form>
-      </div><br />
+      </div></div></div><br />
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid
           rows={rows}
@@ -238,6 +240,9 @@ function Stolen() {
           rowsPerPageOptions={[10]}
           checkboxSelection={false}
           disableSelectionOnClick
+          style={{borderTop: '4px solid #05386b'}}
+
+
         />
       </div>
     </div>

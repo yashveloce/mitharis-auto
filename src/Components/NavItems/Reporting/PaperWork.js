@@ -140,7 +140,10 @@ function PaperWork() {
 
     return (
         <div className="container">
-            <div className="col-md-12">
+            <div class="card mt-2">
+            <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
+
+
                 <h1 style={{ width: '100%', textAlign: 'center' }}>Paper Work</h1>
                 <Divider />
 
@@ -165,8 +168,8 @@ function PaperWork() {
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
                         <button className="btn btn-primary" type='reset'>Reset</button>
                     </div>
-                </form>
-            </div><br />
+                </form></div></div>
+            <br />
             <div style={{ height: 500, width: '100%' }}>
                 <DataGrid
                     rows={rows}
@@ -178,6 +181,9 @@ function PaperWork() {
                       Toolbar: GridToolbar,
                     }}
                     disableSelectionOnClick
+                    style={{borderTop: '4px solid #05386b'}}
+
+
                 />
             </div>
         </div>

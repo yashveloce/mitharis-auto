@@ -197,7 +197,7 @@ export default function EnqGen() {
             width: 200,
             renderCell: (params) => {
                 return (
-                    <div className="" style={{ width: "100%", textAlign: 'center', margin: '0 40px' }}>
+                    <div className="" style={{ width: "100%", textAlign: 'center', margin: '0 10px' }}>
                         <button type="button" className="btn btn-warning" data-toggle="tooltip" title="Edit" onClick={() => { editVehicle(params.row) }} ><i className="fa fa-pencil"></i></button>
                         <button style={{ marginLeft: '20%' }} className="btn btn-danger" data-toggle="tooltip" title="Delete" onClick={() => { deleteVehicle(params.row.id) }}><i className="fa fa-trash"></i></button>
 
