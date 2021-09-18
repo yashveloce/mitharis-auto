@@ -2,58 +2,55 @@ import React,{useState} from 'react';
 import {
     useLazyQuery,
     gql,
-    useQuery,
-    useSubscription,
-    useMutation
+    // useQuery,
   } from "@apollo/client";
-import { Modal, Button } from "react-bootstrap";
 import { DataGrid,GridToolbar } from '@material-ui/data-grid';
 import CircularProgress from '@material-ui/core/CircularProgress'; 
 import { Divider } from '@material-ui/core';  
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-const StockQuery=gql`
-query MyQuery {
-  stock {
-    accidental
-    average
-    bank
-    bank_loan
-    vehicle_no
-    id
-  }
-}
-`
+// const StockQuery=gql`
+// query MyQuery {
+//   stock {
+//     accidental
+//     average
+//     bank
+//     bank_loan
+//     vehicle_no
+//     id
+//   }
+// }
+// `
 
-const SellerQuery=gql`
-query MyQuery {
-  seller {
-    address
-    adhaar
-    email
-    id
-    licence
-    mobile_no
-    name
-    occupation
-    pan
-    photo
-    vehicle_master
-  }
-}
-`
-const BuyerQuery=gql`
-query MyQuery {
-  buyer {
-    customer_type
-    email
-    id
-    mobile_no
-    name
-  }
-}
-`
+// const SellerQuery=gql`
+// query MyQuery {
+//   seller {
+//     address
+//     adhaar
+//     email
+//     id
+//     licence
+//     mobile_no
+//     name
+//     occupation
+//     pan
+//     photo
+//     vehicle_master
+//   }
+// }
+// `
+// const BuyerQuery=gql`
+// query MyQuery {
+//   buyer {
+//     customer_type
+//     email
+//     id
+//     mobile_no
+//     name
+//   }
+// }
+// `
 
 const TransactionQuery=gql`
 query MyQuery($_lte: date!, $_gte: date!) {
@@ -86,12 +83,12 @@ query MyQuery($_lte: date!, $_gte: date!) {
 function Commission_Report()
 {   
     var rows=[];
-    var counter=0;
+    // var counter=0;
     const [date,setDate]=useState({
       from:"",
       to:""
     });
-    const comm_data=useState([])
+    // const comm_data=useState([])
     const onInputChange=(e)=>{  
       setDate({...date,[e.target.name]:e.target.value})
     }
@@ -102,9 +99,6 @@ function Commission_Report()
       getData({ variables: { _lte:date.to,_gte:date.from } })
       //console.assert();
     }
-    const stock = useQuery(StockQuery);
-    const seller = useQuery(SellerQuery);
-    const buyer = useQuery(BuyerQuery);
   
     const [getData,{ loading, error, data }] = useLazyQuery(TransactionQuery);
     if (loading) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;

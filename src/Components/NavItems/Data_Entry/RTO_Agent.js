@@ -4,7 +4,7 @@ import {
     useMutation,
     useSubscription,
 } from "@apollo/client";
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
 //import 'bootstrap/dist/css/bootstrap.css';
@@ -213,10 +213,10 @@ function RTO_Agent() {
     //console.log(data3);
     // const rows = data.vehicle_master;
 
-    // pdf generation function
-    const printPdf = (e) => {
-        e.preventDefault();
-    }
+    // // pdf generation function
+    // const printPdf = (e) => {
+    //     e.preventDefault();
+    // }
 
     return (
         <div className="container">

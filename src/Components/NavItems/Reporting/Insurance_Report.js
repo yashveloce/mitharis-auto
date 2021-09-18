@@ -1,15 +1,15 @@
 import React,{useState} from 'react';
 import {
-    useQuery,
+    // useQuery,
     gql,
-    useMutation,
-    useSubscription,
+    // useMutation,
+    // useSubscription,
     useLazyQuery
   } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid,GridToolbar } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
-import { Modal, Button } from "react-bootstrap";
+// import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
 import jsPDF from "jspdf";

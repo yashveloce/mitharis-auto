@@ -174,9 +174,9 @@ function Transaction() {
     console.log(id);
     deleteTransactionData({ variables: { id: id } })
   }
-  const [deleteTransactionData, { deletedData }] = useMutation(DELETE_TRANSACTION);
-  const [updateTransactionData, { updatedData }] = useMutation(UPDATE_TRANSACTION);
-  const [insertTransactionData, { transactionData }] = useMutation(INSERT_TRANSACTION);
+  const [deleteTransactionData] = useMutation(DELETE_TRANSACTION);
+  const [updateTransactionData] = useMutation(UPDATE_TRANSACTION);
+  const [insertTransactionData] = useMutation(INSERT_TRANSACTION);
   const stock = useQuery(StockQuery);
   const seller = useQuery(SellerQuery);
   const buyer = useQuery(BuyerQuery);

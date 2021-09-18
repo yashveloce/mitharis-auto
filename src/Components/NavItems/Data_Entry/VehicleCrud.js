@@ -4,11 +4,11 @@ import {
   useMutation,
   useSubscription,
 } from "@apollo/client";
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const INSERT_STOCK = gql`
 mutation MyMutation($accidental: String!, $average: Int!, $bank: Int!, $bank_loan: Boolean!, $body_color: String!, $body_type: String!, $buyer: Int!, $chess_no: String!, $engine_displacement: String!, $engine_no: String!, $expected_price: bigint!, $extra_keys: Boolean!, $fuel_type: String!, $hp: Int!, $installment: String!, $insurance: String!, $kms_driven: bigint!, $loan_amount: bigint!, $no_of_owners: Int!, $noc: String!, $owner: Int!, $passing: String!, $registered: String!, $selling_price: bigint!, $stepny: Boolean!, $taxposition: String!, $transfer: String!, $transmission: String!, $vehicle_master: Int!, $vehicle_no: String!) {
@@ -271,9 +271,9 @@ function VehicleCrud() {
   const deleteStock = (id) => {
     deleteStockData({ variables: { id: id } })
   }
-  const [insertStockData, { insertData }] = useMutation(INSERT_STOCK);
-  const [upateStockData, { updateData }] = useMutation(UPDATE_STOCK);
-  const [deleteStockData, { deleteData }] = useMutation(DELETE_STOCK);
+  const [insertStockData] = useMutation(INSERT_STOCK);
+  const [upateStockData] = useMutation(UPDATE_STOCK);
+  const [deleteStockData] = useMutation(DELETE_STOCK);
   const { loading, error, data } = useSubscription(READ_STOCK);
   // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
   //   fetchPolicy: 'network-only',

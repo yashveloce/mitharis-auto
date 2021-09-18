@@ -1,15 +1,15 @@
-import React,{useState} from 'react';
+import React from 'react';
 import {
     useQuery,
     gql,
-    useMutation,
-    useSubscription,
-    useLazyQuery
+    // useMutation,
+    // useSubscription,
+    // useLazyQuery
   } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
-import { Modal, Button } from "react-bootstrap";
+// import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const BUYER=gql`

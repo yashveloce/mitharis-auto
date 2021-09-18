@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
-  useQuery,
+  // useQuery,
   gql,
   useMutation,
   useSubscription,
-  useLazyQuery
+  // useLazyQuery
 } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
@@ -91,9 +91,9 @@ function RTO_Agent_Numbers() {
   const deleteRto = (id) => {
     deleteRTO_agentData({ variables: { id: id } })
   }
-  const [deleteRTO_agentData, { deleteData }] = useMutation(DELETE_RTO);
-  const [updateRTO_agentData, { updateData }] = useMutation(UPDATE_RTO);
-  const [insertRTO_agentData, { insertData }] = useMutation(INSERT_RTO);
+  const [deleteRTO_agentData] = useMutation(DELETE_RTO);
+  const [updateRTO_agentData] = useMutation(UPDATE_RTO);
+  const [insertRTO_agentData] = useMutation(INSERT_RTO);
   const { loading, error, data } = useSubscription(RtoQuery);
   if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
   if (error) return `Error! ${error.message}`;

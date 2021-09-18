@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
-  useQuery,
+  // useQuery,
   gql,
   useMutation,
   useSubscription,
-  useLazyQuery
+  // useLazyQuery
 } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
@@ -111,9 +111,9 @@ function Insurance_Registration() {
     console.log(id);
     deleteInsuranceData({ variables: { id: id } })
   }
-  const [insertInsuranceData, { insuranceData }] = useMutation(INSERT_INSURANCE);
-  const [updateInsuranceData, { updatedData }] = useMutation(UPDATE_INSURANCE);
-  const [deleteInsuranceData, { deleteData }] = useMutation(DELETE_INSURANCE);
+  const [insertInsuranceData] = useMutation(INSERT_INSURANCE);
+  const [updateInsuranceData] = useMutation(UPDATE_INSURANCE);
+  const [deleteInsuranceData] = useMutation(DELETE_INSURANCE);
   const { loading, error, data } = useSubscription(InsuranceQuery);
   // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
   //   fetchPolicy: 'network-only',

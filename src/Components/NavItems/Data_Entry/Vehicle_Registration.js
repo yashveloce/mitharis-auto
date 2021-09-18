@@ -4,11 +4,11 @@ import {
   useMutation,
   useSubscription,
 } from "@apollo/client";
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const UPDATE_VEHICLE = gql`
 mutation MyMutation($id: Int = 10, $address: String = "", $adhaar: String = "", $email: String = "", $licence: String = "", $mobile_no: String = "", $name: String = "", $occupation: String = "", $pan: String = "", $photo: String = "", $vehicle_master: Int = 10) {
@@ -294,69 +294,71 @@ function Vehicle_Registration() {
       <div className="col-md-12">
         <h1 style={{ width: '100%', textAlign: 'center' }}>Seller Registration</h1>
         <Divider style={{ marginBottom: '10px', }} />
-        <form onSubmit={onFormSubmit} className="form-group">
-          <div className="row">
-            <div className="field col-md-6">
-              <label>Seller Name</label>
-              <input onChange={onInputChange} className="form-control" name="name" type="text" placeholder='Enter Your Name' required />
-            </div>
+        <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
+          <form onSubmit={onFormSubmit} className="form-group">
+            <div className="row">
+              <div className="field col-md-6">
+                <label>Seller Name</label>
+                <input onChange={onInputChange} className="form-control" name="name" type="text" placeholder='Enter Your Name' required />
+              </div>
 
-            <div className="field col-md-6">
-              <label>Occupation</label>
-              <input onChange={onInputChange} className="form-control" name="occupation" type="text" placeholder='Enter Your Occupation' required />
-            </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>Contact Details</label>
-              <div style={{ display: 'flex' }}>
-                <input onChange={onInputChange} className="form-control" name="mobile_no" type="text" placeholder='+91' style={{ width: '50%' }} required />
-                <button className="btn btn-primary" style={{ margin: '0 20px' }} type='button'>Get OTP</button>
+              <div className="field col-md-6">
+                <label>Occupation</label>
+                <input onChange={onInputChange} className="form-control" name="occupation" type="text" placeholder='Enter Your Occupation' required />
               </div>
             </div>
+            <div className="row">
+              <div className="field col-md-6">
+                <label>Contact Details</label>
+                <div style={{ display: 'flex' }}>
+                  <input onChange={onInputChange} className="form-control" name="mobile_no" type="text" placeholder='+91' style={{ width: '50%' }} required />
+                  <button className="btn btn-primary" style={{ margin: '0 20px' }} type='button'>Get OTP</button>
+                </div>
+              </div>
 
-            <div className="field col-md-6">
-              <label>Enter OTP</label>
-              <input onChange={onInputChange} className="form-control" name="otp" type="text" placeholder='Enter Your OTP' />
+              <div className="field col-md-6">
+                <label>Enter OTP</label>
+                <input onChange={onInputChange} className="form-control" name="otp" type="text" placeholder='Enter Your OTP' />
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>License Number</label>
-              <input onChange={onInputChange} className="form-control" name="licence" type="text" placeholder='Enter Your License Number' required />
-            </div>
+            <div className="row">
+              <div className="field col-md-6">
+                <label>License Number</label>
+                <input onChange={onInputChange} className="form-control" name="licence" type="text" placeholder='Enter Your License Number' required />
+              </div>
 
-            <div className="field col-md-6">
-              <label>Pan Number</label>
-              <input onChange={onInputChange} className="form-control" name="pan" type="text" placeholder='Enter Your Pan Number' required />
+              <div className="field col-md-6">
+                <label>Pan Number</label>
+                <input onChange={onInputChange} className="form-control" name="pan" type="text" placeholder='Enter Your Pan Number' required />
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>Email</label>
-              <input onChange={onInputChange} className="form-control" name="email" type="text" placeholder='Enter Your Email' required />
-            </div>
+            <div className="row">
+              <div className="field col-md-6">
+                <label>Email</label>
+                <input onChange={onInputChange} className="form-control" name="email" type="text" placeholder='Enter Your Email' required />
+              </div>
 
-            <div className="field col-md-6">
-              <label>Adhaar Number</label>
-              <input onChange={onInputChange} className="form-control" name="adhaar" type="text" placeholder='Enter Your Adhar Number' required />
+              <div className="field col-md-6">
+                <label>Adhaar Number</label>
+                <input onChange={onInputChange} className="form-control" name="adhaar" type="text" placeholder='Enter Your Adhar Number' required />
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="field col-md-6">
-              <label>Address</label>
-              <input onChange={onInputChange} className="form-control" name="address" type="text" placeholder='Enter Your Address' required />
+            <div className="row">
+              <div className="field col-md-6">
+                <label>Address</label>
+                <input onChange={onInputChange} className="form-control" name="address" type="text" placeholder='Enter Your Address' required />
+              </div>
             </div>
-          </div>
-          <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
-            <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+            <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+              <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
 
-            <Link to={`/Data_Entry/Vehicle_Registration2`} className="btn btn-success" style={{ marginRight: '50px' }}>
-              Next
-            </Link>
-            <button className="btn btn-primary" type='reset'>Reset</button>
-          </div>
-        </form>
+              <Link to={`/Data_Entry/Vehicle_Registration2`} className="btn btn-success" style={{ marginRight: '50px' }}>
+                Next
+              </Link>
+              <button className="btn btn-primary" type='reset'>Reset</button>
+            </div>
+          </form>
+        </div>
       </div><br />
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid
@@ -368,6 +370,7 @@ function Vehicle_Registration() {
           // components={{
           //   Toolbar: GridToolbar,
           // }}
+          style={{borderTop: '4px solid #05386b'}}
           disableSelectionOnClick
         />
       </div>

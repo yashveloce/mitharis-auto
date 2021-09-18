@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: 360,
-    backgroundColor: 'black',
     color: 'white',
   },
   nested: {
@@ -64,7 +63,7 @@ export default function Navbar() {
           <ListItemIcon>
             <DashboardIcon style={{ color: 'white' }} />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <ListItemText primary="Dashboard" className='menu-item-color'/>
 
         </ListItem>
       </Link>
@@ -75,7 +74,7 @@ export default function Navbar() {
         <ListItemIcon>
           <SettingsIcon style={{ color: 'white' }} />
         </ListItemIcon>
-        <ListItemText primary="Data Entry" />
+        <ListItemText primary="Data Entry" className='menu-item-color' />
         {open1 ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open1} timeout="auto" unmountOnExit>
@@ -86,7 +85,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Vehicle Master" />
+              <ListItemText primary="Vehicle Master" className='menu-item-color' />
             </ListItem>
           </Link>
         {/* Vehicle_Registration */}
@@ -95,7 +94,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Vehicle Registration" />
+              <ListItemText primary="Vehicle Registration" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Enquiry_Generation */}
@@ -105,7 +104,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <AccountBalanceIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Enquiry Generation" />
+              <ListItemText primary="Enquiry Generation" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Transactions */}
@@ -114,7 +113,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <LocationCityIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Transactions" />
+              <ListItemText primary="Transactions" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Insurance_Registration */}
@@ -123,7 +122,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <StarBorder style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Insurance Registration" />
+              <ListItemText primary="Insurance Registration" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* RTO_Agent */}
@@ -132,7 +131,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <PinDropIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="RTO Agent" />
+              <ListItemText primary="RTO Agent" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Stollen */}
@@ -141,7 +140,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <StarBorder style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Stollen" />
+              <ListItemText primary="Stollen" className='menu-item-color' />
             </ListItem>
           </Link>
         </List>
@@ -154,7 +153,7 @@ export default function Navbar() {
         <ListItemIcon>
           <SettingsIcon style={{ color: 'white' }} />
         </ListItemIcon>
-        <ListItemText primary="Reporting" />
+        <ListItemText primary="Reporting" className='menu-item-color' />
         {open2 ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open2} timeout="auto" unmountOnExit>
@@ -166,7 +165,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Vehicle History" />
+              <ListItemText primary="Vehicle History" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Sales_Report */}
@@ -176,7 +175,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <AccountBalanceIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Sales Report" />
+              <ListItemText primary="Sales Report" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Commission_Report */}
@@ -185,7 +184,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <LocationCityIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Commission Report" />
+              <ListItemText primary="Commission Report" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Insurance_Report */}
@@ -194,7 +193,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <StarBorder style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Insurance Report" />
+              <ListItemText primary="Insurance Report" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Paperwork */}
@@ -203,7 +202,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <PinDropIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Paperwork" />
+              <ListItemText primary="Paperwork" className='menu-item-color' />
             </ListItem>
           </Link>
         </List>
@@ -216,7 +215,7 @@ export default function Navbar() {
         <ListItemIcon>
           <SettingsIcon style={{ color: 'white' }} />
         </ListItemIcon>
-        <ListItemText primary="Utilities" />
+        <ListItemText primary="Utilities" className='menu-item-color' />
         {open3 ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open3} timeout="auto" unmountOnExit>
@@ -228,7 +227,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Third-Party Agent" />
+              <ListItemText primary="Third-Party Agent" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* RTO_Agent */}
@@ -238,7 +237,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <AccountBalanceIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="RTO agent" />
+              <ListItemText primary="RTO agent" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Customer */}
@@ -247,7 +246,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <LocationCityIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Customer" />
+              <ListItemText primary="Customer" className='menu-item-color' />
             </ListItem>
           </Link>
         </List>

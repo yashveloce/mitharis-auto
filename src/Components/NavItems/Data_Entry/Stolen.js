@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
-  useQuery,
+  // useQuery,
   gql,
   useMutation,
   useSubscription,
-  useLazyQuery
+  // useLazyQuery
 } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
@@ -77,9 +77,9 @@ function Stolen() {
     e.preventDefault();
     insertStolen({ variables: { seller: seller, vehicle_no: vehicle_no, fine: fine, criminal_record: criminal_record } });
   }
-  const [insertStolen, { stolenData }] = useMutation(INSERT_STOLEN);
-  const [updateStolen, { updatedData }] = useMutation(UPDATE_STOLEN);
-  const [deleteStolen, { deleteData }] = useMutation(DELETE_STOLEN);
+  const [insertStolen] = useMutation(INSERT_STOLEN);
+  const [updateStolen] = useMutation(UPDATE_STOLEN);
+  const [deleteStolen] = useMutation(DELETE_STOLEN);
   const { loading, error, data } = useSubscription(StolenQuery);
   // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
   //   fetchPolicy: 'network-only',

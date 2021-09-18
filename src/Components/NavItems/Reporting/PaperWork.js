@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
     gql,
-    useMutation,
+    // useMutation,
     useLazyQuery,
-    useSubscription,
+    // useSubscription,
 } from "@apollo/client";
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
-import { Modal, Button } from "react-bootstrap";
+// import { Modal, Button } from "react-bootstrap";
 //import 'bootstrap/dist/css/bootstrap.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
@@ -31,7 +31,7 @@ query MyQuery($_lte: date!, $_gte: date!) {
 
 function PaperWork() {
     var rows=[];
-    var counter=0;
+    // var counter=0;
     const [date,setDate]=useState({
       from:"",
       to:""
@@ -134,9 +134,9 @@ function PaperWork() {
         doc.save("report.pdf")
       }
     // pdf generation function
-    const printPdf = (e) => {
-        e.preventDefault();
-    }
+    // const printPdf = (e) => {
+    //     e.preventDefault();
+    // }
 
     return (
         <div className="container">

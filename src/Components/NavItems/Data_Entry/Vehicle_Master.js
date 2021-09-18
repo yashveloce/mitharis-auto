@@ -1,12 +1,12 @@
 import React,{useState} from 'react';
 import {
-    useQuery,
+    // useQuery,
     gql,
     useMutation,
     useSubscription,
-    useLazyQuery
+    // useLazyQuery
   } from "@apollo/client";
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
 import { DataGrid } from '@material-ui/data-grid';
 //import { IconName } from "react-icons/bs";
 import { Modal, Button } from "react-bootstrap";
@@ -107,9 +107,9 @@ function Vehicle_Master()
         //loadVehicle({ variables: { id:id } });
         //console.log(data3);
     }
-    const [updateVehicleData,{updatedData}]=useMutation(UPDATE_VEHICLE);
-    const [insertVehicleData,{carsData}]=useMutation(INSERT_VEHICLE);
-    const [deleteVehicleData,{deletedData}]=useMutation(DELETE_VEHICLE);
+    const [updateVehicleData]=useMutation(UPDATE_VEHICLE);
+    const [insertVehicleData]=useMutation(INSERT_VEHICLE);
+    const [deleteVehicleData]=useMutation(DELETE_VEHICLE);
     
     const { loading, error, data } = useSubscription(VehicleMasterQuery);
     // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
