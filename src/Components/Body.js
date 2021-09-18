@@ -49,11 +49,14 @@ const Body = () => {
   return (
     <div>
       <header className="header" id="header" >
-        <div className="header_toggle" onClick={menu_toggle}> <GridMenuIcon /> </div>
+        <div className="header_toggle row" onClick={menu_toggle}> 
+          <GridMenuIcon className='col'/> 
+          <h2 className='col-5' style={{ cursor: 'pointer',}} onClick={homeRedirect}>
+            Veloce
+          </h2>
+        </div>
         <div style={{ textAlign: 'center' }}>
-            <h2 style={{ cursor: 'pointer' }} onClick={homeRedirect}>
-              Veloce
-            </h2>
+            
           </div>
           <Divider />
         <div className="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt="" /> </div>

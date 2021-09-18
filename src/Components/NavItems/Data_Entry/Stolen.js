@@ -3,6 +3,7 @@ import {
   // useQuery,
   gql,
   useMutation,
+  useQuery,
   useSubscription,
   // useLazyQuery
 } from "@apollo/client";
@@ -44,9 +45,23 @@ subscription MySubscription {
       id
       seller
       vehicle_no
+      sellerBySeller {
+        name
+        id
+      }
     }
   } 
 `
+
+const SellerQuery = gql`
+query MyQuery {
+  seller {
+    name
+    id
+  }
+}
+`;
+
 
 function Stolen() {
   const [showModal, setShow] = useState(false);
@@ -80,6 +95,21 @@ function Stolen() {
   const [insertStolen] = useMutation(INSERT_STOLEN);
   const [updateStolen] = useMutation(UPDATE_STOLEN);
   const [deleteStolen] = useMutation(DELETE_STOLEN);
+  const seller1 = useQuery(SellerQuery);
+  if (seller1.loading) {
+    console.log(`${seller1.loading}`);
+  }
+  if (seller1.error) {
+    console.log(`${seller1.error}`);
+  } else {
+    // let a = x.data.seller;
+    // a.map(item => {
+    //   // console.log(console.item.id);
+    //   console.log(console.item);
+    // });
+
+  }
+
   const { loading, error, data } = useSubscription(StolenQuery);
   // const [loadVehicle,{loading3,data3}] = useLazyQuery(VehicleMasterByPK,{
   //   fetchPolicy: 'network-only',
@@ -117,8 +147,11 @@ function Stolen() {
     },
     {
       field: 'seller',
-      headerName: 'Seller',
+      headerName: 'Seller Name',
       width: 150,
+      valueGetter: (params) => {
+        return params.row.sellerBySeller.name;
+      },
       editable: false,
     },
     {
@@ -171,7 +204,15 @@ function Stolen() {
               </div>
               <div className="field">
                 <label>Seller</label>
-                <input defaultValue={modalSeller} className="form-control" name="seller" type="text" />
+                {/* <input defaultValue={modalSeller} className="form-control" name="seller" type="text" /> */}
+                <select defaultValue={modalSeller} onChange={onSellerChange} className='form-control' name='seller'>
+                  <option>Select Seller</option>
+                  {
+                    seller1.data.seller.map(seller => (
+                      <option key={seller.id} value={seller.id}>{seller.name}</option>
+                    ))
+                  }
+                </select>
               </div>
               <div className="field">
                 <label>Vehicle No</label>
@@ -201,12 +242,20 @@ function Stolen() {
       <div className="col-md-12">
         <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
           <div className="row">
- 
+
             <h1 style={{ width: '100%', textAlign: 'center' }}>Stolen</h1>
             <Divider style={{ marginBottom: '10px', }} />
             <div className="field col-md-6">
               <label>Seller</label>
-              <input onChange={e => onSellerChange(e)} className="form-control" name="seller" type="text" />
+              {/* <input onChange={e => onSellerChange(e)} className="form-control" name="seller" type="text" /> */}
+              <select onChange={onSellerChange} className='form-control' name='seller'>
+                <option>Select Seller</option>
+                {
+                  seller1.data.seller.map(seller => (
+                    <option key={seller.id} value={seller.name}>{seller.name}</option>
+                  ))
+                }
+              </select>
             </div>
 
             <div className="field col-md-6">
