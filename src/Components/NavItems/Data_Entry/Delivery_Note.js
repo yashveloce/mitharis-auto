@@ -9,6 +9,7 @@ import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { Switch, Route, Link } from "react-router-dom";
 
 const VehicleMasterQuery = gql`
 subscription MySubscription {
@@ -294,6 +295,9 @@ function Delivery_Note() {
           </div>
           <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
             <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+            <Link to={`/Data_Entry/Vehicle_Registration2`} style={{ marginRight: '50px' }} className="btn btn-success">
+                Previous
+              </Link>
             <button className="btn btn-primary" type='reset'>Reset</button>
           </div>
         </form>

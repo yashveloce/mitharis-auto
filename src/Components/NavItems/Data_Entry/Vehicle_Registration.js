@@ -33,16 +33,19 @@ function Vehicle_Registration() {
   const handleShow = () => setShow(true);
 
   const [id, setId] = useState('');
-
+  const [passPara,setPassPara] = useState();
   const INSERT_SELLER = gql`
   mutation insert_seller($address: String = "", $adhaar: String = "", $licence: String = "", $mobile_no: String = "", $name: String = "", $occupation: String = "", $pan: String = "", $email: String = "") {
     insert_seller(objects: {address: $address, adhaar: $adhaar, licence: $licence, mobile_no: $mobile_no, pan: $pan, name: $name, occupation: $occupation, email: $email}) {
       affected_rows
+      returning {
+        id
+      }
     }
   }
     `
 
-  const [insertSellersData] = useMutation(INSERT_SELLER);
+  const [insertSellersData,{insertData}] = useMutation(INSERT_SELLER);
 
   const [seller, setSeller] = useState({
     name: "",
@@ -61,7 +64,11 @@ function Vehicle_Registration() {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    insertSellersData({ variables: { address: seller.address, adhaar: seller.adhaar, licence: seller.licence, mobile_no: seller.mobile_no, pan: seller.pan, name: seller.name, occupation: seller.occupation, email: seller.email } });
+    insertSellersData({ variables: { address: seller.address, adhaar: seller.adhaar, licence: seller.licence, mobile_no: seller.mobile_no, pan: seller.pan, name: seller.name, occupation: seller.occupation, email: seller.email } })
+    .then((inserted)=>{
+      console.log(inserted.data.insert_seller.returning[0].id);
+      setPassPara(inserted.data.insert_seller.returning[0].id)
+    })
   }
 
   const [modalseller, setModalSeller] = useState({

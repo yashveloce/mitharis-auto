@@ -102,6 +102,15 @@ mutation MyMutation($id: Int!) {
 }
   `
 
+const UPDATE_STOCK=gql`
+mutation MyMutation($id: Int!, $selling_price: bigint!, $buyer: Int!, $is_sold: Boolean) {
+  update_stock_by_pk(pk_columns: {id: $id}, _set: {selling_price: $selling_price, buyer: $buyer, is_sold: $is_sold}) {
+    id
+  }
+}
+
+`
+
 
 function Transaction() {
   const [showModal, setShow] = useState(false);
@@ -147,6 +156,7 @@ function Transaction() {
     e.preventDefault();
     console.log(modalTransaction)
     insertTransactionData({ variables: { seller: transaction.seller, buyer: transaction.buyer, seller_commission: transaction.seller_commission, buyer_commission: transaction.buyer_commission, advance_amount: transaction.advance_amount, amount_paid: transaction.amount_paid, pending_amount: transaction.pending_amount, rto_commission: transaction.rto_commission, reg_date: transaction.reg_date, transaction_date: transaction.transaction_date, vehicle: transaction.vehicle } });
+    updateStock({variables:{id:transaction.vehicle,is_sold:true,buyer:transaction.buyer,selling_price:transaction.amount_paid}})
   }
   const onModalFormSubmit = (e) => {
     e.preventDefault();
@@ -178,6 +188,7 @@ function Transaction() {
   const [deleteTransactionData, { deletedData }] = useMutation(DELETE_TRANSACTION);
   const [updateTransactionData, { updatedData }] = useMutation(UPDATE_TRANSACTION);
   const [insertTransactionData, { transactionData }] = useMutation(INSERT_TRANSACTION);
+  const [updateStock, { updatedStockData }] = useMutation(UPDATE_STOCK);
   const stock = useQuery(StockQuery);
   const seller = useQuery(SellerQuery);
   const buyer = useQuery(BuyerQuery);
