@@ -93,9 +93,12 @@ mutation MyMutation($id: Int = 10) {
 
 export default function EnqGen() {
     const [showModal, setShow] = useState(false);
+    // const [searchVehicle, setSearchVehicle] = useState()
     const [id, setId] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    // const [owner, setOwner] = useState();
+    // var ind;
     const [office_receipt, setOfficeReceipt] = useState({
         budget_from: '',
         budget_to: '',
@@ -123,6 +126,7 @@ export default function EnqGen() {
     }
     const onFormSubmit = (e) => {
         e.preventDefault();
+        console.log(office_receipt);
         insertVehicleData({
             variables: {
                 budget_to: office_receipt.budget_to,
@@ -169,19 +173,20 @@ export default function EnqGen() {
         //console.log(data3);
     }
 
-    
+
 
     const onSearch = (e) => {
         e.preventDefault();
         console.log(office_receipt.vehicle_master_id, office_receipt.budget_from, office_receipt.budget_to)
-        getData({ variables: { model: office_receipt.vehicle_master_id, budget_from: parseInt(office_receipt.budget_from), budget_to: parseInt(office_receipt.budget_to) }})
+        getData({ variables: { model: office_receipt.vehicle_master_id, budget_from: parseInt(office_receipt.budget_from), budget_to: parseInt(office_receipt.budget_to) } })
 
-        
+
         console.log(search.data);
-        
+        // setSearchVehicle(search.data)
+
 
     }
-    
+
     const [updateVehicleData] = useMutation(UPDATE_VEHICLE);
     const [insertVehicleData] = useMutation(INSERT_VEHICLE);
     const [deleteVehicleData] = useMutation(DELETE_VEHICLE);
@@ -193,11 +198,11 @@ export default function EnqGen() {
     if (buyer.error) {
         console.log(buyer.error);
     }
-    if(search.loading){
+    if (search.loading) {
         console.log(search.loading);
-    }else if(search.error){
+    } else if (search.error) {
         console.log(search.error);
-    }else{
+    } else {
         console.log(search.data);
         // const abc = document.getElementsByName('xyz');
         // abc.value=search.data
@@ -430,26 +435,40 @@ export default function EnqGen() {
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                             <span className="form-label">Vehicle Number</span>
-                                            <input defaultValue={
+                                            {/* <input defaultValue={
                                                     search.data === undefined ? '' : search.data.stock[0].vehicle_no 
-                                                } className="form-control" type="text" onChange={onInputChange} name='xyz' placeholder="Vehicle Number" />
-                                            {/* <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
-                                                <option>Select Vehicle Number</option>
+                                                } className="form-control" type="text" onChange={onInputChange} name='xyz' placeholder="Vehicle Number" /> */}
+                                            <select className='form-control' onChange={(e) => {
+                                                onInputChange(e);
+                                            }} name='stock_vehicle_id' placeholder="Vehicle Number">
                                                 {
-                                                    search.data.map(vehicle => (
-                                                        <option key={vehicle.id} value={vehicle.id}> {vehicle.vehicle_no}</option>
-                                                    ))
+                                                    search.data === undefined ? '' : search.data.stock.map((vehicle, index) => {
+                                                        console.log(index);
+                                                        // ind = index;
+                                                        return (
+                                                            <option key={index} value={vehicle.id}>{vehicle.vehicle_no}</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
+                                            {/* <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
+                                                {
+                                                    search.data === undefined ? '' : search.data.map(vehicle=>{
+                                                        <option>{vehicle.stock.vehicle_no}</option>
+                                                    })
                                                 }
                                             </select> */}
-                                            
+
                                         </div>
                                     </div>
-                                    <div className="col-sm-6">
+                                    {/* <div className="col-sm-6">
                                         <div className="form-group">
                                             <span className="form-label">Owner</span>
-                                            <input className="form-control" type="text" onChange={onInputChange} name='owner' placeholder="Owner's Name" />
+                                            <input defaultValue={
+                                                search.data === undefined ? '' : search.data.stock[ind].seller.name
+                                            } className="form-control" type="text" onChange={onInputChange} name='owner' placeholder="Owner's Name" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -457,7 +476,11 @@ export default function EnqGen() {
 
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+                        <Link to={`/Data_Entry/Enquiry_Generation`} className="btn btn-success" style={{ marginRight: '50px' }}>
+                            Previous
+                        </Link>
                         <button className="btn btn-primary" type='reset'>Reset</button>
+
                     </div>
                 </form>
             </div><br />
@@ -470,9 +493,6 @@ export default function EnqGen() {
                     checkboxSelection={false}
                     disableSelectionOnClick
                 />
-                <Link to={`/Data_Entry/Enquiry_Generation`} className="btn btn-success">
-                    Previous
-                </Link>
             </div>
 
         </div>
