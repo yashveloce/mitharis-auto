@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  // useQuery,
+  useQuery,
   gql,
   useMutation,
   useSubscription,
@@ -13,10 +13,25 @@ import { Modal, Button } from "react-bootstrap";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Divider } from '@material-ui/core';
 
+const BuyerQuery = gql`
+query MyQuery {
+  buyer {
+    customer_type
+    email
+    id
+    mobile_no
+    name
+  }
+}
+`
 
 const InsuranceQuery = gql`
 subscription MySubscription {
   insurance {
+    buyer {
+      id
+      name
+    }
     customer
     from_date
     id
@@ -111,6 +126,7 @@ function Insurance_Registration() {
     console.log(id);
     deleteInsuranceData({ variables: { id: id } })
   }
+  const buyer = useQuery(BuyerQuery);
   const [insertInsuranceData] = useMutation(INSERT_INSURANCE);
   const [updateInsuranceData] = useMutation(UPDATE_INSURANCE);
   const [deleteInsuranceData] = useMutation(DELETE_INSURANCE);
@@ -120,7 +136,7 @@ function Insurance_Registration() {
   // });
 
 
-  if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+  if (loading || buyer.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
   if (error) return `Error! ${error.message}`;
   //console.log(data);
   //const rows=data.stolen;
@@ -132,10 +148,12 @@ function Insurance_Registration() {
       hide: false,
     },
     {
-      field: 'customer',
-      headerName: 'Customer',
-      width: 150,
-      editable: false,
+      field: "buyer",
+      headerName: "Buyer Name",
+      width: 160,
+      valueGetter: (params) => {
+        return params.row.buyer.name;
+      }
     },
     {
       field: 'vehicle_no',
@@ -199,7 +217,13 @@ function Insurance_Registration() {
               </div>
               <div className="field">
                 <label>Customer</label>
-                <input onChange={(e) => { onModalInputChange(e) }} defaultValue={modalInsurance.customer} className="form-control" name="customer" type="text" />
+                {/* <input onChange={(e) => { onModalInputChange(e) }} defaultValue={modalInsurance.customer} className="form-control" name="customer" type="text" /> */}
+                <select defaultValue={modalInsurance.customer} onChange={(e) => onModalInputChange(e)} className="form-control" name="customer">
+                <option>Select Customer</option>
+                {buyer.data.buyer.map(buyerdata => (
+                  <option key={buyerdata.id} value={buyerdata.id}>{buyerdata.name}</option>
+                ))}  
+              </select>
               </div>
               <div className="field">
                 <label>Vehicle No</label>
@@ -242,7 +266,13 @@ function Insurance_Registration() {
             <Divider style={{ marginBottom: '10px', }} />
             <div className="field col-md-6">
               <label>Customer</label>
-              <input onChange={(e) => onInputChange(e)} className="form-control" name="customer" type="text" />
+              {/* <input onChange={(e) => onInputChange(e)} className="form-control" name="customer" type="text" /> */}
+              <select onChange={(e) => onInputChange(e)} className="form-control" name="customer">
+                <option>Select Customer</option>
+                {buyer.data.buyer.map(buyerdata => (
+                  <option key={buyerdata.id} value={buyerdata.id}>{buyerdata.name}</option>
+                ))}  
+              </select>
             </div>
             <div className="field col-md-6">
               <label>Vehicle No</label>
@@ -286,5 +316,3 @@ function Insurance_Registration() {
 }
 
 export default Insurance_Registration;
-
-
