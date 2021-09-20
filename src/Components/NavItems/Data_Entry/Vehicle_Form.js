@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const VehicleQuery = gql`
 subscription MySubscription {
-  vehicle(distinct_on: id) {
+  vehicle(order_by: {id: desc}) {
     body_type
     chess_number
     color

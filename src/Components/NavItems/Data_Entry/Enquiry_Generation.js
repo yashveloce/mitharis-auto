@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const VehicleQuery = gql`
 subscription MySubscription {
-    buyer(distinct_on: id) {
+    buyer(order_by: {id: desc}) {
       address
       adhaar
       customer_type

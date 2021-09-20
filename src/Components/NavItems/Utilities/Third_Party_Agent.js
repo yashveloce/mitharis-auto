@@ -44,7 +44,7 @@ mutation MyMutation($id: Int!) {
 
 const AgentQuery=gql`
 subscription MySubscription {
-    third_party_agent {
+    third_party_agent (order_by: {id: desc}){
       id
       mobile
       name

@@ -16,7 +16,7 @@ import "jspdf-autotable";
 
 const PaperWorkQuery = gql`
 query MyQuery($_lte: date!, $_gte: date!) {
-  paperwork(where: {timestamp: {_gte: $_gte,_lte:$_lte}}){
+  paperwork(where: {timestamp: {_gte: $_gte,_lte:$_lte}}, order_by: {id: desc}){
     amount_paid
     amount_pending
     id

@@ -28,7 +28,7 @@ mutation MyMutation($id: Int!, $accidental: String!, $average: Int!, $bank: Int!
 `
 const READ_STOCK = gql`
 subscription MySubscription {
-  stock {
+  stock(order_by: {id: desc}) {
     accidental
     average
     bank

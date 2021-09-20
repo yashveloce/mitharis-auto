@@ -135,7 +135,7 @@ a {
   left: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 0 1rem;
   background-color: var(--white-color);
   z-index: var(--z-fixed);
@@ -144,6 +144,7 @@ a {
 }
 
 .header_toggle {
+  width: 100%;
   color: var(--first-color);
   font-size: 1.5rem;
   cursor: pointer
@@ -274,7 +275,14 @@ a {
   .show {
     width: calc(var(--nav-width) + 156px)
   }
-  /*.body-pd {*/
-  /*  padding-left: calc(var(--nav-width) + 188px)*/
-  /*}*/
+}
+.MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover {
+  background-color: rgba(0, 0, 0, 0.4)!important;
+  border-radius: 20px;
+}
+
+.nami{
+  position: absolute;
+  font-size: 180%!important;
+  right: 5px;
 }

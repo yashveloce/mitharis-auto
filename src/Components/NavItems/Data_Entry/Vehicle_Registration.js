@@ -112,7 +112,7 @@ function Vehicle_Registration() {
 
   const SellerQuery = gql`
   subscription SellerSubscription {
-    seller(distinct_on: id) {
+    seller(order_by: {id: desc}) {
       address
       adhaar
       email

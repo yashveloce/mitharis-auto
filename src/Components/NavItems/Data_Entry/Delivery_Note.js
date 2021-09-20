@@ -12,7 +12,7 @@ import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 
 const VehicleMasterQuery = gql`
 subscription MySubscription {
-  delivery_note {
+  delivery_note(order_by: {id: desc}) {
     id
     address
     name

@@ -54,7 +54,7 @@ query MyQuery {
 
 const TransactionQuery = gql`
 subscription MySubscription {
-  transaction {
+  transaction(order_by: {id: desc}) {
     advance_amount
     amount_paid
     buyer

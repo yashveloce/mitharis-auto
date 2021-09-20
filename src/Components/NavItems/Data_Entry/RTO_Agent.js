@@ -14,7 +14,7 @@ import { Divider } from '@material-ui/core';
 
 const PaperWorkQuery = gql`
 subscription MySubscription {
-    paperwork {
+    paperwork(order_by: {id: desc}) {
       id
       payable_amount
       amount_pending
@@ -382,8 +382,7 @@ function RTO_Agent() {
                     columns={columns}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
-                    checkboxSelection={false}
-
+                    autoPageSize={true}
                     disableSelectionOnClick
                 />
             </div>

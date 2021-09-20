@@ -27,7 +27,7 @@ query MyQuery {
 
 const InsuranceQuery = gql`
 subscription MySubscription {
-  insurance {
+  insurance(order_by: {id: desc}) {
     buyer {
       id
       name

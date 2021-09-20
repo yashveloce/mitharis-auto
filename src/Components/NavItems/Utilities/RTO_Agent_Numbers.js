@@ -42,7 +42,7 @@ mutation MyMutation2($id: Int!) {
 
 const RtoQuery = gql`
 subscription MySubscription {
-    rto_agent_master {
+    rto_agent_master(order_by: {id: desc}) {
       id
       rto_mobile
       rto_name

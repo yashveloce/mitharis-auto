@@ -16,7 +16,7 @@ query MyQuery {
 
 const EnquiryQuery = gql`
 subscription MySubscription {
-    enquiry {
+    enquiry(order_by: {id: desc}) {
         id
         buyer
         adhaar

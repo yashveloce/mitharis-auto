@@ -15,7 +15,7 @@ import "jspdf-autotable";
 
 const StockQuery=gql`
 query MyQuery {
-  stock {
+  stock(order_by: {id: desc}) {
     accidental
     average
     bank
@@ -57,7 +57,7 @@ query MyQuery {
 
 const TransactionQuery=gql`
 query MyQuery($_lte: date!, $_gte: date!) {
-  transaction(where: {transaction_date: {_gte: $_gte,_lte:$_lte}}) {
+  transaction(where: {transaction_date: {_gte: $_gte,_lte:$_lte}}, order_by: {id: desc}) {
     advance_amount
     amount_paid
     buyer

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const VehicleQuery = gql`
 subscription MySubscription {
-    enq_gen {
+    enq_gen(order_by: {id: desc}) {
         budget_from
         budget_to
         buyer_id

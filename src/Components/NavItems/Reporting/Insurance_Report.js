@@ -17,7 +17,7 @@ import "jspdf-autotable";
 
 const InsuranceQuery=gql`
 query MyQuery($_lte: date!, $_gte: date!) {
-  insurance(where: {timestamp: {_gte: $_gte, _lte: $_lte}}) {
+  insurance(where: {timestamp: {_gte: $_gte, _lte: $_lte}}, order_by: {id: desc}) {
     customer
     from_date
     id

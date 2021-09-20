@@ -14,7 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const BUYER=gql`
 query MyQuery {
-    buyer {
+    buyer (order_by: {id: desc}){
       id
       name
       mobile_no
@@ -28,7 +28,7 @@ query MyQuery {
 
 const SELLER=gql`
 query MyQuery {
-    seller {
+    seller (order_by: {id: desc}){
       id
       name
       mobile_no
@@ -42,8 +42,8 @@ function Customer()
 {
     const { loading, error, data } = useQuery(BUYER);
     const seller_data = useQuery(SELLER);
-    if (loading) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;
-    if (error) return `Error! ${error.message}`;
+    if (loading || seller_data.loading) return <div style={{width:"100%",marginTop:'25%', textAlign:'center'}}><CircularProgress /></div>;
+    if (error || seller_data.error) return `Error! ${error.message}`;
     const columns = [
       { 
         field: 'id', 
@@ -120,7 +120,7 @@ function Customer()
         editable: false,
       },
     ];
-    console.log(seller_data.data.seller);
+    // console.log(seller_data.data.seller);
     const rows=data.buyer;
     const rows1=seller_data.data.seller;
     return(

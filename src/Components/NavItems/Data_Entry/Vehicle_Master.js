@@ -15,7 +15,7 @@ import { Divider } from '@material-ui/core';
 
 const VehicleMasterQuery=gql`
 subscription MySubscription {
-    vehicle_master {
+    vehicle_master(order_by: {id: desc}) {
       model
       id
       brand

@@ -39,7 +39,7 @@ mutation MyMutation($id:Int!){
 
 const StolenQuery = gql`
 subscription MySubscription {
-    stolen {
+    stolen (order_by: {id: desc}){
       criminal_record
       fine
       id
