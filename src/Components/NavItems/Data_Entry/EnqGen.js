@@ -169,28 +169,23 @@ export default function EnqGen() {
         //console.log(data3);
     }
 
-    const [getData, search] = useLazyQuery(SearchQuery);
+    
 
     const onSearch = (e) => {
         e.preventDefault();
         console.log(office_receipt.vehicle_master_id, office_receipt.budget_from, office_receipt.budget_to)
         getData({ variables: { model: office_receipt.vehicle_master_id, budget_from: parseInt(office_receipt.budget_from), budget_to: parseInt(office_receipt.budget_to) }})
 
-        const abc = document.getElementsByName('xyz');
-        if(search.loading){
-            console.log(search.loading);
-        }else if(search.error){
-            console.log(search.error);
-        }else if(!search.loading){
-            console.log(search.data);
-            // abc.value = search.data.stock[0].vehicle_no;
-        }
+        
+        console.log(search.data);
+        
 
     }
-
+    
     const [updateVehicleData] = useMutation(UPDATE_VEHICLE);
     const [insertVehicleData] = useMutation(INSERT_VEHICLE);
     const [deleteVehicleData] = useMutation(DELETE_VEHICLE);
+    const [getData, search] = useLazyQuery(SearchQuery);
     const buyer = useQuery(BuyerQuery);
     if (buyer.loading) {
         console.log(buyer.loading);
@@ -198,7 +193,16 @@ export default function EnqGen() {
     if (buyer.error) {
         console.log(buyer.error);
     }
-
+    if(search.loading){
+        console.log(search.loading);
+    }else if(search.error){
+        console.log(search.error);
+    }else{
+        console.log(search.data);
+        // const abc = document.getElementsByName('xyz');
+        // abc.value=search.data
+        //setSearchVehicle(search.data);
+    }
     const vehicleMaster = useQuery(VehicleMasterQuery);
     if (vehicleMaster.loading) {
         console.log(vehicleMaster.loading);
@@ -426,15 +430,18 @@ export default function EnqGen() {
                                     <div className="col-sm-6">
                                         <div className="form-group">
                                             <span className="form-label">Vehicle Number</span>
-                                            <input className="form-control" type="text" onChange={onInputChange} name='xyz' placeholder="Vehicle Number" />
+                                            <input defaultValue={
+                                                    search.data === undefined ? '' : search.data.stock[0].vehicle_no 
+                                                } className="form-control" type="text" onChange={onInputChange} name='xyz' placeholder="Vehicle Number" />
                                             {/* <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
                                                 <option>Select Vehicle Number</option>
                                                 {
-                                                    vehicleMaster.data.vehicle_master.map(vehicleMaster => (
-                                                        <option key={vehicleMaster.id} value={vehicleMaster.id}> {vehicleMaster.model}</option>
+                                                    search.data.map(vehicle => (
+                                                        <option key={vehicle.id} value={vehicle.id}> {vehicle.vehicle_no}</option>
                                                     ))
                                                 }
                                             </select> */}
+                                            
                                         </div>
                                     </div>
                                     <div className="col-sm-6">
