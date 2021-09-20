@@ -242,7 +242,7 @@ return (
             </div>
         </div>
         <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
-            <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
+            <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Search</button>
             <button className="btn btn-primary" type='reset'>Reset</button>
         </div>
     </form>
