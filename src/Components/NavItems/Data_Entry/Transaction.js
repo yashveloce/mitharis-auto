@@ -12,7 +12,7 @@ import { Divider } from '@material-ui/core';
 
 const StockQuery = gql`
 query MyQuery {
-  stock {
+  stock(where: {is_sold: {_eq: false}}){
     accidental
     average
     bank

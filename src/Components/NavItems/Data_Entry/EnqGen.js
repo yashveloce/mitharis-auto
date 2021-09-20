@@ -1,42 +1,101 @@
 import React, { useState } from 'react'
 import { CircularProgress, Divider } from '@material-ui/core';
-import { gql, useMutation, useSubscription } from '@apollo/client';
+import { gql, useMutation, useQuery, useSubscription, useLazyQuery } from '@apollo/client';
 import { Modal, Button } from "react-bootstrap";
 import { DataGrid } from '@material-ui/data-grid';
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const VehicleQuery = gql`subscription MySubscription {
-    office_receipt(distinct_on: id) {
-      budget_from
-      budget_to
-      fuel_type
+const VehicleQuery = gql`
+subscription MySubscription {
+    enq_gen {
+        budget_from
+        budget_to
+        buyer_id
+        fuel_type
+        stock_vehicle_id
+        vehicle_master_id
+        id
+        buyer {
+            name
+        }
+        stock {
+            vehicle_no
+            vehicleMasterByVehicleMaster {
+              brand
+              model
+            }
+        }
+        vehicle_master {
+            brand
+            model
+        }
+    }
+}      
+  `
+
+const StockQuery = gql`
+query MyQuery {
+    stock(where: {is_sold: {_eq: false}}) {
       id
-      model
-      name
-      owner
-      variant
+      vehicle_no
+      is_sold
+    }
+  }
+`
+
+const SearchQuery = gql`
+query MyQuery($model: Int = 10, $budget_from: bigint = 10, $budget_to: bigint = 10) {
+    stock(where: {is_sold: {_eq: false},vehicle_master: {_eq: $model}, expected_price: {_lte: $budget_to, _gte: $budget_from}}) {
+      id
+      vehicle_no
+      vehicleMasterByVehicleMaster {
+        brand
+        model
+      }
+      seller {
+        name
+      }
     }
   }
   
-  `
+`;
 
-const UPDATE_VEHICLE = gql`
-mutation MyMutation($id: Int = 10, $budget_from: bigint = "", $budget_to: bigint = "", $fuel_type: String = "", $model: String = "", $name: String = "", $owner: String = "", $variant: String = "") {
-    update_office_receipt_by_pk(pk_columns: {id: $id}, _set: {budget_from: $budget_from, budget_to: $budget_to, fuel_type: $fuel_type, model: $model, name: $name, owner: $owner, variant: $variant}) {
+const BuyerQuery = gql`
+query MyQuery {
+    buyer {
+      name
       id
     }
-  }    
+  }
+  
+`;
+
+const VehicleMasterQuery = gql`
+query MyQuery {
+    vehicle_master {
+      id
+      model
+    }
+}  
+`;
+
+const UPDATE_VEHICLE = gql`
+mutation MyMutation($id: Int = 10, $budget_from: bigint = "", $budget_to: bigint = "", $buyer_id: Int = 10, $fuel_type: String = "", $stock_vehicle_id: Int = 10, $vehicle_master_id: Int = 10) {
+    update_enq_gen_by_pk(pk_columns: {id: $id}, _set: {budget_from: $budget_from, budget_to: $budget_to, buyer_id: $buyer_id, fuel_type: $fuel_type, stock_vehicle_id: $stock_vehicle_id, vehicle_master_id: $vehicle_master_id}) {
+      id
+    }
+}  
 `
 const INSERT_VEHICLE = gql`
-mutation MyMutation($variant: String = "", $owner: String = "", $name: String = "", $model: String = "", $fuel_type: String = "", $budget_to: bigint = "", $budget_from: bigint = "") {
-    insert_office_receipt(objects: {budget_from: $budget_from, budget_to: $budget_to, fuel_type: $fuel_type, model: $model, name: $name, owner: $owner, variant: $variant}) {
+mutation MyMutation($stock_vehicle_id: Int = 10, $budget_from: bigint = "", $budget_to: bigint = "", $buyer_id: Int = 10, $fuel_type: String = "", $vehicle_master_id: Int = 10) {
+    insert_enq_gen(objects: {budget_from: $budget_from, budget_to: $budget_to, buyer_id: $buyer_id, fuel_type: $fuel_type, stock_vehicle_id: $stock_vehicle_id, vehicle_master_id: $vehicle_master_id}) {
       affected_rows
     }
-  }    
+  }   
   `
 const DELETE_VEHICLE = gql`
 mutation MyMutation($id: Int = 10) {
-    delete_office_receipt_by_pk(id: $id) {
+    delete_enq_gen_by_pk(id: $id) {
       id
     }
   }  
@@ -44,29 +103,28 @@ mutation MyMutation($id: Int = 10) {
 
 export default function EnqGen() {
     const [showModal, setShow] = useState(false);
+    const [searchVehicle, setSearchVehicle] = useState()
     const [id, setId] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [owner,setOwner]=useState();
+    var ind;
     const [office_receipt, setOfficeReceipt] = useState({
-        name: "",
-        mobile_no: '',
-        model: '',
-        variant: '',
-        owner: '',
-        fuel_type: '',
         budget_from: '',
         budget_to: '',
+        buyer_id: '',
+        fuel_type: '',
+        stock_vehicle_id: '',
+        vehicle_master_id: ''
     })
     const [updateOfficeReceipt, setUpdateOfficeReceipt] = useState({
         id: id,
-        name: "",
-        mobile_no: '',
-        model: '',
-        variant: '',
-        owner: '',
-        fuel_type: '',
         budget_from: '',
         budget_to: '',
+        buyer_id: '',
+        fuel_type: '',
+        stock_vehicle_id: '',
+        vehicle_master_id: ''
     })
     const onInputChange = (e) => {
         setOfficeReceipt({ ...office_receipt, [e.target.name]: e.target.value })
@@ -78,16 +136,15 @@ export default function EnqGen() {
     }
     const onFormSubmit = (e) => {
         e.preventDefault();
+        console.log(office_receipt);
         insertVehicleData({
             variables: {
-                name: office_receipt.name,
-                mobile_no: office_receipt.mobile_no,
-                model: office_receipt.model,
-                variant: office_receipt.variant,
-                owner: office_receipt.owner,
-                fuel_type: office_receipt.fuel_type,
-                budget_from: office_receipt.budget_from,
                 budget_to: office_receipt.budget_to,
+                budget_from: office_receipt.budget_from,
+                buyer_id: office_receipt.buyer_id,
+                fuel_type: office_receipt.fuel_type,
+                stock_vehicle_id: office_receipt.stock_vehicle_id,
+                vehicle_master_id: office_receipt.vehicle_master_id
             }
         });
     }
@@ -100,42 +157,87 @@ export default function EnqGen() {
         updateVehicleData({
             variables: {
                 id: id,
-                name: updateOfficeReceipt.name,
-                mobile_no: updateOfficeReceipt.mobile_no,
-                model: updateOfficeReceipt.model,
-                variant: updateOfficeReceipt.variant,
-                owner: updateOfficeReceipt.owner,
-                fuel_type: updateOfficeReceipt.fuel_type,
-                budget_from: updateOfficeReceipt.budget_from,
                 budget_to: updateOfficeReceipt.budget_to,
+                budget_from: updateOfficeReceipt.budget_from,
+                buyer_id: updateOfficeReceipt.buyer_id,
+                fuel_type: updateOfficeReceipt.fuel_type,
+                stock_vehicle_id: updateOfficeReceipt.stock_vehicle_id,
+                vehicle_master_id: updateOfficeReceipt.vehicle_master_id
             }
         });
         handleClose();
     }
     const editVehicle = (row) => {
-        console.log(row.id);
+        console.log(row.stock_vehicle_id);
         setId(row.id);
         setUpdateOfficeReceipt({
-            name: row.name,
-            mobile_no: row.mobile_no,
-            model: row.model,
-            variant: row.variant,
-            owner: row.owner,
-            fuel_type: row.fuel_type,
-            budget_from: row.budget_from,
             budget_to: row.budget_to,
+            budget_from: row.budget_from,
+            buyer_id: row.buyer_id,
+            fuel_type: row.fuel_type,
+            stock_vehicle_id: row.stock_vehicle_id,
+            vehicle_master_id: row.vehicle_master_id
         })
         handleShow();
         //loadVehicle({ variables: { id:id } });
-        //console.log(data3);
+        console.log(updateOfficeReceipt);
     }
+
+
+
+    const onSearch = (e) => {
+        e.preventDefault();
+        console.log(office_receipt.vehicle_master_id, office_receipt.budget_from, office_receipt.budget_to)
+        getData({ variables: { model: office_receipt.vehicle_master_id, budget_from: parseInt(office_receipt.budget_from), budget_to: parseInt(office_receipt.budget_to) } })
+
+
+        console.log(search.data);
+        setSearchVehicle(search.data)
+
+
+    }
+
     const [updateVehicleData] = useMutation(UPDATE_VEHICLE);
     const [insertVehicleData] = useMutation(INSERT_VEHICLE);
     const [deleteVehicleData] = useMutation(DELETE_VEHICLE);
+    const [getData, search] = useLazyQuery(SearchQuery);
+    const buyer = useQuery(BuyerQuery);
+    if (buyer.loading) {
+        console.log(buyer.loading);
+    }
+    if (buyer.error) {
+        console.log(buyer.error);
+    }
+    if (search.loading) {
+        console.log(search.loading);
+    } else if (search.error) {
+        console.log(search.error);
+    } else {
+        console.log(search.data);
+        // const abc = document.getElementsByName('xyz');
+        // abc.value=search.data
+        //setSearchVehicle(search.data);
+    }
+    const vehicleMaster = useQuery(VehicleMasterQuery);
+    const stockMaster = useQuery(StockQuery);
+    if (vehicleMaster.loading) {
+        console.log(vehicleMaster.loading);
+    }
+    if (vehicleMaster.error) {
+        console.log(vehicleMaster.error);
+    }
 
     const { loading, error, data } = useSubscription(VehicleQuery);
-    if (loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
-    if (error) return `Error! ${error.message}`;
+    if (loading || vehicleMaster.loading || buyer.loading ||stockMaster.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+    if (error || vehicleMaster.error || buyer.error) return `Error! ${error.message}`;
+
+
+    // budget_from
+    // budget_to
+    // buyer_id
+    // fuel_type
+    // stock_vehicle_id
+    // vehicle_master_id
 
     const columns = [
         {
@@ -145,38 +247,29 @@ export default function EnqGen() {
             hide: false,
         },
         {
-            field: 'name',
+            field: 'buyer_id',
             headerName: 'Buyer Name',
+            valueGetter: (params) => {
+                return params.row.buyer.name
+            },
             width: 200,
             hide: false,
         },
         {
-            field: 'model',
-            headerName: 'Model',
-            width: 150,
-            editable: false,
-        },
-        {
-            field: 'variant',
-            headerName: 'Variant',
-            width: 150,
-            editable: false,
-        },
-
-        {
-            field: 'owner',
-            headerName: 'Owner Name',
+            field: 'stock_vehicle_id',
+            headerName: 'Vehicle No',
+            valueGetter: (params) => {
+                return params.row.stock.vehicle_no
+            },
             width: 200,
-            editable: false,
+            hide: false,
         },
-
         {
             field: 'fuel_type',
             headerName: 'Fuel Type',
             width: 150,
             editable: false,
         },
-
         {
             field: 'budget_from',
             headerName: 'Budget From',
@@ -207,7 +300,7 @@ export default function EnqGen() {
         },
     ];
     //console.log(data3);
-    const rows = data.office_receipt;
+    const rows = data.enq_gen;
 
     return (
         <div className='container'>
@@ -227,28 +320,47 @@ export default function EnqGen() {
                                     <div className="row">
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <span className="form-label">Vehicle Name</span>
-                                                <input defaultValue={updateOfficeReceipt.name} className="form-control" type="text" onChange={onModalInputChange} name='name' placeholder="Enter vehicle name" />
+                                                <span className="form-label">Vehicle Model</span>
+                                                {/* <input defaultValue={updateOfficeReceipt.vehicle_master_id} className="form-control" type="text" onChange={onModalInputChange} name='name' placeholder="Enter vehicle name" /> */}
+                                                <select defaultValue={updateOfficeReceipt.vehicle_master_id} onChange={onModalInputChange} className='form-control' name='vehicle_master_id'>
+                                                <option>Select Car</option>
+                                                    {
+                                                        vehicleMaster.data.vehicle_master.map(vehicle => (
+                                                            <option key={vehicle.id} value={vehicle.id}> {vehicle.model}</option>
+                                                        ))
+                                                    }
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <span className="form-label">Car Model</span>
-                                                <input defaultValue={updateOfficeReceipt.model} className="form-control" type="text" onChange={onModalInputChange} name='model' placeholder="Enter car model" />
+                                                {/* <span className="form-label">Vehicle No</span>
+                                                <input defaultValue={updateOfficeReceipt.stock_vehicle_id} className="form-control" type="text" name='stock_vehicle_id' onChange={onModalInputChange} placeholder="Vehicle No" /> */}
+                                                <span className="form-label">Vehicle No</span>
+                                                <select defaultValue={updateOfficeReceipt.stock_vehicle_id} onChange={onModalInputChange} className='form-control' name='stock_vehicle_id'>
+                                                <option>Select Vehicle</option>
+                                                    {
+                                                        stockMaster.data.stock.map(vehicle => (
+                                                            <option key={vehicle.id} value={vehicle.id}> {vehicle.vehicle_no}</option>
+                                                        ))
+                                                    }
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <span className="form-label">Model Variant</span>
-                                                <input defaultValue={updateOfficeReceipt.variant} className="form-control" type="text" onChange={onModalInputChange} name='variant' placeholder="Enter Model Variant" />
+                                                <span className="form-label">Buyer</span>
+                                                <select defaultValue={updateOfficeReceipt.buyer_id} onChange={onModalInputChange} className='form-control' name='buyer_id'>
+                                                <option>Select Buyer</option>
+                                                {
+                                                    buyer.data.buyer.map(buyer => (
+                                                        <option key={buyer.id} value={buyer.id}> {buyer.name}</option>
+                                                    ))
+                                                }
+                                            </select>
                                             </div>
                                         </div>
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <span className="form-label">Owner</span>
-                                                <input defaultValue={updateOfficeReceipt.owner} className="form-control" type="text" onChange={onModalInputChange} name='owner' placeholder="Owner's Name" />
-                                            </div>
-                                        </div>
+                                        
                                         <div className="col-sm-6">
                                             <div className="form-group">
                                                 <span className="form-label">Fuel Type</span>
@@ -301,26 +413,31 @@ export default function EnqGen() {
                                 <div className="row">
                                     <div className="col-sm-6">
                                         <div className="form-group">
+                                            <span className="form-label">Buyer Name</span>
+                                            {/* <input className="form-control" type="text" onChange={onInputChange} name='name' placeholder="Enter vehicle name" /> */}
+                                            <select onChange={onInputChange} className='form-control' name='buyer_id'>
+                                                <option>Select Buyer</option>
+                                                {
+                                                    buyer.data.buyer.map(buyer => (
+                                                        <option key={buyer.id} value={buyer.id}> {buyer.name}</option>
+                                                    ))
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <div className="form-group">
                                             <span className="form-label">Vehicle Name</span>
-                                            <input className="form-control" type="text" onChange={onInputChange} name='name' placeholder="Enter vehicle name" />
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Car Model</span>
-                                            <input className="form-control" type="text" onChange={onInputChange} name='model' placeholder="Enter car model" />
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Model Variant</span>
-                                            <input className="form-control" type="text" onChange={onInputChange} name='variant' placeholder="Enter Model Variant" />
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Owner</span>
-                                            <input className="form-control" type="text" onChange={onInputChange} name='owner' placeholder="Owner's Name" />
+                                            {/* <input className="form-control" type="text" onChange={onInputChange} name='model' placeholder="Enter car model" /> */}
+                                            <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
+                                                <option>Select Buyer</option>
+                                                {
+                                                    vehicleMaster.data.vehicle_master.map(vehicleMaster => (
+                                                        <option key={vehicleMaster.id} value={vehicleMaster.id}> {vehicleMaster.model}</option>
+                                                    ))
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="col-sm-6">
@@ -350,6 +467,48 @@ export default function EnqGen() {
                                     </div>
                                 </div>
 
+                                <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                                    <button className="btn btn-primary" type='button' onClick={onSearch}>Search</button>
+                                </div>
+                                <div className='row'>
+                                    <div className="col-sm-6">
+                                        <div className="form-group">
+                                            <span className="form-label">Vehicle Number</span>
+                                            {/* <input defaultValue={
+                                                    search.data === undefined ? '' : search.data.stock[0].vehicle_no 
+                                                } className="form-control" type="text" onChange={onInputChange} name='xyz' placeholder="Vehicle Number" /> */}
+                                            <select className='form-control' name='vehicle_no' onChange={(e)=>{
+                                                onInputChange(e);
+                                                }} name='stock_vehicle_id' placeholder="Vehicle Number">
+                                                {
+                                                    search.data === undefined ? '' : search.data.stock.map((vehicle,index) => {
+                                                        console.log(index);
+                                                        ind=index;
+                                                        return(
+                                                            <option key={index} value={vehicle.id}>{vehicle.vehicle_no}</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
+                                            {/* <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
+                                                {
+                                                    search.data === undefined ? '' : search.data.map(vehicle=>{
+                                                        <option>{vehicle.stock.vehicle_no}</option>
+                                                    })
+                                                }
+                                            </select> */}
+
+                                        </div>
+                                    </div>
+                                    {/* <div className="col-sm-6">
+                                        <div className="form-group">
+                                            <span className="form-label">Owner</span>
+                                            <input defaultValue={
+                                                search.data === undefined ? '' : search.data.stock[ind].seller.name
+                                            } className="form-control" type="text" onChange={onInputChange} name='owner' placeholder="Owner's Name" />
+                                        </div>
+                                    </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -370,8 +529,8 @@ export default function EnqGen() {
                     disableSelectionOnClick
                 />
                 <Link to={`/Data_Entry/Enquiry_Generation`} className="btn btn-success">
-          Previous
-        </Link>
+                    Previous
+                </Link>
             </div>
 
         </div>
