@@ -253,6 +253,7 @@ function Delivery_Note() {
       <div className="col-md-12">
         <h1 style={{ width: '100%', textAlign: 'center' }}>Delivery Note</h1>
         <Divider style={{ marginBottom: '10px', }} />
+        <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
         <form onSubmit={(e) => { onFormSubmit(e) }} className="form-group">
           <div className="row">
             <h2>On Payment of Rs.</h2>
@@ -297,6 +298,7 @@ function Delivery_Note() {
             <button className="btn btn-primary" type='reset'>Reset</button>
           </div>
         </form>
+        </div>
       </div><br />
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid

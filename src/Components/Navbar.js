@@ -114,7 +114,7 @@ export default function Navbar() {
             </ListItem>
           </Link>
           {/* Enquiry_Generation */}
-          <Link to='/Data_Entry/Enquiry_Generation' >
+          <Link to='/Data_Entry/Buyer_Registration' >
 
             <ListItem
           selected={selectedIndex === 3}

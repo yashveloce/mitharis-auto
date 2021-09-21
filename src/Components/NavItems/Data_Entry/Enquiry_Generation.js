@@ -416,7 +416,7 @@ export default function Enquiry_Generation() {
 
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
-                        <Link to={`/Data_Entry/Enquiry_Generation1`} className="btn btn-success" style={{ marginRight: '50px' }}>
+                        <Link to={`/Data_Entry/Enquiry_Generation`} className="btn btn-success" style={{ marginRight: '50px' }}>
                             Next
                         </Link>
                         <button className="btn btn-primary" type='reset'>Reset</button>

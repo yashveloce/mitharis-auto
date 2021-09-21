@@ -33,9 +33,19 @@ subscription MySubscription {
 }      
   `
 
+const StockQuery = gql`
+query MyQuery {
+    stock(where: {is_sold: {_eq: false}}) {
+      id
+      vehicle_no
+      is_sold
+    }
+  }
+`
+
 const SearchQuery = gql`
 query MyQuery($model: Int = 10, $budget_from: bigint = 10, $budget_to: bigint = 10) {
-    stock(where: {vehicle_master: {_eq: $model}, expected_price: {_lte: $budget_to, _gte: $budget_from}}) {
+    stock(where: {is_sold: {_eq: false},vehicle_master: {_eq: $model}, expected_price: {_lte: $budget_to, _gte: $budget_from}}) {
       id
       vehicle_no
       vehicleMasterByVehicleMaster {
@@ -97,7 +107,7 @@ export default function EnqGen() {
     const [id, setId] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    // const [owner, setOwner] = useState();
+    // const [owner,setOwner]=useState();
     // var ind;
     const [office_receipt, setOfficeReceipt] = useState({
         budget_from: '',
@@ -117,6 +127,7 @@ export default function EnqGen() {
         vehicle_master_id: ''
     })
     const onInputChange = (e) => {
+        console.log(e.target.value);
         setOfficeReceipt({ ...office_receipt, [e.target.name]: e.target.value })
     }
 
@@ -158,7 +169,7 @@ export default function EnqGen() {
         handleClose();
     }
     const editVehicle = (row) => {
-        console.log(row.id);
+        console.log(row.stock_vehicle_id);
         setId(row.id);
         setUpdateOfficeReceipt({
             budget_to: row.budget_to,
@@ -170,7 +181,7 @@ export default function EnqGen() {
         })
         handleShow();
         //loadVehicle({ variables: { id:id } });
-        //console.log(data3);
+        console.log(updateOfficeReceipt);
     }
 
 
@@ -183,7 +194,7 @@ export default function EnqGen() {
 
         console.log(search.data);
         // setSearchVehicle(search.data)
-
+        
 
     }
 
@@ -209,6 +220,7 @@ export default function EnqGen() {
         //setSearchVehicle(search.data);
     }
     const vehicleMaster = useQuery(VehicleMasterQuery);
+    const stockMaster = useQuery(StockQuery);
     if (vehicleMaster.loading) {
         console.log(vehicleMaster.loading);
     }
@@ -217,7 +229,7 @@ export default function EnqGen() {
     }
 
     const { loading, error, data } = useSubscription(VehicleQuery);
-    if (loading || vehicleMaster.loading || buyer.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+    if (loading || vehicleMaster.loading || buyer.loading ||stockMaster.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
     if (error || vehicleMaster.error || buyer.error) return `Error! ${error.message}`;
 
 
@@ -240,6 +252,15 @@ export default function EnqGen() {
             headerName: 'Buyer Name',
             valueGetter: (params) => {
                 return params.row.buyer.name
+            },
+            width: 200,
+            hide: false,
+        },
+        {
+            field: 'stock_vehicle_id',
+            headerName: 'Vehicle No',
+            valueGetter: (params) => {
+                return params.row.stock.vehicle_no
             },
             width: 200,
             hide: false,
@@ -300,28 +321,47 @@ export default function EnqGen() {
                                     <div className="row">
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <span className="form-label">Vehicle Name</span>
-                                                <input defaultValue={updateOfficeReceipt.name} className="form-control" type="text" onChange={onModalInputChange} name='name' placeholder="Enter vehicle name" />
+                                                <span className="form-label">Vehicle Model</span>
+                                                {/* <input defaultValue={updateOfficeReceipt.vehicle_master_id} className="form-control" type="text" onChange={onModalInputChange} name='name' placeholder="Enter vehicle name" /> */}
+                                                <select defaultValue={updateOfficeReceipt.vehicle_master_id} onChange={onModalInputChange} className='form-control' name='vehicle_master_id'>
+                                                <option>Select Car</option>
+                                                    {
+                                                        vehicleMaster.data.vehicle_master.map(vehicle => (
+                                                            <option key={vehicle.id} value={vehicle.id}> {vehicle.model}</option>
+                                                        ))
+                                                    }
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <span className="form-label">Car Model</span>
-                                                <input defaultValue={updateOfficeReceipt.model} className="form-control" type="text" onChange={onModalInputChange} name='model' placeholder="Enter car model" />
+                                                {/* <span className="form-label">Vehicle No</span>
+                                                <input defaultValue={updateOfficeReceipt.stock_vehicle_id} className="form-control" type="text" name='stock_vehicle_id' onChange={onModalInputChange} placeholder="Vehicle No" /> */}
+                                                <span className="form-label">Vehicle No</span>
+                                                <select defaultValue={updateOfficeReceipt.stock_vehicle_id} onChange={onModalInputChange} className='form-control' name='stock_vehicle_id'>
+                                                <option>Select Vehicle</option>
+                                                    {
+                                                        stockMaster.data.stock.map(vehicle => (
+                                                            <option key={vehicle.id} value={vehicle.id}> {vehicle.vehicle_no}</option>
+                                                        ))
+                                                    }
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <span className="form-label">Model Variant</span>
-                                                <input defaultValue={updateOfficeReceipt.variant} className="form-control" type="text" onChange={onModalInputChange} name='variant' placeholder="Enter Model Variant" />
+                                                <span className="form-label">Buyer</span>
+                                                <select defaultValue={updateOfficeReceipt.buyer_id} onChange={onModalInputChange} className='form-control' name='buyer_id'>
+                                                <option>Select Buyer</option>
+                                                {
+                                                    buyer.data.buyer.map(buyer => (
+                                                        <option key={buyer.id} value={buyer.id}> {buyer.name}</option>
+                                                    ))
+                                                }
+                                            </select>
                                             </div>
                                         </div>
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <span className="form-label">Owner</span>
-                                                <input defaultValue={updateOfficeReceipt.owner} className="form-control" type="text" onChange={onModalInputChange} name='owner' placeholder="Owner's Name" />
-                                            </div>
-                                        </div>
+                                        
                                         <div className="col-sm-6">
                                             <div className="form-group">
                                                 <span className="form-label">Fuel Type</span>
@@ -441,6 +481,7 @@ export default function EnqGen() {
                                             <select className='form-control' onChange={(e) => {
                                                 onInputChange(e);
                                             }} name='stock_vehicle_id' placeholder="Vehicle Number">
+                                                <option>Select Vehicle</option>
                                                 {
                                                     search.data === undefined ? '' : search.data.stock.map((vehicle, index) => {
                                                         console.log(index);
@@ -476,11 +517,7 @@ export default function EnqGen() {
 
                     <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                         <button className="btn btn-primary" type='submit' style={{ marginRight: '50px' }}>Save</button>
-                        <Link to={`/Data_Entry/Enquiry_Generation`} className="btn btn-success" style={{ marginRight: '50px' }}>
-                            Previous
-                        </Link>
                         <button className="btn btn-primary" type='reset'>Reset</button>
-
                     </div>
                 </form>
             </div><br />
@@ -493,6 +530,9 @@ export default function EnqGen() {
                     checkboxSelection={false}
                     disableSelectionOnClick
                 />
+                <Link to={`/Data_Entry/Enquiry_Generation`} className="btn btn-success">
+                    Previous
+                </Link>
             </div>
 
         </div>

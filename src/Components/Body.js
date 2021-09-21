@@ -73,8 +73,8 @@ const Body = () => {
             <Route exact path='/Data_Entry/Delivery_Note' component={Delivery_Note} />
             <Route exact path='/Data_Entry/Vehicle_Form' component={Vehicle_Form} />
             <Route exact path='/Data_Entry/Vehicle_Registration' component={Vehicle_Registration} />
-            <Route exact path='/Data_Entry/Enquiry_Generation' component={Enquiry_Generation} />
-            <Route exact path='/Data_Entry/Enquiry_Generation1' component={EnqGen} />
+            <Route exact path='/Data_Entry/Buyer_Registration' component={Enquiry_Generation} />
+            <Route exact path='/Data_Entry/Enquiry_Generation' component={EnqGen} />
             <Route exact path='/Data_Entry/Enquiry_Generation2' component={EnquiryCrud} />
             <Route exact path='/Data_Entry/Transactions' component={Transaction} />
             <Route exact path='/Data_Entry/Insurance_Registration' component={Insurance_Registration} />
