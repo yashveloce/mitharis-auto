@@ -22,6 +22,15 @@ query MyQuery($_lte: date!, $_gte: date!) {
     id
     payable_amount
     rto_id
+    rto_agent_master {
+      id
+      rto_mobile
+      rto_name
+    }
+    sellerBySeller {
+      id
+      name
+    }
     seller_id
     timestamp
   }
@@ -69,6 +78,18 @@ function PaperWork() {
             hide: false,
         },
         {
+            field: 'rto_id',
+            headerName: 'RTO Agent ID',
+            width: 130,
+            editable: false,
+        },
+        {
+            field: 'seller_id',
+            headerName: 'Seller Id',
+            width: 150,
+            editable: false,
+        },
+        {
             field: 'amount_paid',
             headerName: 'Amount Paid',
             width: 190,
@@ -84,19 +105,6 @@ function PaperWork() {
             field: 'payable_amount',
             headerName: 'Payable Amount',
             width: 190,
-            editable: false,
-        },
-
-        {
-            field: 'rto_id',
-            headerName: 'RTO Agent ID',
-            width: 130,
-            editable: false,
-        },
-        {
-            field: 'seller_id',
-            headerName: 'Seller Id',
-            width: 150,
             editable: false,
         },
     ];
@@ -121,7 +129,7 @@ function PaperWork() {
         const title = "Paperwork Report";
         const headers = [["ID","SELLER","AMOUNT PENDING","AMOUNT PAID", "AMOUNT PAYABLE","RTO"]];
     
-        const comm_data = data.paperwork.map(comm=> [comm.id,comm.seller_id,comm.amount_pending,comm.amount_paid,comm.payable_amount,comm.rto_id]);
+        const comm_data = data.paperwork.map(comm=> [comm.id,comm.sellerBySeller.name,comm.amount_pending,comm.amount_paid,comm.payable_amount,comm.rto_agent_master.rto_name]);
     
         let content = {
           startY: 50,

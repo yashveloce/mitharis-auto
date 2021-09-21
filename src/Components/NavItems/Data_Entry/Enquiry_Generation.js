@@ -380,8 +380,6 @@ export default function Enquiry_Generation() {
                             </div>
                         </div>
                     </div>
-
-
                     <div className="row">
                         <div className="col-sm-6">
                             <div className="form-group" style={{ width: '100%' }}>

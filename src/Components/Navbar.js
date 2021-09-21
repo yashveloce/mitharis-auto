@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 // import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: 360,
-    backgroundColor: 'black',
     color: 'white',
   },
   nested: {
@@ -33,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar() {
+  const [selectedIndex, setSelectedIndex] = useState(1);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
   const classes = useStyles();
   const [open1, setOpen1] = React.useState(false);
 
@@ -60,194 +65,256 @@ export default function Navbar() {
     >
       {/* Dashboard */}
       <Link to='/Dashboard'>
-        <ListItem button>
+        <ListItem
+          selected={selectedIndex === 0}
+          onClick={(event) => handleListItemClick(event, 0)}
+          button>
           <ListItemIcon>
             <DashboardIcon style={{ color: 'white' }} />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <ListItemText primary="Dashboard" className='menu-item-color' />
 
         </ListItem>
       </Link>
 
       {/* Data Entry */}
 
-      <ListItem button onClick={handleClick1} style={{paddingLeft:'30px'}}>
+      <ListItem button onClick={handleClick1} style={{ paddingLeft: '30px' }}>
         <ListItemIcon>
           <SettingsIcon style={{ color: 'white' }} />
         </ListItemIcon>
-        <ListItemText primary="Data Entry" />
+        <ListItemText primary="Data Entry" className='menu-item-color' />
         {open1 ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open1} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-         {/* Vehicle_Master */}
+          {/* Vehicle_Master */}
           <Link to='/Data_Entry/Vehicle_Master' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+              selected={selectedIndex === 1}
+              onClick={(event) => handleListItemClick(event, 1)}
+              button className={classes.nested}>
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Vehicle Master" />
+              <ListItemText primary="Vehicle Master" className='menu-item-color' />
             </ListItem>
           </Link>
-        {/* Vehicle_Registration */}
+          {/* Vehicle_Registration */}
           <Link to='/Data_Entry/Vehicle_Registration' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 2}
+          onClick={(event) => handleListItemClick(event, 2)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Vehicle Registration" />
+              <ListItemText primary="Vehicle Registration" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Enquiry_Generation */}
           <Link to='/Data_Entry/Enquiry_Generation' >
 
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 3}
+          onClick={(event) => handleListItemClick(event, 3)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <AccountBalanceIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Enquiry Generation" />
+              <ListItemText primary="Enquiry Generation" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Transactions */}
           <Link to='/Data_Entry/Transactions' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 4}
+          onClick={(event) => handleListItemClick(event, 4)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <LocationCityIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Transactions" />
+              <ListItemText primary="Transactions" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Insurance_Registration */}
           <Link to='/Data_Entry/Insurance_Registration' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 5}
+          onClick={(event) => handleListItemClick(event, 5)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <StarBorder style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Insurance Registration" />
+              <ListItemText primary="Insurance Registration" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* RTO_Agent */}
           <Link to='/Data_Entry/RTO_Agent' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 6}
+          onClick={(event) => handleListItemClick(event, 6)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <PinDropIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="RTO Agent" />
+              <ListItemText primary="RTO Agent" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Stollen */}
           <Link to='/Data_Entry/Stollen' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 16}
+          onClick={(event) => handleListItemClick(event, 16)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <StarBorder style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Stollen" />
+              <ListItemText primary="Stollen" className='menu-item-color' />
             </ListItem>
           </Link>
         </List>
       </Collapse>
 
-      
+
       {/* Reporting */}
 
-      <ListItem button onClick={handleClick2} style={{paddingLeft:'30px'}}>
+      <ListItem button onClick={handleClick2} style={{ paddingLeft: '30px' }}>
         <ListItemIcon>
           <SettingsIcon style={{ color: 'white' }} />
         </ListItemIcon>
-        <ListItemText primary="Reporting" />
+        <ListItemText primary="Reporting" className='menu-item-color' />
         {open2 ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open2} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-        {/* Vehicle_History */}
+          {/* Vehicle_History */}
           <Link to='/Reporting/Vehicle_History' >
 
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 7}
+          onClick={(event) => handleListItemClick(event, 7)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Vehicle History" />
+              <ListItemText primary="Vehicle History" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Sales_Report */}
           <Link to='/Reporting/Sales_Report' >
 
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 8}
+          onClick={(event) => handleListItemClick(event, 8)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <AccountBalanceIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Sales Report" />
+              <ListItemText primary="Sales Report" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Commission_Report */}
           <Link to='/Reporting/Commission_Report' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 9}
+          onClick={(event) => handleListItemClick(event, 9)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <LocationCityIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Commission Report" />
+              <ListItemText primary="Commission Report" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Insurance_Report */}
           <Link to='/Reporting/Insurance_Report' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 10}
+          onClick={(event) => handleListItemClick(event, 10)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <StarBorder style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Insurance Report" />
+              <ListItemText primary="Insurance Report" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Paperwork */}
           <Link to='/Reporting/Paperwork' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 11}
+          onClick={(event) => handleListItemClick(event, 11)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <PinDropIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Paperwork" />
+              <ListItemText primary="Paperwork" className='menu-item-color' />
             </ListItem>
           </Link>
         </List>
       </Collapse>
 
-      
+
       {/* Utilities */}
 
-      <ListItem button onClick={handleClick3} style={{paddingLeft:'30px'}}>
+      <ListItem button onClick={handleClick3} style={{ paddingLeft: '30px' }}>
         <ListItemIcon>
           <SettingsIcon style={{ color: 'white' }} />
         </ListItemIcon>
-        <ListItemText primary="Utilities" />
+        <ListItemText primary="Utilities" className='menu-item-color' />
         {open3 ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open3} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-        {/* Third_Party_Agent */}
+          {/* Third_Party_Agent */}
           <Link to='/Utilities/Third_Party_Agent' >
 
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 12}
+          onClick={(event) => handleListItemClick(event, 12)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <FlagIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Third-Party Agent" />
+              <ListItemText primary="Third-Party Agent" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* RTO_Agent */}
           <Link to='/Utilities/RTO_Agent_Numbers' >
 
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 13}
+          onClick={(event) => handleListItemClick(event, 13)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <AccountBalanceIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="RTO agent" />
+              <ListItemText primary="RTO agent" className='menu-item-color' />
             </ListItem>
           </Link>
           {/* Customer */}
           <Link to='/Utilities/Customer' >
-            <ListItem button className={classes.nested}>
+            <ListItem
+          selected={selectedIndex === 14}
+          onClick={(event) => handleListItemClick(event, 14)}
+          button
+          className={classes.nested}>
               <ListItemIcon>
                 <LocationCityIcon style={{ color: 'white' }} />
               </ListItemIcon>
-              <ListItemText primary="Customer" />
+              <ListItemText primary="Customer" className='menu-item-color' />
             </ListItem>
           </Link>
         </List>

@@ -25,6 +25,10 @@ query MyQuery($_lte: date!, $_gte: date!) {
     insurance_type
     to_date
     vehicle_no
+    buyer {
+      id
+      name
+    }
   }
 }
 `
@@ -66,7 +70,9 @@ function Insurance_Report()
         field: 'customer',
         headerName: 'Customer',
         width: 150,
-        editable: false,
+        valueGetter: (params) => {
+          return params.row.buyer.name;
+        }
       },
       {
         field: 'vehicle_no',
@@ -119,7 +125,7 @@ function Insurance_Report()
         const title = "Insurance Report";
         const headers = [["ID","CUSTOMER","VEHICLE","FROM", "TO","INSURANCE_AMOUNT","INSURANCE_TYPE"]];
     
-        const comm_data = data.insurance.map(comm=> [comm.id,comm.customer,comm.vehicle_no,comm.from_date,comm.to_date,comm.insurance_amount,comm.insurance_type]);
+        const comm_data = data.insurance.map(comm=> [comm.id,comm.buyer.name,comm.vehicle_no,comm.from_date,comm.to_date,comm.insurance_amount,comm.insurance_type]);
     
         let content = {
           startY: 50,

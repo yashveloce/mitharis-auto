@@ -212,7 +212,7 @@ function Commission_Report()
         const title = "Commission Report";
         const headers = [["ID","SELLER","BUYER","SELLER COMMISSION","BUYER_COMMISSION","RTO COMMISSION","VEHICLE"]];
     
-        const comm_data = data.transaction.map(comm=> [comm.id,comm.seller,comm.buyer,comm.seller_commission,comm.buyer_commission,comm.rto_commission,comm.vehicle]);
+        const comm_data = data.transaction.map(comm=> [comm.id,comm.sellerBySeller.name,comm.buyerByBuyer.name,comm.seller_commission,comm.buyer_commission,comm.rto_commission,comm.stock.vehicle_no]);
     
         let content = {
           startY: 50,

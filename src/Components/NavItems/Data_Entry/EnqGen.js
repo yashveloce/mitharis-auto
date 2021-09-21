@@ -127,6 +127,7 @@ export default function EnqGen() {
         vehicle_master_id: ''
     })
     const onInputChange = (e) => {
+        console.log(e.target.value);
         setOfficeReceipt({ ...office_receipt, [e.target.name]: e.target.value })
     }
 
@@ -193,7 +194,7 @@ export default function EnqGen() {
 
         console.log(search.data);
         setSearchVehicle(search.data)
-
+        
 
     }
 
@@ -477,14 +478,15 @@ export default function EnqGen() {
                                             {/* <input defaultValue={
                                                     search.data === undefined ? '' : search.data.stock[0].vehicle_no 
                                                 } className="form-control" type="text" onChange={onInputChange} name='xyz' placeholder="Vehicle Number" /> */}
-                                            <select className='form-control' name='vehicle_no' onChange={(e)=>{
+                                            <select className='form-control' onChange={(e) => {
                                                 onInputChange(e);
-                                                }} name='stock_vehicle_id' placeholder="Vehicle Number">
+                                            }} name='stock_vehicle_id' placeholder="Vehicle Number">
+                                                <option>Select Vehicle</option>
                                                 {
-                                                    search.data === undefined ? '' : search.data.stock.map((vehicle,index) => {
+                                                    search.data === undefined ? '' : search.data.stock.map((vehicle, index) => {
                                                         console.log(index);
-                                                        ind=index;
-                                                        return(
+                                                        // ind = index;
+                                                        return (
                                                             <option key={index} value={vehicle.id}>{vehicle.vehicle_no}</option>
                                                         )
                                                     })

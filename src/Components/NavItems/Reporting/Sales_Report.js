@@ -228,7 +228,7 @@ function Transaction()
         const title = "Sales Report";
         const headers = [["ID","SELLER","BUYER","VEHICLE","ADVANCE AMOUNT","AMOUNT PAID","PENDING AMOUNT"]];
     
-        const comm_data = data.transaction.map(comm=> [comm.id,comm.seller,comm.buyer,comm.advance_amount,comm.vehicle,comm.amount_paid,comm.pending_amount]);
+        const comm_data = data.transaction.map(comm=> [comm.id,comm.sellerBySeller.name,comm.buyerByBuyer.name,comm.stock.vehicle_no,comm.advance_amount,comm.amount_paid,comm.pending_amount]);
     
         let content = {
           startY: 50,
