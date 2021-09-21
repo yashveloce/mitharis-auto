@@ -303,13 +303,13 @@ function Vehicle_Registration() {
               <input onChange={onInputChange} className="form-control" name="name" type="text" placeholder='Enter Your Name' required />
             </div>
 
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Occupation</label>
               <input onChange={onInputChange} className="form-control" name="occupation" type="text" placeholder='Enter Your Occupation' required />
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Contact Details</label>
               <div style={{ display: 'flex' }}>
                 <input onChange={onInputChange} className="form-control" name="mobile_no" type="text" placeholder='+91' style={{ width: '50%' }} required />
@@ -317,35 +317,35 @@ function Vehicle_Registration() {
               </div>
             </div>
 
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Enter OTP</label>
               <input onChange={onInputChange} className="form-control" name="otp" type="text" placeholder='Enter Your OTP' />
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>License Number</label>
               <input onChange={onInputChange} className="form-control" name="licence" type="text" placeholder='Enter Your License Number' required />
             </div>
 
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Pan Number</label>
               <input onChange={onInputChange} className="form-control" name="pan" type="text" placeholder='Enter Your Pan Number' required />
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Email</label>
               <input onChange={onInputChange} className="form-control" name="email" type="text" placeholder='Enter Your Email' required />
             </div>
 
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Adhaar Number</label>
               <input onChange={onInputChange} className="form-control" name="adhaar" type="text" placeholder='Enter Your Adhar Number' required />
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Address</label>
               <input onChange={onInputChange} className="form-control" name="address" type="text" placeholder='Enter Your Address' required />
             </div>

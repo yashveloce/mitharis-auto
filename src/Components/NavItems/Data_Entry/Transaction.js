@@ -410,48 +410,48 @@ function Transaction() {
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Seller Commission</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="seller_commission" type="text" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Buyer Commission</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="buyer_commission" type="text" />
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Advance Amount</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="advance_amount" type="text" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Amount Paid</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="amount_paid" type="text" />
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Pending Amount</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="pending_amount" type="text" />
             </div>
 
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>RTO Commission</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="rto_commission" type="text" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Registered Date</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="reg_date" type="date" />
             </div>
           </div>
           <div className="row">
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Transaction Date</label>
               <input onChange={e => onInputChange(e)} className="form-control" name="transaction_date" type="date" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Vehicle</label>
 
               <select onChange={e => onInputChange(e)} className="form-control" name="vehicle">

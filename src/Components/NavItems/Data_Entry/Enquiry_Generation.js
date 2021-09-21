@@ -345,37 +345,37 @@ export default function Enquiry_Generation() {
                                 <input className="form-control" onChange={e => onInputChange(e)} name="email" type="email" placeholder="Enter your email" />
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                             <div className="form-group">
                                 <span className="form-label">Contact Details</span>
                                 <input className="form-control" onChange={e => onInputChange(e)} name="mobile_no" type="text" placeholder="Enter your contact number" />
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                             <div className="form-group">
                                 <span className="form-label">Occupation</span>
                                 <input className="form-control" onChange={e => onInputChange(e)} name="occupation" type="text" placeholder="Enter your occupation" />
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                             <div className="form-group">
                                 <span className="form-label">License number</span>
                                 <input className="form-control" onChange={e => onInputChange(e)} name="license_number" type="text" placeholder="Enter your license number" />
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                             <div className="form-group">
                                 <span className="form-label">Pan Card Number</span>
                                 <input className="form-control" onChange={e => onInputChange(e)} name="pan" type="text" placeholder="Enter your Pan Card Number" />
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                             <div className="form-group">
                                 <span className="form-label">Adhaar card number</span>
                                 <input className="form-control" onChange={e => onInputChange(e)} name="adhaar" type="text" placeholder="Enter your adhar card number" />
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                             <div className="form-group">
                                 <span className="form-label">Address</span>
                                 <input className="form-control" onChange={e => onInputChange(e)} name="address" type="text" placeholder="Enter your address" />
@@ -385,7 +385,7 @@ export default function Enquiry_Generation() {
 
 
                     <div className="row">
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                             <div className="form-group" style={{ width: '100%' }}>
                                 <p className="form-label">Customer Type</p>
                                 <div style={{ width: '100%', textAlign: 'center' }}>

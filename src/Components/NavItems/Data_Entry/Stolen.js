@@ -215,7 +215,7 @@ function Stolen() {
               <label>Vehicle No</label>
               <input onChange={e => onVehicle_noChange(e)} className="form-control" name="vehicle_no" type="text" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <div className="form-check">
                 <label>Fine</label>
                 <input onChange={e => onFineChange(e)} className="form-check-input" name="fine" type="checkbox" />

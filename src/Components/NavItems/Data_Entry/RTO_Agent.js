@@ -280,17 +280,17 @@ function RTO_Agent() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="field col-md-6">
+                        <div className="field col-md-6 mt-2">
                             <label>Payable Amount</label>
                             <input onChange={e => onInputChange(e)} className="form-control" name="payable_amount" type="text" />
                         </div>
-                        <div className="field col-md-6">
+                        <div className="field col-md-6 mt-2">
                             <label>Amount Paid</label>
                             <input onChange={e => onInputChange(e)} className="form-control" name="amount_paid" type="text" />
                         </div>
                     </div>
                     <div className="row">
-                        <div className="field col-md-6">
+                        <div className="field col-md-6 mt-2">
                             <label>RTO</label>
                             <input onChange={e => onInputChange(e)} className="form-control" name="rto_id" type="text" />
                         </div>

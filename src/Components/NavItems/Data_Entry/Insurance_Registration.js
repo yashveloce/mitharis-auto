@@ -246,23 +246,23 @@ function Insurance_Registration() {
               <label>Customer</label>
               <input onChange={(e) => onInputChange(e)} className="form-control" name="customer" type="text" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 ">
               <label>Vehicle No</label>
               <input onChange={(e) => onInputChange(e)} className="form-control" name="vehicle_no" type="text" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>From Date</label>
               <input onChange={(e) => onInputChange(e)} className="form-control" name="from_date" type="date" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>To Date</label>
               <input onChange={(e) => onInputChange(e)} className="form-control" name="to_date" type="date" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Insurance Amount</label>
               <input onChange={(e) => onInputChange(e)} className="form-control" name="insurance_amount" type="text" />
             </div>
-            <div className="field col-md-6">
+            <div className="field col-md-6 mt-2">
               <label>Insurance Type</label>
               <input onChange={(e) => onInputChange(e)} className="form-control" name="insurance_type" type="text" />
             </div>
