@@ -193,6 +193,7 @@ function RTO_Agent_Numbers() {
           rows={rows}
           columns={columns}
           pageSize={10}
+          style={{borderTop: '4px solid rgb(5, 56, 107)'}}
           rowsPerPageOptions={[10]}
           checkboxSelection={false}
           disableSelectionOnClick

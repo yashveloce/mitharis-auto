@@ -168,6 +168,7 @@ function Insurance_Report()
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection={false}
+        style={{borderTop: '4px solid rgb(5, 56, 107)'}}
         components={{
             Toolbar: GridToolbar,
           }}

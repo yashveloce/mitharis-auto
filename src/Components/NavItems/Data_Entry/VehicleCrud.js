@@ -824,6 +824,7 @@ function VehicleCrud() {
         <div className="col-md-12">
           <h1 style={{ width: '100%', textAlign: 'center' }}>Vehicle Registration</h1>
           <Divider style={{ marginBottom: '10px', }} />
+        <div className='card card-primary card-outline' style={{padding: '20px', borderTop: '4px solid #05386b'}}>
           <form className="form-group" onSubmit={e => onFormSubmit(e)}>
 
             <div className="row">
@@ -1046,12 +1047,14 @@ function VehicleCrud() {
               <button className="btn btn-primary" type='reset'>Reset</button>
             </div>
           </form>
+        </div>
         </div><br />
         <div style={{ height: 500, width: '100%' }}>
           <DataGrid
             rows={rows}
             columns={columns}
             pageSize={10}
+            style={{borderTop: '4px solid rgb(5, 56, 107)'}}
             rowsPerPageOptions={[10]}
             checkboxSelection={false}
             disableSelectionOnClick

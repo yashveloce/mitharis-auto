@@ -283,6 +283,7 @@ function Stolen() {
         <DataGrid
           rows={rows}
           columns={columns}
+          style={{borderTop: '4px solid rgb(5, 56, 107)'}}
           pageSize={10}
           rowsPerPageOptions={[10]}
           checkboxSelection={false}

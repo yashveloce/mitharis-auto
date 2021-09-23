@@ -194,7 +194,7 @@ export default function EnqGen() {
 
         console.log(search.data);
         // setSearchVehicle(search.data)
-        
+
 
     }
 
@@ -229,7 +229,7 @@ export default function EnqGen() {
     }
 
     const { loading, error, data } = useSubscription(VehicleQuery);
-    if (loading || vehicleMaster.loading || buyer.loading ||stockMaster.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
+    if (loading || vehicleMaster.loading || buyer.loading || stockMaster.loading) return <div style={{ width: "100%", marginTop: '25%', textAlign: 'center' }}><CircularProgress /></div>;
     if (error || vehicleMaster.error || buyer.error) return `Error! ${error.message}`;
 
 
@@ -324,7 +324,7 @@ export default function EnqGen() {
                                                 <span className="form-label">Vehicle Model</span>
                                                 {/* <input defaultValue={updateOfficeReceipt.vehicle_master_id} className="form-control" type="text" onChange={onModalInputChange} name='name' placeholder="Enter vehicle name" /> */}
                                                 <select defaultValue={updateOfficeReceipt.vehicle_master_id} onChange={onModalInputChange} className='form-control' name='vehicle_master_id'>
-                                                <option>Select Car</option>
+                                                    <option>Select Car</option>
                                                     {
                                                         vehicleMaster.data.vehicle_master.map(vehicle => (
                                                             <option key={vehicle.id} value={vehicle.id}> {vehicle.model}</option>
@@ -339,7 +339,7 @@ export default function EnqGen() {
                                                 <input defaultValue={updateOfficeReceipt.stock_vehicle_id} className="form-control" type="text" name='stock_vehicle_id' onChange={onModalInputChange} placeholder="Vehicle No" /> */}
                                                 <span className="form-label">Vehicle No</span>
                                                 <select defaultValue={updateOfficeReceipt.stock_vehicle_id} onChange={onModalInputChange} className='form-control' name='stock_vehicle_id'>
-                                                <option>Select Vehicle</option>
+                                                    <option>Select Vehicle</option>
                                                     {
                                                         stockMaster.data.stock.map(vehicle => (
                                                             <option key={vehicle.id} value={vehicle.id}> {vehicle.vehicle_no}</option>
@@ -352,16 +352,16 @@ export default function EnqGen() {
                                             <div className="form-group">
                                                 <span className="form-label">Buyer</span>
                                                 <select defaultValue={updateOfficeReceipt.buyer_id} onChange={onModalInputChange} className='form-control' name='buyer_id'>
-                                                <option>Select Buyer</option>
-                                                {
-                                                    buyer.data.buyer.map(buyer => (
-                                                        <option key={buyer.id} value={buyer.id}> {buyer.name}</option>
-                                                    ))
-                                                }
-                                            </select>
+                                                    <option>Select Buyer</option>
+                                                    {
+                                                        buyer.data.buyer.map(buyer => (
+                                                            <option key={buyer.id} value={buyer.id}> {buyer.name}</option>
+                                                        ))
+                                                    }
+                                                </select>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="col-sm-6">
                                             <div className="form-group">
                                                 <span className="form-label">Fuel Type</span>
@@ -409,90 +409,92 @@ export default function EnqGen() {
                     <div className="row">
                         <h1 style={{ width: '100%', textAlign: 'center' }}>Enquiry Generation</h1>
                         <Divider style={{ marginBottom: '10px', }} />
-                        <div className="row">
-                            <div className="booking-form">
-                                <div className="row">
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Buyer Name</span>
-                                            {/* <input className="form-control" type="text" onChange={onInputChange} name='name' placeholder="Enter vehicle name" /> */}
-                                            <select onChange={onInputChange} className='form-control' name='buyer_id'>
-                                                <option>Select Buyer</option>
-                                                {
-                                                    buyer.data.buyer.map(buyer => (
-                                                        <option key={buyer.id} value={buyer.id}> {buyer.name}</option>
-                                                    ))
-                                                }
-                                            </select>
+                        <div className='card card-primary card-outline' style={{ padding: '20px', borderTop: '4px solid #05386b' }}>
 
+                            <div className="row">
+                                <div className="booking-form">
+                                    <div className="row">
+                                        <div className="col-sm-6">
+                                            <div className="form-group">
+                                                <span className="form-label">Buyer Name</span>
+                                                {/* <input className="form-control" type="text" onChange={onInputChange} name='name' placeholder="Enter vehicle name" /> */}
+                                                <select onChange={onInputChange} className='form-control' name='buyer_id'>
+                                                    <option>Select Buyer</option>
+                                                    {
+                                                        buyer.data.buyer.map(buyer => (
+                                                            <option key={buyer.id} value={buyer.id}> {buyer.name}</option>
+                                                        ))
+                                                    }
+                                                </select>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Vehicle Name</span>
-                                            {/* <input className="form-control" type="text" onChange={onInputChange} name='model' placeholder="Enter car model" /> */}
-                                            <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
-                                                <option>Select Buyer</option>
-                                                {
-                                                    vehicleMaster.data.vehicle_master.map(vehicleMaster => (
-                                                        <option key={vehicleMaster.id} value={vehicleMaster.id}> {vehicleMaster.model}</option>
-                                                    ))
-                                                }
-                                            </select>
+                                        <div className="col-sm-6">
+                                            <div className="form-group">
+                                                <span className="form-label">Vehicle Name</span>
+                                                {/* <input className="form-control" type="text" onChange={onInputChange} name='model' placeholder="Enter car model" /> */}
+                                                <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
+                                                    <option>Select Buyer</option>
+                                                    {
+                                                        vehicleMaster.data.vehicle_master.map(vehicleMaster => (
+                                                            <option key={vehicleMaster.id} value={vehicleMaster.id}> {vehicleMaster.model}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Fuel Type</span>
-                                            <select className="form-control" name='fuel_type' onChange={onInputChange}>
-                                                <option>Select Fuel Type</option>
-                                                <option value="Petrol">Petrol</option>
-                                                <option value="Disel">Disel</option>
-                                                <option value="CNG/LPG">CNG/LPG</option>
-                                                <option value="Electric">Electric</option>
-                                            </select>
+                                        <div className="col-sm-6">
+                                            <div className="form-group">
+                                                <span className="form-label">Fuel Type</span>
+                                                <select className="form-control" name='fuel_type' onChange={onInputChange}>
+                                                    <option>Select Fuel Type</option>
+                                                    <option value="Petrol">Petrol</option>
+                                                    <option value="Disel">Disel</option>
+                                                    <option value="CNG/LPG">CNG/LPG</option>
+                                                    <option value="Electric">Electric</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Budget</span>
-                                            <div style={{ display: 'flex', width: '100%' }}>
-                                                <div className="form-group" style={{ marginRight: '50px' }} >
-                                                    <input className="form-control" type="text" name='budget_from' onChange={onInputChange} placeholder="From" />
-                                                </div>
-                                                <div className="form-group">
-                                                    <input className="form-control" type="text" name='budget_to' onChange={onInputChange} placeholder="To" />
+                                        <div className="col-sm-6">
+                                            <div className="form-group">
+                                                <span className="form-label">Budget</span>
+                                                <div style={{ display: 'flex', width: '100%' }}>
+                                                    <div className="form-group" style={{ marginRight: '50px' }} >
+                                                        <input className="form-control" type="text" name='budget_from' onChange={onInputChange} placeholder="From" />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <input className="form-control" type="text" name='budget_to' onChange={onInputChange} placeholder="To" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
-                                    <button className="btn btn-primary" type='button' onClick={onSearch}>Search</button>
-                                </div>
-                                <div className='row'>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <span className="form-label">Vehicle Number</span>
-                                            {/* <input defaultValue={
+                                    <div className="field" style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
+                                        <button className="btn btn-primary" type='button' onClick={onSearch}>Search</button>
+                                    </div>
+                                    <div className='row'>
+                                        <div className="col-sm-6">
+                                            <div className="form-group">
+                                                <span className="form-label">Vehicle Number</span>
+                                                {/* <input defaultValue={
                                                     search.data === undefined ? '' : search.data.stock[0].vehicle_no 
                                                 } className="form-control" type="text" onChange={onInputChange} name='xyz' placeholder="Vehicle Number" /> */}
-                                            <select className='form-control' onChange={(e) => {
-                                                onInputChange(e);
-                                            }} name='stock_vehicle_id' placeholder="Vehicle Number">
-                                                <option>Select Vehicle</option>
-                                                {
-                                                    search.data === undefined ? '' : search.data.stock.map((vehicle, index) => {
-                                                        console.log(index);
-                                                        // ind = index;
-                                                        return (
-                                                            <option key={index} value={vehicle.id}>{vehicle.vehicle_no}</option>
-                                                        )
-                                                    })
-                                                }
-                                            </select>
-                                            {/* <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
+                                                <select className='form-control' onChange={(e) => {
+                                                    onInputChange(e);
+                                                }} name='stock_vehicle_id' placeholder="Vehicle Number">
+                                                    <option>Select Vehicle</option>
+                                                    {
+                                                        search.data === undefined ? '' : search.data.stock.map((vehicle, index) => {
+                                                            console.log(index);
+                                                            // ind = index;
+                                                            return (
+                                                                <option key={index} value={vehicle.id}>{vehicle.vehicle_no}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                                {/* <select onChange={onInputChange} className='form-control' name='vehicle_master_id'>
                                                 {
                                                     search.data === undefined ? '' : search.data.map(vehicle=>{
                                                         <option>{vehicle.stock.vehicle_no}</option>
@@ -500,9 +502,9 @@ export default function EnqGen() {
                                                 }
                                             </select> */}
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    {/* <div className="col-sm-6">
+                                        {/* <div className="col-sm-6">
                                         <div className="form-group">
                                             <span className="form-label">Owner</span>
                                             <input defaultValue={
@@ -510,6 +512,7 @@ export default function EnqGen() {
                                             } className="form-control" type="text" onChange={onInputChange} name='owner' placeholder="Owner's Name" />
                                         </div>
                                     </div> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -525,6 +528,7 @@ export default function EnqGen() {
                 <DataGrid
                     rows={rows}
                     columns={columns}
+                    style={{ borderTop: '4px solid rgb(5, 56, 107)' }}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
                     checkboxSelection={false}

@@ -60,7 +60,7 @@ const Body = () => {
       </header>
       <div className='row'>
 
-        <div className="col-md-2 sidenav" id='sidebar' style={{ padding: 0, minHeight: '100vh', height: "auto", }}>
+        <div className="col-md-2 sidenav" id='sidebar' style={{ padding: 0, }}>
           <Navbar />
         </div>
         <div className="col-md-10 main" id='main'>
